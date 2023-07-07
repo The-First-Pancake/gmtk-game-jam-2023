@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Trees
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 21300000, guid: 2042ba416f9ba07408e037af1d5af895, type: 3}
-  m_DefaultGameObject: {fileID: 5429420616487622722, guid: 098cedf0df884ba4fbca54a85915f30f, type: 3}
+  m_DefaultGameObject: {fileID: 2946281850547603745, guid: 9e49c818555438f43954825dfb84bb94, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules: []

@@ -44,3 +44,6 @@ TagManager:
   - name: Buildings
     uniqueID: 511158543
     locked: 0
+  - name: Fire
+    uniqueID: 786324613
+    locked: 0
