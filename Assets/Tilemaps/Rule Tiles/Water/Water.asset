@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6f3fbb560bd6041a202ea918fa4f23, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 21300000, guid: 8e8fb5469a0fe74408572905dbbaa542, type: 3}
-  m_DefaultGameObject: {fileID: 7112450242574752520, guid: 8dcaaca9d89aa8c4f90ebb5a91c8c43d, type: 3}
+  m_DefaultSprite: {fileID: 21300000, guid: efae7ba63f872fc4f8adb4c2c56e637c, type: 3}
+  m_DefaultGameObject: {fileID: 7112450242574752520, guid: 9746868473b69d2449a84454e936f461, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: 21300000, guid: 8e8fb5469a0fe74408572905dbbaa542, type: 3}
-    m_GameObject: {fileID: 7112450242574752520, guid: 8dcaaca9d89aa8c4f90ebb5a91c8c43d, type: 3}
+    - {fileID: 21300000, guid: efae7ba63f872fc4f8adb4c2c56e637c, type: 3}
+    m_GameObject: {fileID: 7112450242574752520, guid: 9746868473b69d2449a84454e936f461, type: 3}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
