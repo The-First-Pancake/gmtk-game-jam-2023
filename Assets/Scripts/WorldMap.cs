@@ -34,7 +34,7 @@ public class WorldMap : MonoBehaviour
 
     public void PublishTile(Vector3Int coords, GameObject obj) {
         TileBehavior tile_behavior = obj.GetComponent<TileBehavior>();
-        if (tile_behavior.IsUpper()) {
+        if (tile_behavior.IsUpper) {
             map[coords.x + 50, coords.y + 50].present_upper = true;
             map[coords.x + 50, coords.y + 50].upper_tile = tile_behavior;
         } else {

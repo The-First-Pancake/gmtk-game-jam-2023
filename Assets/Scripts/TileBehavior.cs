@@ -21,10 +21,13 @@ public class TileBehavior : MonoBehaviour
         BLOCKS_MOVEMENT = 0,
         ALLOWS_MOVEMENT = 1,
     }
+
+    [Header("Do Not Edit")]
     public PathAble CanPath;
-    [HideInInspector] public IsometricRuleTile ThisTile;
-    [HideInInspector] public Vector3Int IsoCoordinates;
-    [HideInInspector] public Vector3 WorldCoordinates;
+    public IsometricRuleTile ThisTile;
+    public Vector3Int IsoCoordinates;
+    public Vector3 WorldCoordinates;
+    public bool IsUpper;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +36,14 @@ public class TileBehavior : MonoBehaviour
         Tilemap tilemap = GetComponentInParent<Tilemap>();
         IsoCoordinates = tilemap.WorldToCell(WorldCoordinates);
         ThisTile = tilemap.GetTile<IsometricRuleTile>(IsoCoordinates);
+        TilemapRenderer renderer = GetComponentInParent<TilemapRenderer>();
+        if (renderer.sortingLayerName == "Default") {
+            IsUpper = false;
+        } else if (renderer.sortingLayerName == "Buildings") {
+            IsUpper = true;
+        } else {
+            Debug.LogWarning("TilemapRenderer in parent does not have a valid sorting layer");
+        }
         WorldMap.instance.PublishTile(IsoCoordinates, gameObject);
     }
 
@@ -42,14 +53,10 @@ public class TileBehavior : MonoBehaviour
         
     }
 
-    public bool IsUpper() {
-        return true; // TODO What is upper
-    }
-
     public List<TileBehavior> GetNeighbors() {
         List<TileBehavior> neighbors = new List<TileBehavior>();
         foreach (Vector3Int coord in NEIGHBOR_COORDS) {
-            TileBehavior tile = WorldMap.instance.GetTopTile(coord);
+            TileBehavior tile = WorldMap.instance.GetTopTile(coord + IsoCoordinates);
             if (tile) {
                 neighbors.Add(tile);
             }
