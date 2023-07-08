@@ -75,6 +75,7 @@ public class FireBehaviour : MonoBehaviour
     {
         state = burnState.unburnt;
         sustain = (timeStartedBurning + sustain) - Time.time;
+        deleteParticles();
 
     }
 
@@ -93,9 +94,7 @@ public class FireBehaviour : MonoBehaviour
             tileBehavior.DeleteTile();
         }
 
-        var ps = spawnedFire.GetComponent<ParticleSystem>();
-        ps.emissionRate = 0;
-        Destroy(spawnedFire, ps.main.startLifetime.constant); //Destroy particle effect after its finished
+        deleteParticles();
 
         state = burnState.unburnt;
     }
@@ -122,4 +121,10 @@ public class FireBehaviour : MonoBehaviour
         return burningNeighbors/8;
     }
 
+    float deleteParticles()
+    {
+        var ps = spawnedFire.GetComponent<ParticleSystem>();
+        ps.emissionRate = 0;
+        Destroy(spawnedFire, ps.main.startLifetime.constant); //Destroy particle effect after its finished
+    }
 }
