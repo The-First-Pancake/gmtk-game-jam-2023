@@ -33,7 +33,10 @@ public class VillagerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        TileBehavior CurrentTile = movement.GetCurrentTile();
+        if (CurrentTile != null && CurrentTile.Fire.state == FireBehaviour.burnState.burning) {
+            Destroy(gameObject);
+        }
     }
 
     void TickStateMachine() {
