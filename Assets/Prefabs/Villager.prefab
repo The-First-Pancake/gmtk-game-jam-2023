@@ -142,6 +142,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 0
   CurrentTarget: {fileID: 0}
-  CurrentFire: {fileID: 0}
-  StateMachineTickRateSeconds: 1
+  SeenFires: []
+  StateMachineTickRateSeconds: 0.1
   FireSenseDistanceSquares: 5
+  RoamSpeed: 25
+  FireSpeed: 50

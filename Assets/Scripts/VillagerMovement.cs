@@ -82,7 +82,12 @@ public class VillagerMovement : MonoBehaviour
             }
             direction_of_travel /= direction_of_travel.magnitude;
             TileBehavior current_tile = WorldMap.instance.GetTopTileFromWorldPoint(transform.position);
-            Vector3 velocity = Time.deltaTime * BaseSpeed * (1 - current_tile.MovementModifier) * direction_of_travel;
+            Vector3 velocity = Vector3.zero;
+            if (current_tile) {
+                velocity = Time.deltaTime * BaseSpeed * (1 - current_tile.MovementModifier) * direction_of_travel;
+            } else {
+                velocity = Time.deltaTime * BaseSpeed * direction_of_travel;
+            }   
             rb2d.velocity = velocity;
         }
     }
