@@ -17,6 +17,12 @@ public class TileBehavior : MonoBehaviour
         Vector3Int.down + Vector3Int.left,
     };
 
+    public enum VillagerTargetType {
+        DONT_CARE = 0,
+        BUILDING,
+        WATER
+    }
+
     public enum PathAble
     {
         BLOCKS_MOVEMENT = 0,
@@ -24,6 +30,7 @@ public class TileBehavior : MonoBehaviour
     }
 
     public PathAble CanPath;
+    public VillagerTargetType VillagerTarget = VillagerTargetType.DONT_CARE;
     public float MovementModifier = 0;
     [Header("Do Not Edit")]
     public IsometricRuleTile ThisTile;

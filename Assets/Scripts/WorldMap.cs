@@ -19,6 +19,7 @@ public class WorldMap : MonoBehaviour
     {
         instance = this;
         map = new WorldTile[100, 100];
+        grid = GetComponentInParent<Grid>();
     }
 
     // Start is called before the first frame update
