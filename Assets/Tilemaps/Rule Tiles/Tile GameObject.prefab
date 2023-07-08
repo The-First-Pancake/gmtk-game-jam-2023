@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a005353a0af8683299d2d2cadad6ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanPath: 0
+  CanPath: 1
+  MovementModifier: 0
   ThisTile: {fileID: 0}
   IsoCoordinates: {x: 0, y: 0, z: 0}
   WorldCoordinates: {x: 0, y: 0, z: 0}

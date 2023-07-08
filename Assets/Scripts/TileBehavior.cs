@@ -22,8 +22,9 @@ public class TileBehavior : MonoBehaviour
         ALLOWS_MOVEMENT = 1,
     }
 
-    [Header("Do Not Edit")]
     public PathAble CanPath;
+    public float MovementModifier = 0;
+    [Header("Do Not Edit")]
     public IsometricRuleTile ThisTile;
     public Vector3Int IsoCoordinates;
     public Vector3 WorldCoordinates;
