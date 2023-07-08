@@ -6493,7 +6493,7 @@ MonoBehaviour:
   validColor: {r: 1, g: 1, b: 1, a: 0.33333334}
   invalidColor: {r: 1, g: 0.32452828, b: 0.32452828, a: 0.49019608}
   projectileSpeed: 2
-  projectile: {fileID: 0}
+  projectile: {fileID: 427563794674964962, guid: c068c5e3bb0c00742accc09584510eb0, type: 3}
 --- !u!1 &7841361329225710111
 GameObject:
   m_ObjectHideFlags: 0
