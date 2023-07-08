@@ -73,6 +73,8 @@ public class VillagerBehavior : MonoBehaviour
                 }
                 break;
             case VillagerState.PANICKING:
+                anim.SetTrigger("EnterPanic");
+                break;
             default:
                 throw new NotImplementedException();
         }
@@ -106,13 +108,18 @@ public class VillagerBehavior : MonoBehaviour
 
     private void panickingUpdate()
     {
-        throw new NotImplementedException();
+        if (movement.IsDoneMove()) {
+            enterState(VillagerState.PANICKING);
+        }
     }
 
     private void puttingOutFireUpdate()
     {
         // Check if we can put out any fires
         TileBehavior currentTile = movement.GetCurrentTile();
+        if (currentTile == null) {
+            return;
+        }
         foreach (TileBehavior neighbor in currentTile.GetNeighbors()) {
             if (neighbor.Fire.state == FireBehaviour.burnState.burning) {
                 neighbor.Fire.extinguish();
@@ -132,7 +139,9 @@ public class VillagerBehavior : MonoBehaviour
         if (dangerFire) {
             if (CurrentTarget != dangerFire || CurrentTarget == null) {
                 CurrentTarget = dangerFire;
-                movement.GoToNeighborOf(CurrentTarget);
+                if (!movement.GoToNeighborOf(CurrentTarget)) {
+                    enterState(VillagerState.PANICKING);
+                }
             }
         } else {
             enterState(VillagerState.IDLE);
@@ -147,7 +156,12 @@ public class VillagerBehavior : MonoBehaviour
     }
 
     private void alertedUpdate()
-    {   
+    {
+        List<TileBehavior> water_sources = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.WATER);
+        if (water_sources.Count == 0) {
+            enterState(VillagerState.PANICKING);
+            return;
+        }
         enterState(VillagerState.GETTING_WATER);
     }
 
@@ -231,7 +245,13 @@ public class VillagerBehavior : MonoBehaviour
 
     private void on_enterPanicking()
     {
-        throw new NotImplementedException();
+        Vector3Int randomVector = new Vector3Int(UnityEngine.Random.Range(-2, 2), (UnityEngine.Random.Range(-2, 2)));
+        TileBehavior tile = WorldMap.instance.GetTopTile(movement.GetCurrentTile().IsoCoordinates + randomVector);
+        if (tile) {
+            movement.BaseSpeed = RoamSpeed;
+            CurrentTarget = tile;
+            movement.GoToNeighborOf(CurrentTarget);
+        }
     }
 
     private void on_enterPuttingOutFire()
@@ -246,10 +266,6 @@ public class VillagerBehavior : MonoBehaviour
     private void on_enterGettingWater()
     {
         List<TileBehavior> water_sources = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.WATER);
-        if (water_sources.Count == 0) {
-            enterState(VillagerState.PANICKING);
-            return;
-        }
         float closestWaterDistance = float.PositiveInfinity;
         TileBehavior closestWater = null;
         foreach (TileBehavior water in water_sources) {
