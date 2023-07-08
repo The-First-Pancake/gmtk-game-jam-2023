@@ -10,37 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e6f3fbb560bd6041a202ea918fa4f23, type: 3}
-  m_Name: Building
+  m_Name: Tall Grass
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 21300000, guid: db05f25054afea34c988e41588a4942e, type: 3}
+  m_DefaultSprite: {fileID: -1172852688, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
   m_DefaultGameObject: {fileID: 6058571008962211761, guid: fd3ffd3d8e6797f45a71510175d52b78, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules:
-  - m_Id: 1
-    m_Sprites:
-    - {fileID: 21300000, guid: c9e8bf9e43c1d824c84f4e1997c88472, type: 3}
-    m_GameObject: {fileID: 6058571008962211761, guid: fd3ffd3d8e6797f45a71510175d52b78, type: 3}
-    m_MinAnimationSpeed: 1
-    m_MaxAnimationSpeed: 1
-    m_PerlinScale: 0.5
-    m_Output: 0
-    m_ColliderType: 0
-    m_RandomTransform: 0
-    m_Neighbors: 01000000020000000200000002000000
-    m_NeighborPositions:
-    - {x: -1, y: 0, z: 0}
-    - {x: 0, y: 1, z: 0}
-    - {x: 1, y: 0, z: 0}
-    - {x: 0, y: -1, z: 0}
-    m_RuleTransform: 0
   - m_Id: 0
     m_Sprites:
-    - {fileID: 21300000, guid: db05f25054afea34c988e41588a4942e, type: 3}
+    - {fileID: -1172852688, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
+    - {fileID: -796717958, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
+    - {fileID: 1561544498, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
+    - {fileID: -180147428, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
+    - {fileID: 2077965771, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
+    - {fileID: 1838118917, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
     m_GameObject: {fileID: 6058571008962211761, guid: fd3ffd3d8e6797f45a71510175d52b78, type: 3}
-    m_MinAnimationSpeed: 1
-    m_MaxAnimationSpeed: 1
+    m_MinAnimationSpeed: 4
+    m_MaxAnimationSpeed: 4
     m_PerlinScale: 0.5
-    m_Output: 0
+    m_Output: 2
     m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 

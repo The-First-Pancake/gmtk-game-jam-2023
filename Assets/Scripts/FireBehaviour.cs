@@ -80,11 +80,15 @@ public class FireBehaviour : MonoBehaviour
     public void burnComplete()
     {
         if(state != burnState.burning) { Debug.Log("What the hell oh my god"); return; }
+
         if (destroyAfterBurnOut)
         {
-            Vector3 noisyPos = transform.position + new Vector3(Random.Range(-.10f, .10f), Random.Range(-.10f, -.10f), 0);
-            GameObject newSpawned = Instantiate((Resources.Load("Burnout Sprite Prefab") as GameObject), transform.position, transform.rotation);
-            newSpawned.GetComponent<SpriteRenderer>().sprite = burnoutSprites[Random.Range(0,burnoutSprites.Length - 1)];
+            if (burnoutSprites.Length > 0)
+            {
+                Vector3 noisyPos = transform.position + new Vector3(Random.Range(-.10f, .10f), Random.Range(-.10f, -.10f), 0);
+                GameObject newSpawned = Instantiate((Resources.Load("Burnout Sprite Prefab") as GameObject), noisyPos, transform.rotation);
+                newSpawned.GetComponent<SpriteRenderer>().sprite = burnoutSprites[Random.Range(0, burnoutSprites.Length - 1)];
+            }
             tileBehavior.DeleteTile();
         }
 
