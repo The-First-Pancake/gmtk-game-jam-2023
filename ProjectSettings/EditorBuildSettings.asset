@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Main_Menu.unity
     guid: ddc108330bff1a940aa32a0e034bad1d
   - enabled: 1
-    path: Assets/Scenes/Declan_prototypting 1.unity
-    guid: a86430ae5f012fb438cc2c7987b58767
+    path: Assets/Scenes/Level_01.unity
+    guid: 3a3ec31aec73d8346ab464f20a65d481
+  - enabled: 1
+    path: Assets/Scenes/Level_Blank.unity
+    guid: 7b8b708067eb063459a1816c831d8c2c
+  - enabled: 1
+    path: Assets/Scenes/Level_03.unity
+    guid: 450ca957bb284ba49bc0cca4c8fd39b5
   m_configObjects: {}
