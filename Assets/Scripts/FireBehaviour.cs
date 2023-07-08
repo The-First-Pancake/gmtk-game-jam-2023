@@ -16,7 +16,7 @@ public class FireBehaviour : MonoBehaviour
 
     private TileBehavior tileBehavior;
 
-    static private float spreadInterval = .5f;
+    static private float spreadInterval = .25f;
 
     [Header("Burnout Behavior")]
     [SerializeField]
