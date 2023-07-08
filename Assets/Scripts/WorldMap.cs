@@ -86,4 +86,20 @@ public class WorldMap : MonoBehaviour
         }
         return targets;
     }
+
+    public List<TileBehavior> GetAllBurningTiles() {
+        List<TileBehavior> targets = new List<TileBehavior>();
+        foreach (WorldTile tile in map) {
+            if (tile.present_upper) {
+                if (tile.upper_tile.Fire.state == FireBehaviour.burnState.burning) {
+                    targets.Add(tile.upper_tile);
+                }
+            } else if (tile.present_lower) {
+                if (tile.lower_tile.Fire.state == FireBehaviour.burnState.burning) {
+                    targets.Add(tile.lower_tile);
+                }
+            }
+        }
+        return targets;
+    }
 }

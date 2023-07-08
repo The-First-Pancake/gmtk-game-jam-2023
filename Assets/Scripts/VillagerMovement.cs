@@ -41,24 +41,25 @@ public class VillagerMovement : MonoBehaviour
         FollowPath();
     }
 
-    public void GoToTile(TileBehavior target) {
+    public bool GoToTile(TileBehavior target) {
         TileBehavior start = GetCurrentTile();
         List<Vector3> path = PathFind(start, target);
         if (path != null) {
             CurrentPath = path;
-        } else {
-            Debug.Log("No path found.");
+            return true;
         }
+        Debug.Log("No path found.");
+        return false;
     }
 
-    public void GoToNeighborOf(TileBehavior target) {
+    public bool GoToNeighborOf(TileBehavior target) {
         foreach (TileBehavior neighbor in target.GetNeighbors()) {
             if (neighbor.CanPath != TileBehavior.PathAble.BLOCKS_MOVEMENT &&
                     neighbor.Fire.state != FireBehaviour.burnState.burning) {
-                GoToTile(neighbor);
-                return;
+                return GoToTile(neighbor);
             }
         }
+        return false;
     }
 
     public TileBehavior GetCurrentTile() {

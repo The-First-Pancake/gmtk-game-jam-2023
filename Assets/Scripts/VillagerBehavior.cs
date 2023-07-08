@@ -17,6 +17,9 @@ public class VillagerBehavior : MonoBehaviour
     public VillagerState State = VillagerState.IDLE;
     private VillagerMovement movement;
     public TileBehavior CurrentTarget;
+    private Animator anim;
+    private Rigidbody2D rb2d;
+    private SpriteRenderer spriteRenderer;
     public List<TileBehavior> SeenFires;
     public float StateMachineTickRateSeconds = 1f;
     public int FireSenseDistanceSquares = 5;
@@ -27,15 +30,53 @@ public class VillagerBehavior : MonoBehaviour
     void Start()
     {
         movement = GetComponent<VillagerMovement>();
+        rb2d = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         InvokeRepeating("TickStateMachine", 0.1f, StateMachineTickRateSeconds);
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateAnimator();
         TileBehavior CurrentTile = movement.GetCurrentTile();
         if (CurrentTile != null && CurrentTile.Fire.state == FireBehaviour.burnState.burning) {
             Destroy(gameObject);
+        }
+    }
+
+    private void UpdateAnimator() {
+        switch (State) {
+            case VillagerState.IDLE:
+            case VillagerState.ROAMING:
+            case VillagerState.ALERTED:
+            case VillagerState.GETTING_WATER:
+            case VillagerState.PUTTING_OUT_FIRE:
+                Vector3 velocity = rb2d.velocity;
+                float up_angle = Vector3.Angle(velocity, Vector3.up);
+                float left_angle = Vector3.Angle(velocity, Vector3.left);
+                float right_angle = Vector3.Angle(velocity, Vector3.right);
+                float down_angle = Vector3.Angle(velocity, Vector3.down);
+                if (up_angle <= left_angle && up_angle <= right_angle && up_angle <= down_angle) {
+                    anim.SetTrigger("TurnAway");
+                    return;
+                } else if (left_angle <= up_angle && left_angle <= right_angle && left_angle <= down_angle) {
+                    spriteRenderer.flipX = false;
+                    anim.SetTrigger("TurnSide");
+                    return;
+                } else if (right_angle <= up_angle && right_angle <= left_angle && right_angle <= down_angle) {
+                    spriteRenderer.flipX = true;
+                    anim.SetTrigger("TurnSide");
+                } else {
+                    anim.SetTrigger("TurnForward");
+                }
+                break;
+            case VillagerState.PANICKING:
+                anim.SetTrigger("EnterPanic");
+                break;
+            default:
+                throw new NotImplementedException();
         }
     }
 
@@ -67,13 +108,18 @@ public class VillagerBehavior : MonoBehaviour
 
     private void panickingUpdate()
     {
-        throw new NotImplementedException();
+        if (movement.IsDoneMove()) {
+            enterState(VillagerState.PANICKING);
+        }
     }
 
     private void puttingOutFireUpdate()
     {
         // Check if we can put out any fires
         TileBehavior currentTile = movement.GetCurrentTile();
+        if (currentTile == null) {
+            return;
+        }
         foreach (TileBehavior neighbor in currentTile.GetNeighbors()) {
             if (neighbor.Fire.state == FireBehaviour.burnState.burning) {
                 neighbor.Fire.extinguish();
@@ -93,7 +139,9 @@ public class VillagerBehavior : MonoBehaviour
         if (dangerFire) {
             if (CurrentTarget != dangerFire || CurrentTarget == null) {
                 CurrentTarget = dangerFire;
-                movement.GoToNeighborOf(CurrentTarget);
+                if (!movement.GoToNeighborOf(CurrentTarget)) {
+                    enterState(VillagerState.PANICKING);
+                }
             }
         } else {
             enterState(VillagerState.IDLE);
@@ -108,7 +156,12 @@ public class VillagerBehavior : MonoBehaviour
     }
 
     private void alertedUpdate()
-    {   
+    {
+        List<TileBehavior> water_sources = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.WATER);
+        if (water_sources.Count == 0) {
+            enterState(VillagerState.PANICKING);
+            return;
+        }
         enterState(VillagerState.GETTING_WATER);
     }
 
@@ -192,7 +245,13 @@ public class VillagerBehavior : MonoBehaviour
 
     private void on_enterPanicking()
     {
-        throw new NotImplementedException();
+        Vector3Int randomVector = new Vector3Int(UnityEngine.Random.Range(-2, 2), (UnityEngine.Random.Range(-2, 2)));
+        TileBehavior tile = WorldMap.instance.GetTopTile(movement.GetCurrentTile().IsoCoordinates + randomVector);
+        if (tile) {
+            movement.BaseSpeed = RoamSpeed;
+            CurrentTarget = tile;
+            movement.GoToNeighborOf(CurrentTarget);
+        }
     }
 
     private void on_enterPuttingOutFire()
@@ -207,10 +266,6 @@ public class VillagerBehavior : MonoBehaviour
     private void on_enterGettingWater()
     {
         List<TileBehavior> water_sources = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.WATER);
-        if (water_sources.Count == 0) {
-            enterState(VillagerState.PANICKING);
-            return;
-        }
         float closestWaterDistance = float.PositiveInfinity;
         TileBehavior closestWater = null;
         foreach (TileBehavior water in water_sources) {
