@@ -17,7 +17,9 @@ public class VillagerBehavior : MonoBehaviour
     public VillagerState State = VillagerState.IDLE;
     private VillagerMovement movement;
     public TileBehavior CurrentTarget;
+    public TileBehavior CurrentFire;
     public float StateMachineTickRateSeconds = 1f;
+    public int FireSenseDistanceSquares = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -65,28 +67,82 @@ public class VillagerBehavior : MonoBehaviour
 
     private void puttingOutFireUpdate()
     {
-        throw new NotImplementedException();
+        // Check if we can put out any fires
+        TileBehavior currentTile = movement.GetCurrentTile();
+        foreach (TileBehavior neighbor in currentTile.GetNeighbors()) {
+            if (neighbor.Fire.state == FireBehaviour.burnState.burning) {
+                neighbor.Fire.extinguish();
+                enterState(VillagerState.ALERTED);
+            }
+        }
+
+        // Check if we're still heading to the highest danger fire we can see
+        TileBehavior dangerFire = GetHighestDangerFire();
+        if (dangerFire) {
+            if (CurrentFire == null || dangerFire.Fire.dangerRating > CurrentFire.Fire.dangerRating) {
+                CurrentTarget = dangerFire;
+                movement.GoToNeighborOf(dangerFire);
+            }
+        }
     }
 
     private void gettingWaterUpdate()
     {
-        throw new NotImplementedException();
+        if (movement.IsDoneMove()) {
+            enterState(VillagerState.PUTTING_OUT_FIRE);
+        } 
     }
 
     private void alertedUpdate()
-    {
-        throw new NotImplementedException();
+    {   
+        enterState(VillagerState.GETTING_WATER);
     }
 
     private void roamingUpdate()
     {
         if (movement.IsDoneMove()) {
             enterState(VillagerState.IDLE);
+        } else if (CanSeeFire()) {
+            enterState(VillagerState.ALERTED);
         }
+    }
+
+    private bool CanSeeFire() {
+        for (int i = -FireSenseDistanceSquares; i < FireSenseDistanceSquares; i++) {
+            for (int j = -FireSenseDistanceSquares; i < FireSenseDistanceSquares; i++) {
+                Vector3Int offset = new Vector3Int(i, j, 0);
+                TileBehavior current_tile = movement.GetCurrentTile();
+                TileBehavior check_tile = WorldMap.instance.GetTopTile(current_tile.IsoCoordinates + offset);
+                if (check_tile != null && check_tile.Fire.state == FireBehaviour.burnState.burning) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    private TileBehavior GetHighestDangerFire()
+    {
+        TileBehavior dangerousFire = null;
+        float highestDanger = 0;
+        for (int i = -FireSenseDistanceSquares; i < FireSenseDistanceSquares; i++) {
+            for (int j = -FireSenseDistanceSquares; i < FireSenseDistanceSquares; i++) {
+                Vector3Int offset = new Vector3Int(i, j, 0);
+                TileBehavior current_tile = movement.GetCurrentTile();
+                TileBehavior check_tile = WorldMap.instance.GetTopTile(current_tile.IsoCoordinates + offset);
+                if (check_tile.Fire.state == FireBehaviour.burnState.burning && check_tile.Fire.dangerRating > highestDanger) {
+                    dangerousFire = check_tile;
+                    highestDanger = check_tile.Fire.dangerRating;
+                }
+            }
+        }
+        return dangerousFire;
     }
 
     private void idleUpdate()
     {
+        if (CanSeeFire()) {
+            enterState(VillagerState.ALERTED);
+        }
         enterState(VillagerState.ROAMING);
     }
 
@@ -114,6 +170,7 @@ public class VillagerBehavior : MonoBehaviour
             default:
                 throw new NotImplementedException();
         }
+        Debug.Log("Villager entered " + new_state.ToString());
         State = new_state;
     }
 
@@ -124,17 +181,35 @@ public class VillagerBehavior : MonoBehaviour
 
     private void on_enterPuttingOutFire()
     {
-        throw new NotImplementedException();
+        if (CurrentFire) {
+            CurrentTarget = CurrentFire;
+            movement.GoToNeighborOf(CurrentFire);
+        }
     }
 
     private void on_enterGettingWater()
     {
-        throw new NotImplementedException();
+        List<TileBehavior> water_sources = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.WATER);
+        if (water_sources.Count == 0) {
+            enterState(VillagerState.PANICKING);
+            return;
+        }
+        float closestWaterDistance = float.PositiveInfinity;
+        TileBehavior closestWater = null;
+        foreach (TileBehavior water in water_sources) {
+            float waterDistance = (water.WorldCoordinates - transform.position).magnitude;
+            if (waterDistance < closestWaterDistance) {
+                closestWater = water;
+                closestWaterDistance = waterDistance;
+            }
+        }
+        CurrentTarget = closestWater;
+        movement.GoToNeighborOf(closestWater);
     }
 
     private void on_enterAlerted()
     {
-        throw new NotImplementedException();
+        CurrentFire = GetHighestDangerFire();
     }
 
     private void on_enterRoaming()

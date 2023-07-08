@@ -51,6 +51,16 @@ public class VillagerMovement : MonoBehaviour
         }
     }
 
+    public void GoToNeighborOf(TileBehavior target) {
+        foreach (TileBehavior neighbor in target.GetNeighbors()) {
+            if (neighbor.CanPath != TileBehavior.PathAble.BLOCKS_MOVEMENT &&
+                    neighbor.Fire.state != FireBehaviour.burnState.burning) {
+                GoToTile(neighbor);
+                return;
+            }
+        }
+    }
+
     public TileBehavior GetCurrentTile() {
         return WorldMap.instance.GetTopTileFromWorldPoint(transform.position);
     }
@@ -154,7 +164,6 @@ public class VillagerMovement : MonoBehaviour
         List<TileBehavior> path = new List<TileBehavior>();
         PathFindingNode currentNode = targetNode;
         while (currentNode != startNode) {
-            Debug.Log(currentNode);
             path.Add(currentNode.tile);
             currentNode = currentNode.parent;
         }
