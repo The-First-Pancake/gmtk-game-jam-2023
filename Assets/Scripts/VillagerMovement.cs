@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class VillagerMovement : MonoBehaviour
 {
+    public float BaseSpeed = 1f;
     public List<TileBehavior> CurrentPath;
     public class PathFindingNode {
         public float gCost;
@@ -26,18 +27,43 @@ public class VillagerMovement : MonoBehaviour
         }
     }
 
+    private Rigidbody2D rb2d;
+
     // Start is called before the first frame update
     void Start()
     {
-        TileBehavior start = WorldMap.instance.GetTopTile(Vector3Int.zero);
-        TileBehavior end = WorldMap.instance.GetTopTile(new Vector3Int(10, -5, 0));
-        CurrentPath = PathFind(start, end);
+        rb2d = GetComponent<Rigidbody2D>();
+        TileBehavior target = WorldMap.instance.GetTopTile(new Vector3Int(10, -5, 0));
+        GoToTile(target);
     }
 
     // Update is called once per frame
     void Update()
     {
+        FollowPath();
+    }
 
+    public void GoToTile(TileBehavior target) {
+        TileBehavior start = WorldMap.instance.GetTopTileFromWorldPoint(transform.position);
+        CurrentPath = PathFind(start, target);
+    }
+
+    void FollowPath() {
+        if (CurrentPath.Count > 0) {
+            Vector3 target = CurrentPath[0].WorldCoordinates;
+            Vector3 direction_of_travel = target - transform.position;
+            if (direction_of_travel.magnitude < 0.1) {
+                CurrentPath.RemoveAt(0);
+                if (CurrentPath.Count <= 0) {
+                    rb2d.velocity = Vector3.zero;
+                }
+                return;
+            }
+            direction_of_travel /= direction_of_travel.magnitude;
+            TileBehavior current_tile = WorldMap.instance.GetTopTileFromWorldPoint(transform.position);
+            Vector3 velocity = Time.deltaTime * BaseSpeed * (1 - current_tile.MovementModifier) * direction_of_travel;
+            rb2d.velocity = velocity;
+        }
     }
 
     void OnDrawGizmos() {

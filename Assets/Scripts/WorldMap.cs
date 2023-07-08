@@ -12,6 +12,7 @@ public class WorldMap : MonoBehaviour
     }
 
     public WorldTile [,] map;
+    public Grid grid;
     public static WorldMap instance;
 
     void Awake()
@@ -52,6 +53,11 @@ public class WorldMap : MonoBehaviour
             tile.present_lower = false;
             tile.lower_tile = null;
         }
+    }
+
+    public TileBehavior GetTopTileFromWorldPoint(Vector3 coords) {
+        Vector3Int iso_point = grid.WorldToCell(coords);
+        return GetTopTile(iso_point);
     }
 
     public TileBehavior GetTopTile(Vector3Int coords) {
