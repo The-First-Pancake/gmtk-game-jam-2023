@@ -70,8 +70,7 @@ public class TileBehavior : MonoBehaviour
 
     public void DeleteTile()
     {
-        WorldMap.instance.UnPublishTile(IsoCoordinates, this.gameObject);
+        WorldMap.instance.UnPublishTile(IsoCoordinates, gameObject);
         tilemap.SetTile(IsoCoordinates, null);
-        Destroy(this.gameObject);
     }
 }

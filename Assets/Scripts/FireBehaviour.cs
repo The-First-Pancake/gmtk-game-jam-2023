@@ -83,6 +83,7 @@ public class FireBehaviour : MonoBehaviour
 
     public void burnComplete()
     {
+        if(state != burnState.burning) { Debug.Log("What the hell oh my god"); return; }
         if (destroyAfterBurnOut)
         {
             GameObject newSpawned = Instantiate((Resources.Load("Burnout Sprite Prefab") as GameObject), transform.position, transform.rotation);
@@ -92,7 +93,6 @@ public class FireBehaviour : MonoBehaviour
 
         Destroy(spawnedFire);
         state = burnState.unburnt;
-        Debug.Log("Extinguish");
     }
 
     int burningNeighborsCount()
