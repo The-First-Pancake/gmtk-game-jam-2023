@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 8908126924316209637}
   - component: {fileID: 4464470741254031405}
   - component: {fileID: 7511758222939453266}
+  - component: {fileID: 1229347882070091422}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -315,6 +316,22 @@ MonoBehaviour:
   projectileSpeed: 1.5
   projectile: {fileID: 427563794674964962, guid: c068c5e3bb0c00742accc09584510eb0, type: 3}
   lightningGFX: {fileID: 7520491419621928241, guid: 318fb3edbae51b849bfd493afe489463, type: 3}
+--- !u!114 &1229347882070091422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5926353040764641532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2568188cf75f314c886fb87b960306b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  startMarker: {x: 0, y: 0, z: 0}
+  endMarker: {x: 0, y: 0, z: 0}
+  duration: 5
 --- !u!1 &7841361329225710111
 GameObject:
   m_ObjectHideFlags: 0
