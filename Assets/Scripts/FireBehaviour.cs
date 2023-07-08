@@ -121,7 +121,7 @@ public class FireBehaviour : MonoBehaviour
         return burningNeighbors/8;
     }
 
-    float deleteParticles()
+    void deleteParticles()
     {
         var ps = spawnedFire.GetComponent<ParticleSystem>();
         ps.emissionRate = 0;
