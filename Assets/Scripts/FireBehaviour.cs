@@ -6,7 +6,6 @@ public class FireBehaviour : MonoBehaviour
 {
     public enum burnState {unburnt, burning, burnt} //Burnt is currently unused
 
-    [Range(0.0f, 1.0f)]
     public float flambilityScore = .5f; //Base chance of being spread to each second (assuming completly surrounded by fire)
     public float sustain = 5;
     public float dangerRating= 0;
@@ -30,7 +29,9 @@ public class FireBehaviour : MonoBehaviour
     {
         tileBehavior = GetComponent<TileBehavior>();
         sustain *= Random.Range(0.9f, 1.1f); //Noise applied to sustain
-        InvokeRepeating("onSpread", spreadInterval, spreadInterval);
+        InvokeRepeating("onSpread", Random.Range(0,spreadInterval), spreadInterval);
+
+
     }
 
     // Update is called once per frame
@@ -52,18 +53,23 @@ public class FireBehaviour : MonoBehaviour
         if(WorldMap.instance.GetTopTile(tileBehavior.IsoCoordinates) != tileBehavior) { return; } //IDo not try to burn if there is a tile above
 
         if (state == burnState.unburnt){
-            //check for ignition
-
             //Advanced coding and algorithms
-            //TODO wind direction
 
-            float igniteProbability = bruningNeighborsFactor() * flambilityScore * spreadInterval;
+            float igniteProbability = tickRateProbabilityCompensation(bruningNeighborsFactor() * flambilityScore) ;
             
             if (igniteProbability > Random.Range(0f, 1f))
             {
                 ignite();
             }
         }
+    }
+
+    float tickRateProbabilityCompensation(float prob){
+
+        if(prob == 0){return 0;}
+        float spreadsPerSec = (1/spreadInterval);
+        float output = 1f-Mathf.Pow((1f-prob),(1f/spreadsPerSec));
+        return output;
     }
 
     private void updateDanger()
@@ -113,7 +119,7 @@ public class FireBehaviour : MonoBehaviour
         state = burnState.unburnt;
     }
 
-    float bruningNeighborsFactor()
+    float bruningNeighborsFactor() // value between 0 and 2 that will modify the likelyhood of neighboring tiles catching on fire
     {
         List<TileBehavior> neighbors = tileBehavior.GetNeighbors();
 
@@ -124,15 +130,16 @@ public class FireBehaviour : MonoBehaviour
             {
                 if (neighbor.gameObject.GetComponent<FireBehaviour>().state == burnState.burning)
                 {
-                    Vector3 dirOfBurningNeighbor = neighbor.IsoCoordinates - tileBehavior.IsoCoordinates;
                     Vector3 windDir = GameManager.instance.wind.GetIsoWindDir();
-                    float alignment = (Vector3.Angle(windDir , dirOfBurningNeighbor)/180); //should be 1 if aligned, 0 if not
-
-                    burningNeighbors += alignment;
+                    Vector3 dirOfBurningNeighbor = neighbor.IsoCoordinates - tileBehavior.IsoCoordinates;
+                    burningNeighbors += neighborWindModifier(dirOfBurningNeighbor, windDir);
                 }
             }
         }
-        return burningNeighbors/8;
+        return burningNeighbors/4 * 1.5f;
+    }
+    float neighborWindModifier(Vector3 neighborDir, Vector3 windDir){
+        return (Vector3.Angle(windDir , neighborDir)/180); //should be 1 if aligned, 0 if not
     }
 
     void deleteParticles()

@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Color validColor;
     public Color invalidColor;
     public float projectileSpeed = 2;
+    public GameObject projectile;
 
 
     PlayerState state = PlayerState.ready;
@@ -71,14 +72,16 @@ public class PlayerController : MonoBehaviour
     IEnumerator ShootProjectile(TileBehavior origin, TileBehavior target){
         state = PlayerState.cooldown;
         //Get path
-        //Spawn Projectile
-
+        GameObject newProjectile = Instantiate(projectile, origin.WorldCoordinates, Quaternion.identity);
+        
         float dist = (target.IsoCoordinates - origin.IsoCoordinates).magnitude;
         float timeToArrive = dist/projectileSpeed;
         Debug.Log(dist);
+        
         yield return new WaitForSeconds(timeToArrive);
+
         Debug.Log("arrived");
-        //Despawn projectile
+        Destroy(newProjectile);
         target.Fire.ignite();
         state = PlayerState.ready;
     }

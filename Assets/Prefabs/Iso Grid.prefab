@@ -6476,57 +6476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0d475e66081cf4da1e81c9aa0fd819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.20752358
-      outSlope: 0.20752358
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.24185558
-      value: 0.050190736
-      inSlope: 0.38506678
-      outSlope: 0.38506678
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.25201607
-    - serializedVersion: 3
-      time: 0.54496235
-      value: 0.46916655
-      inSlope: 4.58952
-      outSlope: 4.58952
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.069350444
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.9390607
-      value: 1.0088952
-      inSlope: -0.03639772
-      outSlope: -0.03639772
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -0.1459675
-      outSlope: -0.1459675
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &7511758222939453266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6542,8 +6491,9 @@ MonoBehaviour:
   gridIcon: {fileID: 7841361329225710111}
   maxRange: 15
   validColor: {r: 1, g: 1, b: 1, a: 0.33333334}
-  invalidColor: {r: 0.6792453, g: 0, b: 0, a: 0.6117647}
-  projectileSpeed: 1
+  invalidColor: {r: 1, g: 0.32452828, b: 0.32452828, a: 0.49019608}
+  projectileSpeed: 2
+  projectile: {fileID: 0}
 --- !u!1 &7841361329225710111
 GameObject:
   m_ObjectHideFlags: 0
