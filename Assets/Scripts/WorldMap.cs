@@ -46,13 +46,14 @@ public class WorldMap : MonoBehaviour
     }
 
     public void UnPublishTile(Vector3Int coords, GameObject obj) {
-        WorldTile tile = map[coords.x + 50, coords.y + 50];
-        if (tile.upper_tile.gameObject == obj) {
-            tile.present_upper = false;
-            tile.upper_tile = null;
-        } else if (tile.lower_tile.gameObject == obj) {
-            tile.present_lower = false;
-            tile.lower_tile = null;
+        if (map[coords.x + 50, coords.y + 50].upper_tile.gameObject == obj) {
+            Debug.Log("Unpublishing Upper");
+            map[coords.x + 50, coords.y + 50].present_upper = false;
+            map[coords.x + 50, coords.y + 50].upper_tile = null;
+        } else if (map[coords.x + 50, coords.y + 50].lower_tile.gameObject == obj) {
+            Debug.Log("Unpublishing Lower");
+            map[coords.x + 50, coords.y + 50].present_lower = false;
+            map[coords.x + 50, coords.y + 50].lower_tile = null;
         }
     }
 
