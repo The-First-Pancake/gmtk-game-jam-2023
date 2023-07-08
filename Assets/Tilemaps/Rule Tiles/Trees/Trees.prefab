@@ -52,9 +52,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2537774669494516959, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
+      propertyPath: sustain
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2537774669494516959, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
+      propertyPath: flambilityScore
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 6788183475321432562, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
       propertyPath: m_Name
-      value: Tile GameObject
+      value: Trees
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
