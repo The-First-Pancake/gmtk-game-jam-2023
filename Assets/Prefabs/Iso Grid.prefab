@@ -314,6 +314,7 @@ MonoBehaviour:
   invalidColor: {r: 1, g: 0.32452828, b: 0.32452828, a: 0.49019608}
   projectileSpeed: 1.5
   projectile: {fileID: 427563794674964962, guid: c068c5e3bb0c00742accc09584510eb0, type: 3}
+  lightningGFX: {fileID: 7520491419621928241, guid: 318fb3edbae51b849bfd493afe489463, type: 3}
 --- !u!1 &7841361329225710111
 GameObject:
   m_ObjectHideFlags: 0
