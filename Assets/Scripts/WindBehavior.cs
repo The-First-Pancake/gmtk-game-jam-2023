@@ -6,7 +6,7 @@ using UnityEngine;
 public class WindBehavior : MonoBehaviour
 {
     private Vector3Int windDir;
-    public AnimationCurve windCurve;
+
     // Start is called before the first frame update
     void Start()
     {

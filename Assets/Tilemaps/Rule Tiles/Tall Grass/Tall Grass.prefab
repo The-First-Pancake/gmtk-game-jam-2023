@@ -66,12 +66,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2537774669494516959, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
       propertyPath: burnoutSprites.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2537774669494516959, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
       propertyPath: burnoutSprites.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: 464bcc85fb29f3349a8b23cbf34d39c5, type: 3}
+      objectReference: {fileID: 21300000, guid: 7b6c8f11f8128f72aa3cfa313d1a3b59, type: 3}
     - target: {fileID: 6788183475321432562, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
       propertyPath: m_Name
       value: Tall Grass

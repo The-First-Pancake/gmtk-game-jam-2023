@@ -38,7 +38,7 @@ public class TileBehavior : MonoBehaviour
     public Vector3 WorldCoordinates;
     public bool IsUpper;
     public FireBehaviour Fire;
-    Tilemap tilemap;
+    public Tilemap tilemap;
 
     // Start is called before the first frame update
     void Start()

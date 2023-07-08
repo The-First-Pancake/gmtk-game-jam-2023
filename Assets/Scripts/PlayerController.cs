@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Color validColor;
     public Color invalidColor;
     public float projectileSpeed = 2;
+    public GameObject projectile;
 
 
     PlayerState state = PlayerState.ready;
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
             
             (TileBehavior closestFireTile, float dist) = getClosestFireTile(mousePosCell);
 
+
+
             //Check for invalid shot
             bool validShot = checkValidShot(mouseTile, dist);
             if(validShot){
@@ -53,8 +56,11 @@ public class PlayerController : MonoBehaviour
             }
 
             if(closestFireTile == null){
-                invalidShotGFX();
+                //Fire hasn't started yet. Tiem to do lightnig
                 lr.enabled = false;
+                if(Input.GetMouseButtonDown(0) && validShot){
+                    StartCoroutine(LightningSequence(mouseTile));
+                }
                 return;
             }
             drawArc(closestFireTile.IsoCoordinates, mousePosCell);
@@ -68,19 +74,41 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    IEnumerator LightningSequence(TileBehavior target){
+        target.Fire.ignite();
+        yield return null;
+    }
+
     IEnumerator ShootProjectile(TileBehavior origin, TileBehavior target){
         state = PlayerState.cooldown;
         //Get path
-        //Spawn Projectile
+        
+        
+        float dist = worldMap.grid.CellToWorld(target.IsoCoordinates - origin.IsoCoordinates).magnitude;
+        Vector3Int isodir = (target.IsoCoordinates - origin.IsoCoordinates);
+        Vector3 dir = worldMap.grid.CellToWorld(isodir);
+        dir.Normalize();
+        
+        float launchAngle = Vector3.SignedAngle(dir, Vector3.right,Vector3.back) + 180;
 
-        float dist = (target.IsoCoordinates - origin.IsoCoordinates).magnitude;
         float timeToArrive = dist/projectileSpeed;
-        Debug.Log(dist);
-        yield return new WaitForSeconds(timeToArrive);
-        Debug.Log("arrived");
-        //Despawn projectile
+        
+        GameObject newProjectile = Instantiate(projectile, origin.WorldCoordinates, Quaternion.Euler(new Vector3(0,0,launchAngle)));
+
+        while((newProjectile.transform.position - target.WorldCoordinates).magnitude >= .5f){
+            newProjectile.transform.position += -projectileSpeed*newProjectile.transform.right* Time.deltaTime;
+            yield return null;
+        }
+
+        
         target.Fire.ignite();
         state = PlayerState.ready;
+
+        //
+        newProjectile.GetComponent<SpriteRenderer>().enabled = false;
+        newProjectile.GetComponent<ParticleSystem>().emissionRate = 0;
+        yield return new WaitForSeconds(5);
+        Destroy(newProjectile);
     }
     bool checkValidShot(TileBehavior tile, float dist){
         if(tile == null){return false;}
