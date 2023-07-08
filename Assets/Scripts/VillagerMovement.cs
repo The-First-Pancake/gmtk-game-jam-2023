@@ -43,7 +43,12 @@ public class VillagerMovement : MonoBehaviour
 
     public void GoToTile(TileBehavior target) {
         TileBehavior start = GetCurrentTile();
-        CurrentPath = PathFind(start, target);
+        List<TileBehavior> path = PathFind(start, target);
+        if (path != null) {
+            CurrentPath = path;
+        } else {
+            Debug.Log("No path found.");
+        }
     }
 
     public TileBehavior GetCurrentTile() {
@@ -112,7 +117,6 @@ public class VillagerMovement : MonoBehaviour
 
                 float newMovementCostToNeighbor = currentNode.gCost + Vector3Int.Distance(currentNode.tile.IsoCoordinates, neighbor_node.tile.IsoCoordinates);
                 newMovementCostToNeighbor += neighbor_node.tile.MovementModifier; // Add our own arbitrary modifier for difficult/easy places to move into
-                Debug.Log(newMovementCostToNeighbor);
                 if (newMovementCostToNeighbor < neighbor_node.gCost) {
                     neighbor_node.gCost = newMovementCostToNeighbor;
                     neighbor_node.hCost = Vector3Int.Distance(neighbor_node.tile.IsoCoordinates, end.IsoCoordinates);

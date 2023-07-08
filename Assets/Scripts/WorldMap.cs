@@ -69,4 +69,20 @@ public class WorldMap : MonoBehaviour
         }
         return null;
     }
+
+    public List<TileBehavior> GetAllTilesOfTargetType(TileBehavior.VillagerTargetType type) {
+        List<TileBehavior> targets = new List<TileBehavior>();
+        foreach (WorldTile tile in map) {
+            if (tile.present_upper) {
+                if (tile.upper_tile.VillagerTarget == type) {
+                    targets.Add(tile.upper_tile);
+                }
+            } else if (tile.present_lower) {
+                if (tile.lower_tile.VillagerTarget == type) {
+                    targets.Add(tile.lower_tile);
+                }
+            }
+        }
+        return targets;
+    }
 }

@@ -17,7 +17,7 @@ public class VillagerBehavior : MonoBehaviour
     public VillagerState State = VillagerState.IDLE;
     private VillagerMovement movement;
     public TileBehavior CurrentTarget;
-    public float StateMachineTickRateSeconds = 5f;
+    public float StateMachineTickRateSeconds = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -86,7 +86,7 @@ public class VillagerBehavior : MonoBehaviour
     }
 
     private void idleUpdate()
-    {        
+    {
         enterState(VillagerState.ROAMING);
     }
 
@@ -139,11 +139,15 @@ public class VillagerBehavior : MonoBehaviour
 
     private void on_enterRoaming()
     {
-        Vector3Int roam_target = new Vector3Int();
-        roam_target.x = UnityEngine.Random.Range(-5, 5);
-        roam_target.y = UnityEngine.Random.Range(-5, 5);
-        roam_target.z = 0;
-        CurrentTarget = WorldMap.instance.GetTopTile(movement.GetCurrentTile().IsoCoordinates + roam_target);
+        List<TileBehavior> buildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING);
+        int random_idx = UnityEngine.Random.Range(0, buildings.Count);
+        TileBehavior targetBuilding = buildings[random_idx];
+        TileBehavior target = targetBuilding;
+        while (target.CanPath == TileBehavior.PathAble.BLOCKS_MOVEMENT) {
+            Vector3Int near_building = new Vector3Int(UnityEngine.Random.Range(-5, 5), UnityEngine.Random.Range(-5, 5), 0);
+            target = WorldMap.instance.GetTopTile(targetBuilding.IsoCoordinates + near_building);
+        }
+        CurrentTarget = target;
         movement.GoToTile(CurrentTarget);
     }
 
