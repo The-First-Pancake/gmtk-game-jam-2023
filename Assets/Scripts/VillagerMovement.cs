@@ -143,6 +143,9 @@ public class VillagerMovement : MonoBehaviour
         if (tile.CanPath == TileBehavior.PathAble.BLOCKS_MOVEMENT) {
             return false;
         }
+        if (tile.Fire.state == FireBehaviour.burnState.burning) {
+            return false;
+        }
         return (CheckContainsTile(tile, closed_list) == null);
     }
 

@@ -37,11 +37,13 @@ public class TileBehavior : MonoBehaviour
     public Vector3Int IsoCoordinates;
     public Vector3 WorldCoordinates;
     public bool IsUpper;
+    public FireBehaviour Fire;
     Tilemap tilemap;
 
     // Start is called before the first frame update
     void Start()
     {
+        Fire = GetComponent<FireBehaviour>();
         Transform transform = GetComponent<Transform>();
         WorldCoordinates = transform.position;
         tilemap = GetComponentInParent<Tilemap>();

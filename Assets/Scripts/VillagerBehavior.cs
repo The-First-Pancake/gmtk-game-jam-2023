@@ -144,7 +144,7 @@ public class VillagerBehavior : MonoBehaviour
         TileBehavior targetBuilding = buildings[random_idx];
         TileBehavior target = targetBuilding;
         while (target.CanPath == TileBehavior.PathAble.BLOCKS_MOVEMENT) {
-            Vector3Int near_building = new Vector3Int(UnityEngine.Random.Range(-5, 5), UnityEngine.Random.Range(-5, 5), 0);
+            Vector3Int near_building = new Vector3Int(UnityEngine.Random.Range(-2, 2), UnityEngine.Random.Range(-2, 2), 0);
             target = WorldMap.instance.GetTopTile(targetBuilding.IsoCoordinates + near_building);
         }
         CurrentTarget = target;
