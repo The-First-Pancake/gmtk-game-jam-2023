@@ -17,6 +17,12 @@ public class TileBehavior : MonoBehaviour
         Vector3Int.down + Vector3Int.left,
     };
 
+    public enum VillagerTargetType {
+        DONT_CARE = 0,
+        BUILDING,
+        WATER
+    }
+
     public enum PathAble
     {
         BLOCKS_MOVEMENT = 0,
@@ -24,17 +30,20 @@ public class TileBehavior : MonoBehaviour
     }
 
     public PathAble CanPath;
+    public VillagerTargetType VillagerTarget = VillagerTargetType.DONT_CARE;
     public float MovementModifier = 0;
     [Header("Do Not Edit")]
     public IsometricRuleTile ThisTile;
     public Vector3Int IsoCoordinates;
     public Vector3 WorldCoordinates;
     public bool IsUpper;
+    public FireBehaviour Fire;
     Tilemap tilemap;
 
     // Start is called before the first frame update
     void Start()
     {
+        Fire = GetComponent<FireBehaviour>();
         Transform transform = GetComponent<Transform>();
         WorldCoordinates = transform.position;
         tilemap = GetComponentInParent<Tilemap>();

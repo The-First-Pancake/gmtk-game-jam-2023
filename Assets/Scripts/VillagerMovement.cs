@@ -6,7 +6,7 @@ using UnityEngine;
 public class VillagerMovement : MonoBehaviour
 {
     public float BaseSpeed = 1f;
-    public List<TileBehavior> CurrentPath;
+    public List<Vector3> CurrentPath;
     public class PathFindingNode {
         public float gCost;
         public float hCost;
@@ -43,7 +43,22 @@ public class VillagerMovement : MonoBehaviour
 
     public void GoToTile(TileBehavior target) {
         TileBehavior start = GetCurrentTile();
-        CurrentPath = PathFind(start, target);
+        List<Vector3> path = PathFind(start, target);
+        if (path != null) {
+            CurrentPath = path;
+        } else {
+            Debug.Log("No path found.");
+        }
+    }
+
+    public void GoToNeighborOf(TileBehavior target) {
+        foreach (TileBehavior neighbor in target.GetNeighbors()) {
+            if (neighbor.CanPath != TileBehavior.PathAble.BLOCKS_MOVEMENT &&
+                    neighbor.Fire.state != FireBehaviour.burnState.burning) {
+                GoToTile(neighbor);
+                return;
+            }
+        }
     }
 
     public TileBehavior GetCurrentTile() {
@@ -56,7 +71,7 @@ public class VillagerMovement : MonoBehaviour
 
     void FollowPath() {
         if (CurrentPath.Count > 0) {
-            Vector3 target = CurrentPath[0].WorldCoordinates;
+            Vector3 target = CurrentPath[0];
             Vector3 direction_of_travel = target - transform.position;
             if (direction_of_travel.magnitude < 0.1) {
                 CurrentPath.RemoveAt(0);
@@ -67,7 +82,12 @@ public class VillagerMovement : MonoBehaviour
             }
             direction_of_travel /= direction_of_travel.magnitude;
             TileBehavior current_tile = WorldMap.instance.GetTopTileFromWorldPoint(transform.position);
-            Vector3 velocity = Time.deltaTime * BaseSpeed * (1 - current_tile.MovementModifier) * direction_of_travel;
+            Vector3 velocity = Vector3.zero;
+            if (current_tile) {
+                velocity = Time.deltaTime * BaseSpeed * (1 - current_tile.MovementModifier) * direction_of_travel;
+            } else {
+                velocity = Time.deltaTime * BaseSpeed * direction_of_travel;
+            }   
             rb2d.velocity = velocity;
         }
     }
@@ -76,11 +96,11 @@ public class VillagerMovement : MonoBehaviour
         // Draw path for debugging
         Gizmos.color = Color.blue;
         for (int i = 0; i < CurrentPath.Count - 1; i++) {
-            Gizmos.DrawLine(CurrentPath[i].WorldCoordinates, CurrentPath[i+1].WorldCoordinates);
+            Gizmos.DrawLine(CurrentPath[i], CurrentPath[i+1]);
         }
     }
 
-    public List<TileBehavior> PathFind(TileBehavior start, TileBehavior end) {
+    public List<Vector3> PathFind(TileBehavior start, TileBehavior end) {
         List<PathFindingNode> open_list = new List<PathFindingNode>();
         List<PathFindingNode> closed_list = new List<PathFindingNode>();
 
@@ -112,7 +132,6 @@ public class VillagerMovement : MonoBehaviour
 
                 float newMovementCostToNeighbor = currentNode.gCost + Vector3Int.Distance(currentNode.tile.IsoCoordinates, neighbor_node.tile.IsoCoordinates);
                 newMovementCostToNeighbor += neighbor_node.tile.MovementModifier; // Add our own arbitrary modifier for difficult/easy places to move into
-                Debug.Log(newMovementCostToNeighbor);
                 if (newMovementCostToNeighbor < neighbor_node.gCost) {
                     neighbor_node.gCost = newMovementCostToNeighbor;
                     neighbor_node.hCost = Vector3Int.Distance(neighbor_node.tile.IsoCoordinates, end.IsoCoordinates);
@@ -139,16 +158,18 @@ public class VillagerMovement : MonoBehaviour
         if (tile.CanPath == TileBehavior.PathAble.BLOCKS_MOVEMENT) {
             return false;
         }
+        if (tile.Fire.state == FireBehaviour.burnState.burning) {
+            return false;
+        }
         return (CheckContainsTile(tile, closed_list) == null);
     }
 
-    private List<TileBehavior> RetracePath(PathFindingNode startNode, PathFindingNode targetNode)
+    private List<Vector3> RetracePath(PathFindingNode startNode, PathFindingNode targetNode)
     {
-        List<TileBehavior> path = new List<TileBehavior>();
+        List<Vector3> path = new List<Vector3>();
         PathFindingNode currentNode = targetNode;
         while (currentNode != startNode) {
-            Debug.Log(currentNode);
-            path.Add(currentNode.tile);
+            path.Add(currentNode.tile.WorldCoordinates);
             currentNode = currentNode.parent;
         }
         path.Reverse();

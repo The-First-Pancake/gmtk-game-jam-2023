@@ -9,6 +9,7 @@ public class FireBehaviour : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float flambilityScore = .5f; //Base chance of being spread to each second (assuming completly surrounded by fire)
     public float sustain = 5;
+    public float dangerRating= 0;
     private float timeStartedBurning = 0;
     public burnState state = burnState.unburnt;
     public GameObject firePrefab;
@@ -37,6 +38,7 @@ public class FireBehaviour : MonoBehaviour
     {
         if (state == burnState.burning)
         {
+            updateDanger();
             //Tickup running burn time, check if we've passed sustain
             if (Time.time > timeStartedBurning + sustain)
             {
@@ -63,6 +65,18 @@ public class FireBehaviour : MonoBehaviour
             }
         }
     }
+
+    private void updateDanger()
+    {
+        List<TileBehavior> buildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING);
+        float closestBuildingDistance = float.PositiveInfinity;
+        foreach (TileBehavior building in buildings) {
+            float buildingDistance = (building.WorldCoordinates - transform.position).magnitude;
+            closestBuildingDistance = Mathf.Min(buildingDistance, closestBuildingDistance);
+        }
+        dangerRating = 1/closestBuildingDistance;
+    }
+
     [ContextMenu("Ignite")]
     public void ignite()
     {
