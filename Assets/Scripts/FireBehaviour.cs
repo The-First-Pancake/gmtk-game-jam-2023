@@ -88,6 +88,7 @@ public class FireBehaviour : MonoBehaviour
     [ContextMenu("Ignite")]
     public void ignite()
     {
+        if(state == burnState.burning){return;}
         state = burnState.burning;
         timeStartedBurning = Time.time;
         spawnedFire = Instantiate(firePrefab);
@@ -150,7 +151,7 @@ public class FireBehaviour : MonoBehaviour
     void deleteParticles()
     {
         var ps = spawnedFire.GetComponent<ParticleSystem>();
-        ps.emissionRate = 0;
+        ps.Stop();
         Destroy(spawnedFire, ps.main.startLifetime.constant); //Destroy particle effect after its finished
     }
 }

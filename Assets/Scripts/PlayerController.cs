@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     public float projectileSpeed = 2;
     public GameObject projectile;
 
+    [SerializeField]
+    private GameObject lightningGFX;
 
     PlayerState state = PlayerState.ready;
     // Start is called before the first frame update
@@ -75,7 +77,11 @@ public class PlayerController : MonoBehaviour
     }
 
     IEnumerator LightningSequence(TileBehavior target){
+        var newlightningGFX = Instantiate(lightningGFX);
+        newlightningGFX.transform.position = target.WorldCoordinates;
         target.Fire.ignite();
+        yield return new WaitForSeconds(.2f);
+        Destroy(newlightningGFX);
         yield return null;
     }
 
@@ -95,7 +101,8 @@ public class PlayerController : MonoBehaviour
         
         GameObject newProjectile = Instantiate(projectile, origin.WorldCoordinates, Quaternion.Euler(new Vector3(0,0,launchAngle)));
 
-        while((newProjectile.transform.position - target.WorldCoordinates).magnitude >= .5f){
+        float launchTime = Time.time;
+        while(Time.time < launchTime + timeToArrive){
             newProjectile.transform.position += -projectileSpeed*newProjectile.transform.right* Time.deltaTime;
             yield return null;
         }
@@ -104,9 +111,8 @@ public class PlayerController : MonoBehaviour
         target.Fire.ignite();
         state = PlayerState.ready;
 
-        //
         newProjectile.GetComponent<SpriteRenderer>().enabled = false;
-        newProjectile.GetComponent<ParticleSystem>().emissionRate = 0;
+        newProjectile.GetComponentInChildren<ParticleSystem>().Stop();
         yield return new WaitForSeconds(5);
         Destroy(newProjectile);
     }
