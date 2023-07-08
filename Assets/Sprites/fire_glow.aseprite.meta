@@ -1,0 +1,948 @@
+fileFormatVersion: 2
+guid: 7d65e78b84e375d4e905a866b5e7c8ad
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: fire_glow_Frame_0
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 96
+      height: 96
+    spriteID: 213c3af40c125d64db052f2aa1d4aa07
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: fire_glow_Frame_1
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.02173913}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 211
+      width: 92
+      height: 92
+    spriteID: 09e94ba06d6524245a13e1723d479a45
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 211}
+  - name: fire_glow_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: -0.033333335}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 410
+      width: 90
+      height: 90
+    spriteID: 1713ce4475e27e0418a2aaadf7acd936
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 410}
+  - name: fire_glow_Frame_4
+    originalName: 
+    pivot: {x: 0.49438202, y: -0.033707865}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 508
+      width: 89
+      height: 89
+    spriteID: 562d0aa81ab906c489da61362077bb4b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 508}
+  - name: fire_glow_Frame_5
+    originalName: 
+    pivot: {x: 0.5, y: -0.058139537}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 701
+      width: 86
+      height: 86
+    spriteID: b6f19b6c518511047ac2fa4591ee2c0c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 701}
+  - name: fire_glow_Frame_6
+    originalName: 
+    pivot: {x: 0.4939759, y: -0.072289154}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 887
+      width: 83
+      height: 83
+    spriteID: d9b7c301e3a496046bdffd25fecae703
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 887}
+  - name: fire_glow_Frame_7
+    originalName: 
+    pivot: {x: 0.49382716, y: -0.086419754}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 94
+      width: 81
+      height: 81
+    spriteID: ee904cb01af58be4ca8eeb5ce9ab021f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 94}
+  - name: fire_glow_Frame_8
+    originalName: 
+    pivot: {x: 0.5, y: -0.11538462}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 270
+      width: 78
+      height: 78
+    spriteID: b45ec6ad184ea0e488aa029f5bfb0762
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 270}
+  - name: fire_glow_Frame_9
+    originalName: 
+    pivot: {x: 0.4935065, y: -0.116883114}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 356
+      width: 77
+      height: 77
+    spriteID: 2a5827b4ab5281749a61ce5dc05147d1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 356}
+  - name: fire_glow_Frame_10
+    originalName: 
+    pivot: {x: 0.4933333, y: -0.13333333}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 610
+      width: 75
+      height: 75
+    spriteID: 9ca05e12f22f13341a939597b51d0a25
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 610}
+  - name: fire_glow_Frame_11
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.14864865}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 776
+      width: 74
+      height: 74
+    spriteID: d8fff534b9fd5694fad77216284837e5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 776}
+  - name: fire_glow_Frame_14
+    originalName: 
+    pivot: {x: 0.49315068, y: -0.15068494}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 940
+      width: 73
+      height: 73
+    spriteID: adb57e434ba50494a84d35a18888f361
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 940}
+  - name: fire_glow_Frame_15
+    originalName: 
+    pivot: {x: 0.49315068, y: -0.15068494}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 198
+      y: 4
+      width: 73
+      height: 73
+    spriteID: 576a4268bd4fafa48a427eaa22a53f85
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 198, y: 4}
+  - name: fire_glow_Frame_16
+    originalName: 
+    pivot: {x: 0.49315068, y: -0.15068494}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 198
+      y: 85
+      width: 73
+      height: 73
+    spriteID: d936fe721d5a7ec4797623ceeb48ab80
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 198, y: 85}
+  - name: fire_glow_Frame_17
+    originalName: 
+    pivot: {x: 0.49315068, y: -0.15068494}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 198
+      y: 166
+      width: 73
+      height: 73
+    spriteID: c744407103b5d4f4a8048e8808a548b2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 198, y: 166}
+  - name: fire_glow_Frame_18
+    originalName: 
+    pivot: {x: 0.49315068, y: -0.15068494}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 198
+      y: 247
+      width: 73
+      height: 73
+    spriteID: 36890b94e4aacee418e57573a32b856e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 198, y: 247}
+  - name: fire_glow_Frame_19
+    originalName: 
+    pivot: {x: 0.49315068, y: -0.15068494}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 198
+      y: 328
+      width: 73
+      height: 73
+    spriteID: 0366aa184807f094688ac81d241cded4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 198, y: 328}
+  - name: fire_glow_Frame_20
+    originalName: 
+    pivot: {x: 0.49315068, y: -0.15068494}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 198
+      y: 409
+      width: 73
+      height: 73
+    spriteID: beb7fdfe47724b3458394f9401991af2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 198, y: 409}
+  - name: fire_glow_Frame_21
+    originalName: 
+    pivot: {x: 0.49315068, y: -0.15068494}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 198
+      y: 490
+      width: 73
+      height: 73
+    spriteID: b348af8bee276664eb71424f872b49eb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 198, y: 490}
+  - name: fire_glow_Frame_22
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.14864865}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 858
+      width: 74
+      height: 74
+    spriteID: 2fe72dc84fd370e418830fa942fc9e15
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 858}
+  - name: fire_glow_Frame_23
+    originalName: 
+    pivot: {x: 0.4933333, y: -0.13333333}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 693
+      width: 75
+      height: 75
+    spriteID: 59c8f08ca02676c4e87a577bd7221823
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 693}
+  - name: fire_glow_Frame_24
+    originalName: 
+    pivot: {x: 0.5, y: -0.13157894}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 526
+      width: 76
+      height: 76
+    spriteID: 3de79ca469a69254a849e31099e1d227
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 526}
+  - name: fire_glow_Frame_25
+    originalName: 
+    pivot: {x: 0.4935065, y: -0.116883114}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 441
+      width: 77
+      height: 77
+    spriteID: 81e9b2c780564344cb958ebc53d00f30
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 441}
+  - name: fire_glow_Frame_26
+    originalName: 
+    pivot: {x: 0.49367085, y: -0.10126582}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 183
+      width: 79
+      height: 79
+    spriteID: 7b5e997b52dc3af4c8902f72ed326610
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 183}
+  - name: fire_glow_Frame_27
+    originalName: 
+    pivot: {x: 0.5, y: -0.08536585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 4
+      width: 82
+      height: 82
+    spriteID: 902c1107f3d34a0469896acee87d51c7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 4}
+  - name: fire_glow_Frame_28
+    originalName: 
+    pivot: {x: 0.5, y: -0.071428575}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 795
+      width: 84
+      height: 84
+    spriteID: 49ac174ecc8c72948a7b11909cf3009c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 795}
+  - name: fire_glow_Frame_26
+    originalName: 
+    pivot: {x: 0.5, y: -0.045454547}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 605
+      width: 88
+      height: 88
+    spriteID: 3493cdf0b35b33a49b58b7b30f99aa3e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 605}
+  - name: fire_glow_Frame_27
+    originalName: 
+    pivot: {x: 0.49450552, y: -0.021978024}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 311
+      width: 91
+      height: 91
+    spriteID: a3c06e2cdc409c646859e667c621a7d4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 311}
+  - name: fire_glow_Frame_28
+    originalName: 
+    pivot: {x: 0.50526315, y: -0.010526316}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 108
+      width: 95
+      height: 95
+    spriteID: 4a69a81ee2bf7e34fa3f240406419ab2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 108}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -216787246
+    name: fire_glow
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: fire_glow_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 96
+        height: 96
+      spriteId: 213c3af40c125d64db052f2aa1d4aa07
+    - name: fire_glow_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 2
+        y: 2
+        width: 92
+        height: 92
+      spriteId: 09e94ba06d6524245a13e1723d479a45
+    - name: fire_glow_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 3
+        y: 3
+        width: 90
+        height: 90
+      spriteId: 1713ce4475e27e0418a2aaadf7acd936
+    - name: fire_glow_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 4
+        y: 3
+        width: 89
+        height: 89
+      spriteId: 562d0aa81ab906c489da61362077bb4b
+    - name: fire_glow_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 5
+        y: 5
+        width: 86
+        height: 86
+      spriteId: b6f19b6c518511047ac2fa4591ee2c0c
+    - name: fire_glow_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 7
+        y: 6
+        width: 83
+        height: 83
+      spriteId: d9b7c301e3a496046bdffd25fecae703
+    - name: fire_glow_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 8
+        y: 7
+        width: 81
+        height: 81
+      spriteId: ee904cb01af58be4ca8eeb5ce9ab021f
+    - name: fire_glow_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 9
+        y: 9
+        width: 78
+        height: 78
+      spriteId: b45ec6ad184ea0e488aa029f5bfb0762
+    - name: fire_glow_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 10
+        y: 9
+        width: 77
+        height: 77
+      spriteId: 2a5827b4ab5281749a61ce5dc05147d1
+    - name: fire_glow_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 11
+        y: 10
+        width: 75
+        height: 75
+      spriteId: 9ca05e12f22f13341a939597b51d0a25
+    - name: fire_glow_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 11
+        y: 11
+        width: 74
+        height: 74
+      spriteId: d8fff534b9fd5694fad77216284837e5
+    - name: fire_glow_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 12
+        y: 11
+        width: 73
+        height: 73
+      spriteId: adb57e434ba50494a84d35a18888f361
+    - name: fire_glow_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 12
+        y: 11
+        width: 73
+        height: 73
+      spriteId: 576a4268bd4fafa48a427eaa22a53f85
+    - name: fire_glow_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: 12
+        y: 11
+        width: 73
+        height: 73
+      spriteId: d936fe721d5a7ec4797623ceeb48ab80
+    - name: fire_glow_Frame_14
+      frameIndex: 14
+      cellRect:
+        x: 12
+        y: 11
+        width: 73
+        height: 73
+      spriteId: c744407103b5d4f4a8048e8808a548b2
+    - name: fire_glow_Frame_15
+      frameIndex: 15
+      cellRect:
+        x: 12
+        y: 11
+        width: 73
+        height: 73
+      spriteId: 36890b94e4aacee418e57573a32b856e
+    - name: fire_glow_Frame_16
+      frameIndex: 16
+      cellRect:
+        x: 12
+        y: 11
+        width: 73
+        height: 73
+      spriteId: 0366aa184807f094688ac81d241cded4
+    - name: fire_glow_Frame_17
+      frameIndex: 17
+      cellRect:
+        x: 12
+        y: 11
+        width: 73
+        height: 73
+      spriteId: beb7fdfe47724b3458394f9401991af2
+    - name: fire_glow_Frame_18
+      frameIndex: 18
+      cellRect:
+        x: 12
+        y: 11
+        width: 73
+        height: 73
+      spriteId: b348af8bee276664eb71424f872b49eb
+    - name: fire_glow_Frame_19
+      frameIndex: 19
+      cellRect:
+        x: 11
+        y: 11
+        width: 74
+        height: 74
+      spriteId: 2fe72dc84fd370e418830fa942fc9e15
+    - name: fire_glow_Frame_20
+      frameIndex: 20
+      cellRect:
+        x: 11
+        y: 10
+        width: 75
+        height: 75
+      spriteId: 59c8f08ca02676c4e87a577bd7221823
+    - name: fire_glow_Frame_21
+      frameIndex: 21
+      cellRect:
+        x: 10
+        y: 10
+        width: 76
+        height: 76
+      spriteId: 3de79ca469a69254a849e31099e1d227
+    - name: fire_glow_Frame_22
+      frameIndex: 22
+      cellRect:
+        x: 10
+        y: 9
+        width: 77
+        height: 77
+      spriteId: 81e9b2c780564344cb958ebc53d00f30
+    - name: fire_glow_Frame_23
+      frameIndex: 23
+      cellRect:
+        x: 9
+        y: 8
+        width: 79
+        height: 79
+      spriteId: 7b5e997b52dc3af4c8902f72ed326610
+    - name: fire_glow_Frame_24
+      frameIndex: 24
+      cellRect:
+        x: 7
+        y: 7
+        width: 82
+        height: 82
+      spriteId: 902c1107f3d34a0469896acee87d51c7
+    - name: fire_glow_Frame_25
+      frameIndex: 25
+      cellRect:
+        x: 6
+        y: 6
+        width: 84
+        height: 84
+      spriteId: 49ac174ecc8c72948a7b11909cf3009c
+    - name: fire_glow_Frame_26
+      frameIndex: 26
+      cellRect:
+        x: 4
+        y: 4
+        width: 88
+        height: 88
+      spriteId: 3493cdf0b35b33a49b58b7b30f99aa3e
+    - name: fire_glow_Frame_27
+      frameIndex: 27
+      cellRect:
+        x: 3
+        y: 2
+        width: 91
+        height: 91
+      spriteId: a3c06e2cdc409c646859e667c621a7d4
+    - name: fire_glow_Frame_28
+      frameIndex: 28
+      cellRect:
+        x: 0
+        y: 1
+        width: 95
+        height: 95
+      spriteId: 4a69a81ee2bf7e34fa3f240406419ab2
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 96, y: 96}

@@ -47,3 +47,6 @@ TagManager:
   - name: Fire
     uniqueID: 786324613
     locked: 0
+  - name: UI
+    uniqueID: 2148190235
+    locked: 1
