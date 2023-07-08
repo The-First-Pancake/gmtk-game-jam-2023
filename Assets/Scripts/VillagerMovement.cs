@@ -6,7 +6,7 @@ using UnityEngine;
 public class VillagerMovement : MonoBehaviour
 {
     public float BaseSpeed = 1f;
-    public List<TileBehavior> CurrentPath;
+    public List<Vector3> CurrentPath;
     public class PathFindingNode {
         public float gCost;
         public float hCost;
@@ -43,7 +43,7 @@ public class VillagerMovement : MonoBehaviour
 
     public void GoToTile(TileBehavior target) {
         TileBehavior start = GetCurrentTile();
-        List<TileBehavior> path = PathFind(start, target);
+        List<Vector3> path = PathFind(start, target);
         if (path != null) {
             CurrentPath = path;
         } else {
@@ -71,7 +71,7 @@ public class VillagerMovement : MonoBehaviour
 
     void FollowPath() {
         if (CurrentPath.Count > 0) {
-            Vector3 target = CurrentPath[0].WorldCoordinates;
+            Vector3 target = CurrentPath[0];
             Vector3 direction_of_travel = target - transform.position;
             if (direction_of_travel.magnitude < 0.1) {
                 CurrentPath.RemoveAt(0);
@@ -91,11 +91,11 @@ public class VillagerMovement : MonoBehaviour
         // Draw path for debugging
         Gizmos.color = Color.blue;
         for (int i = 0; i < CurrentPath.Count - 1; i++) {
-            Gizmos.DrawLine(CurrentPath[i].WorldCoordinates, CurrentPath[i+1].WorldCoordinates);
+            Gizmos.DrawLine(CurrentPath[i], CurrentPath[i+1]);
         }
     }
 
-    public List<TileBehavior> PathFind(TileBehavior start, TileBehavior end) {
+    public List<Vector3> PathFind(TileBehavior start, TileBehavior end) {
         List<PathFindingNode> open_list = new List<PathFindingNode>();
         List<PathFindingNode> closed_list = new List<PathFindingNode>();
 
@@ -159,12 +159,12 @@ public class VillagerMovement : MonoBehaviour
         return (CheckContainsTile(tile, closed_list) == null);
     }
 
-    private List<TileBehavior> RetracePath(PathFindingNode startNode, PathFindingNode targetNode)
+    private List<Vector3> RetracePath(PathFindingNode startNode, PathFindingNode targetNode)
     {
-        List<TileBehavior> path = new List<TileBehavior>();
+        List<Vector3> path = new List<Vector3>();
         PathFindingNode currentNode = targetNode;
         while (currentNode != startNode) {
-            path.Add(currentNode.tile);
+            path.Add(currentNode.tile.WorldCoordinates);
             currentNode = currentNode.parent;
         }
         path.Reverse();
