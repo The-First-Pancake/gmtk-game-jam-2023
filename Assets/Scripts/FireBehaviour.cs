@@ -69,7 +69,7 @@ public class FireBehaviour : MonoBehaviour
         state = burnState.burning;
         timeStartedBurning = Time.time;
         spawnedFire = Instantiate(firePrefab);
-        spawnedFire.transform.position = tileBehavior.WorldCoordinates;
+        spawnedFire.transform.position = new Vector3(tileBehavior.WorldCoordinates.x, tileBehavior.WorldCoordinates.y - 0.5f, tileBehavior.WorldCoordinates.z);
     }
     public void extinguish()
     {
