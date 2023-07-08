@@ -21,20 +21,27 @@ public class FireBehaviour : MonoBehaviour
     [SerializeField]
     private bool destroyAfterBurnOut = false;
     [SerializeField]
-    private Sprite burnoutSprite;
+    private Sprite[] burnoutSprites;
 
     // Start is called before the first frame update
     void Start()
     {
         tileBehavior = GetComponent<TileBehavior>();
-
+        sustain *= Random.Range(0.9f, 1.1f); //Noise applied to sustain
         InvokeRepeating("onSpread", .5f, .5f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (state == burnState.burning)
+        {
+            //Tickup running burn time, check if we've passed sustain
+            if (Time.time > timeStartedBurning + sustain)
+            {
+                burnComplete();
+            }
+        }
     }
 
     void onSpread()
@@ -54,17 +61,6 @@ public class FireBehaviour : MonoBehaviour
                 ignite();
             }
         }
-        else if(state == burnState.burning){
-            //Tickup running burn time, check if we've passed sustain
-            if(Time.time > timeStartedBurning + sustain) {
-                burnComplete();
-            }
-        }
-        else{
-            //not currently used
-
-        }
-
     }
     [ContextMenu("Ignite")]
     public void ignite()
@@ -86,8 +82,9 @@ public class FireBehaviour : MonoBehaviour
         if(state != burnState.burning) { Debug.Log("What the hell oh my god"); return; }
         if (destroyAfterBurnOut)
         {
+            Vector3 noisyPos = transform.position + new Vector3(Random.Range(-.10f, .10f), Random.Range(-.10f, -.10f), 0);
             GameObject newSpawned = Instantiate((Resources.Load("Burnout Sprite Prefab") as GameObject), transform.position, transform.rotation);
-            newSpawned.GetComponent<SpriteRenderer>().sprite = burnoutSprite;
+            newSpawned.GetComponent<SpriteRenderer>().sprite = burnoutSprites[Random.Range(0,burnoutSprites.Length - 1)];
             tileBehavior.DeleteTile();
         }
 

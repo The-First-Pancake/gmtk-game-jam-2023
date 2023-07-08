@@ -14,12 +14,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6188174319425920012, guid: 51e451f18efc31b49a4943630a180172, type: 3}
       propertyPath: sustain
-      value: 20
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6188174319425920012, guid: 51e451f18efc31b49a4943630a180172, type: 3}
       propertyPath: flambilityScore
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 6188174319425920012, guid: 51e451f18efc31b49a4943630a180172, type: 3}
+      propertyPath: burnoutSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188174319425920012, guid: 51e451f18efc31b49a4943630a180172, type: 3}
+      propertyPath: burnoutSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8b68baa664f282e47b28b2eccec60bd4, type: 3}
+    - target: {fileID: 6188174319425920012, guid: 51e451f18efc31b49a4943630a180172, type: 3}
+      propertyPath: burnoutSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 211ed0fbcf1c6f240a4572c262024359, type: 3}
     - target: {fileID: 8596032969792420645, guid: 51e451f18efc31b49a4943630a180172, type: 3}
       propertyPath: m_RootOrder
       value: 0
