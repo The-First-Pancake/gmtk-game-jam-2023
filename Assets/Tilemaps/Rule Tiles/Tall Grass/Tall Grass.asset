@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tall Grass
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -1172852688, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
-  m_DefaultGameObject: {fileID: 6058571008962211761, guid: fd3ffd3d8e6797f45a71510175d52b78, type: 3}
+  m_DefaultGameObject: {fileID: 6058571008962211761, guid: 449b8d64ee31e0b4e985cb4b2c06a56b, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules:
   - m_Id: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
     - {fileID: -180147428, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
     - {fileID: 2077965771, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
     - {fileID: 1838118917, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
-    m_GameObject: {fileID: 6058571008962211761, guid: fd3ffd3d8e6797f45a71510175d52b78, type: 3}
+    m_GameObject: {fileID: 6058571008962211761, guid: 449b8d64ee31e0b4e985cb4b2c06a56b, type: 3}
     m_MinAnimationSpeed: 4
     m_MaxAnimationSpeed: 4
     m_PerlinScale: 0.5
