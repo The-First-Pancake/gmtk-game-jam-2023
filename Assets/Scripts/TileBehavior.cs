@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -29,12 +30,14 @@ public class TileBehavior : MonoBehaviour
     public Vector3Int IsoCoordinates;
     public Vector3 WorldCoordinates;
     public bool IsUpper;
+    Tilemap tilemap;
+
     // Start is called before the first frame update
     void Start()
     {
         Transform transform = GetComponent<Transform>();
         WorldCoordinates = transform.position;
-        Tilemap tilemap = GetComponentInParent<Tilemap>();
+        tilemap = GetComponentInParent<Tilemap>();
         IsoCoordinates = tilemap.WorldToCell(WorldCoordinates);
         ThisTile = tilemap.GetTile<IsometricRuleTile>(IsoCoordinates);
         TilemapRenderer renderer = GetComponentInParent<TilemapRenderer>();
@@ -63,5 +66,12 @@ public class TileBehavior : MonoBehaviour
             }
         }
         return neighbors;
+    }
+
+    public void DeleteTile()
+    {
+        WorldMap.instance.UnPublishTile(IsoCoordinates, this.gameObject);
+        tilemap.SetTile(IsoCoordinates, null);
+        Destroy(this.gameObject);
     }
 }

@@ -16,14 +16,19 @@ public class FireBehaviour : MonoBehaviour
 
     private TileBehavior tileBehavior;
 
-    
+
+    [Header("Burnout Behavior")]
+    [SerializeField]
+    private bool destroyAfterBurnOut = false;
+    [SerializeField]
+    private Sprite burnoutSprite;
 
     // Start is called before the first frame update
     void Start()
     {
         tileBehavior = GetComponent<TileBehavior>();
 
-        InvokeRepeating("onSpread", .25f, .25f);
+        InvokeRepeating("onSpread", .5f, .5f);
     }
 
     // Update is called once per frame
@@ -52,7 +57,7 @@ public class FireBehaviour : MonoBehaviour
         else if(state == burnState.burning){
             //Tickup running burn time, check if we've passed sustain
             if(Time.time > timeStartedBurning + sustain) {
-                extinguish();
+                burnComplete();
             }
         }
         else{
@@ -71,8 +76,20 @@ public class FireBehaviour : MonoBehaviour
     }
     public void extinguish()
     {
-        //TODO if we're grass, turn burnt GFX, then reset. 
-        //TODO otherwise, spawn some rubble and delete
+        state = burnState.unburnt;
+        sustain = (timeStartedBurning + sustain) - Time.time;
+
+    }
+
+    public void burnComplete()
+    {
+        if (destroyAfterBurnOut)
+        {
+            GameObject newSpawned = Instantiate((Resources.Load("Burnout Sprite Prefab") as GameObject), transform.position, transform.rotation);
+            newSpawned.GetComponent<SpriteRenderer>().sprite = burnoutSprite;
+            tileBehavior.DeleteTile();
+        }
+
         Destroy(spawnedFire);
         state = burnState.unburnt;
         Debug.Log("Extinguish");
