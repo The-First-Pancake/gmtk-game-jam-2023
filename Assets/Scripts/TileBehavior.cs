@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class TileBehavior : MonoBehaviour
 {
-    static Vector3Int [] NEIGHBOR_COORDS = {
+    public static Vector3Int [] NEIGHBOR_COORDS = {
         Vector3Int.left,
         Vector3Int.left + Vector3Int.up,
         Vector3Int.up,
