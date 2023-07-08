@@ -65,17 +65,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2537774669494516959, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
-      propertyPath: burnoutTiles.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2537774669494516959, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
       propertyPath: burnoutSprites.Array.size
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2537774669494516959, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
-      propertyPath: burnoutTiles.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: f0fbb90848859d7f3a8c8f6fe7ce2d18, type: 2}
     - target: {fileID: 2537774669494516959, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
       propertyPath: burnoutSprites.Array.data[0]
       value: 

@@ -23,6 +23,8 @@ public class FireBehaviour : MonoBehaviour
     private bool destroyAfterBurnOut = false;
     [SerializeField]
     private Sprite[] burnoutSprites;
+    [SerializeField]
+    private IsometricRuleTile[] burnoutTiles;
 
     // Start is called before the first frame update
     void Start()
@@ -112,6 +114,9 @@ public class FireBehaviour : MonoBehaviour
                 newSpawned.GetComponent<SpriteRenderer>().sprite = burnoutSprites[Random.Range(0, burnoutSprites.Length - 1)];
             }
             tileBehavior.DeleteTile();
+        }
+        if (burnoutTiles.Length > -0) {
+            tileBehavior.tilemap.SetTile(tileBehavior.IsoCoordinates, burnoutTiles[Random.Range(0, burnoutSprites.Length - 1)]);
         }
 
         deleteParticles();
