@@ -33,8 +33,6 @@ public class VillagerMovement : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        TileBehavior target = WorldMap.instance.GetTopTile(new Vector3Int(10, -5, 0));
-        GoToTile(target);
     }
 
     // Update is called once per frame
@@ -44,8 +42,16 @@ public class VillagerMovement : MonoBehaviour
     }
 
     public void GoToTile(TileBehavior target) {
-        TileBehavior start = WorldMap.instance.GetTopTileFromWorldPoint(transform.position);
+        TileBehavior start = GetCurrentTile();
         CurrentPath = PathFind(start, target);
+    }
+
+    public TileBehavior GetCurrentTile() {
+        return WorldMap.instance.GetTopTileFromWorldPoint(transform.position);
+    }
+
+    public bool IsDoneMove() {
+        return (CurrentPath.Count == 0);
     }
 
     void FollowPath() {
@@ -111,7 +117,6 @@ public class VillagerMovement : MonoBehaviour
                     neighbor_node.gCost = newMovementCostToNeighbor;
                     neighbor_node.hCost = Vector3Int.Distance(neighbor_node.tile.IsoCoordinates, end.IsoCoordinates);
                     neighbor_node.parent = currentNode;
-                    Debug.Log(neighbor_node.fCost);
                 }
 
                 if (!open_list.Contains(neighbor_node))
