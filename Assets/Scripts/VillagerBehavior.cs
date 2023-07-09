@@ -33,10 +33,11 @@ public class VillagerBehavior : MonoBehaviour
     public float RoamSpeed = 25f;
     public float FireSpeed = 50f;
     private bool wait_finished = false;
-
+    public SpriteRenderer alert;
     // Start is called before the first frame update
     void Start()
     {
+        alert.enabled = false;
         movement = GetComponent<VillagerMovement>();
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -151,6 +152,7 @@ public class VillagerBehavior : MonoBehaviour
             wait_finished = false;
             Destroy(fireObject);
             Instantiate(smolderingPrefab, transform);
+            alert.enabled = false;
             anim.enabled = false;
             spriteRenderer.sprite = deadSprite;
         }
@@ -160,9 +162,6 @@ public class VillagerBehavior : MonoBehaviour
     {
         if (wait_finished) {
             wait_finished = false;
-            if (CurrentTarget != null) {
-                CurrentTarget.Fire.extinguish();
-            }
             if (LookForFires()) {
                 enterState(VillagerState.ALERTED);
                 return;
@@ -190,6 +189,9 @@ public class VillagerBehavior : MonoBehaviour
         foreach (TileBehavior neighbor in currentTile.GetNeighbors()) {
             if (neighbor.Fire.state == FireBehaviour.burnState.burning) {
                 CurrentTarget = neighbor;
+                if (CurrentTarget != null) {
+                    CurrentTarget.Fire.extinguish();
+                }
                 enterState(VillagerState.SPLATSHING_WATER);
                 return;
             }
@@ -380,6 +382,7 @@ public class VillagerBehavior : MonoBehaviour
 
     private void on_enterAlerted()
     {
+        alert.enabled = true;
         movement.BaseSpeed = FireSpeed;
     }
 
@@ -401,7 +404,6 @@ public class VillagerBehavior : MonoBehaviour
 
     private void on_enterIdle()
     {   
-        // Nothing to do here... for now
-        return;
+        alert.enabled = false;
     }
 }
