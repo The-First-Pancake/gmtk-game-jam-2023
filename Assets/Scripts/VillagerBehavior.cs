@@ -386,6 +386,7 @@ public class VillagerBehavior : MonoBehaviour
     private void on_enterRoaming()
     {
         List<TileBehavior> buildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING);
+        if (buildings.Count == 0) {return;}
         int random_idx = UnityEngine.Random.Range(0, buildings.Count);
         TileBehavior targetBuilding = buildings[random_idx];
         TileBehavior target = targetBuilding;
