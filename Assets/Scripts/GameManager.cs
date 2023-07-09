@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     SceneHandler sceneHandler;
     PlayerController playerController;
     WinLoseText winLoseText;
+
+    Canvas UIcanvas;
     int totalBuildings;
     int totalFire;
     public AudioSource peacfulMusic;
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
         sceneHandler = gameObject.GetComponent<SceneHandler>();
         playerController = gameObject.GetComponent<PlayerController>();
         winLoseText = gameObject.GetComponent<WinLoseText>();
+        UIcanvas = gameObject.GetComponentInChildren<Canvas>();
     }
     // Start is called before the first frame update
     void Start()
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour
             audio.Play();
         }
         totalBuildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING).Count;
+        UIcanvas.worldCamera = Camera.main;
     }
 
 
@@ -46,7 +50,7 @@ public class GameManager : MonoBehaviour
         if (totalBuildings != 0 && remaingBuildings == 0 && !nextLevelCalled) {
             nextLevelCalled = true;
             winLoseText.SetWinLoseText("WIN");
-            sceneHandler.Invoke("NextLevel", 3);
+            sceneHandler.Invoke("NextLevel", 1.25f);
         } else if (WorldMap.instance.GetAllBurningTiles().Count == 0 && 
                     playerController.usedLightning && 
                     !restartLevelCalled && 
@@ -55,7 +59,7 @@ public class GameManager : MonoBehaviour
             
             restartLevelCalled = true;
             winLoseText.SetWinLoseText("LOSE");
-            this.Invoke("lose", 3);
+            this.Invoke("lose", 1.25f);
         }
 
         if(Input.GetKeyDown(KeyCode.R) && !sceneHandler.IsTransitioning()){
