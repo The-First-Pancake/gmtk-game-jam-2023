@@ -52,7 +52,7 @@ public class FireBehaviour : MonoBehaviour
             updateDanger();
             //Tickup running burn time, check if we've passed sustain
             
-            burnProgress = ((timeStartedBurning + sustain) - Time.time)/sustain;
+            burnProgress = (Time.time - (timeStartedBurning))/sustain;
             if (burnProgress >= 1)
             {
                 burnComplete();
