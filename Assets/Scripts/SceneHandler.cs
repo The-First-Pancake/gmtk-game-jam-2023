@@ -15,6 +15,7 @@ public class SceneHandler : MonoBehaviour
     private bool startTransitionOut = false;
     private bool startTransitionIn = false;
     private bool startTransitionRestart = false;
+    private bool startTransitionBackToMenu = false;
     private bool isRestarting = false;
     private float duration = 0.75f;
     private float startTime;
@@ -24,6 +25,7 @@ public class SceneHandler : MonoBehaviour
         startTransitionOut = false;
         startTransitionIn = false;
         startTransitionRestart = false;
+        startTransitionBackToMenu = false;
         LevelTransitionIn();
         cam = Camera.main;
     }
@@ -37,7 +39,7 @@ public class SceneHandler : MonoBehaviour
     }
 
     public bool IsTransitioning(){
-        return startTransitionOut || startTransitionIn || startTransitionRestart || isRestarting || (SceneManager.GetActiveScene().name == "Main_Menu");
+        return startTransitionOut || startTransitionIn || startTransitionRestart || startTransitionBackToMenu || isRestarting || (SceneManager.GetActiveScene().name == "Main_Menu");
     }
 
     public void LevelTransitionOut() {
@@ -56,6 +58,15 @@ public class SceneHandler : MonoBehaviour
         startTransitionRestart = true;
         // Make a note of the time the script started.
         startTime = Time.time;
+    }
+    public void LevelTransitionBackToMenu() {
+        startTransitionBackToMenu = true;
+        // Make a note of the time the script started.
+        startTime = Time.time;
+    }
+
+    public string getCurrentLevel() {
+        return SceneManager.GetActiveScene().name;
     }
 
     public void Update() {
@@ -104,6 +115,22 @@ public class SceneHandler : MonoBehaviour
                 Scene currentScene = SceneManager.GetActiveScene();
                 SceneManager.LoadSceneAsync(currentScene.buildIndex);
                 startTransitionRestart = false;
+            }
+        }
+
+        if (startTransitionBackToMenu) {
+            isRestarting = true;
+            // Calculate the fraction of the total duration that has passed.
+            float t = (Time.time - startTime) / duration;
+            cam.transform.position = new Vector3(
+                EaseInBack(levelCameraPosition.x, inCameraPosition.x / 4, t), 
+                EaseInBack(levelCameraPosition.y, inCameraPosition.y / 4, t), 
+                levelCameraPosition.z
+            );
+            
+            if (Vector3.Distance(cam.transform.position, inCameraPosition) < 1f) {
+                SceneManager.LoadSceneAsync(0);
+                startTransitionBackToMenu = false;
             }
         }
 
