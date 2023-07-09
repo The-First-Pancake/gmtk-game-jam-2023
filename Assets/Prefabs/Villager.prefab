@@ -97,7 +97,7 @@ MonoBehaviour:
   smolderingPrefab: {fileID: 2366841241410158110, guid: 025815b64ef315d4db0dc5794693dda3, type: 3}
   SeenFires: []
   StateMachineTickRateSeconds: 0.1
-  FireSenseDistanceSquares: 10
+  FireSenseDistanceSquares: 5
   RoamSpeed: 0.25
   FireSpeed: 0.5
   alert: {fileID: 5498681837797117184}
