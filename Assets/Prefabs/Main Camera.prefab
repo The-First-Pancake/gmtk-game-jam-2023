@@ -670,7 +670,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5792946412733420368}
   - component: {fileID: 8348280903497765710}
-  - component: {fileID: 6591001374183902772}
   m_Layer: 0
   m_Name: Flag Camera
   m_TagString: Untagged
@@ -745,14 +744,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &6591001374183902772
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3829776282226182594}
-  m_Enabled: 1
 --- !u!1 &4799560244392382562
 GameObject:
   m_ObjectHideFlags: 0
