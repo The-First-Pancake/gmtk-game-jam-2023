@@ -90,6 +90,8 @@ public class VillagerMovement : MonoBehaviour
                 velocity = BaseSpeed * direction_of_travel;
             }   
             rb2d.velocity = velocity;
+        } else {
+            rb2d.velocity = Vector3.zero;
         }
     }
 

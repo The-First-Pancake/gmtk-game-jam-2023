@@ -28,6 +28,7 @@ public class VillagerBehavior : MonoBehaviour
     private GameObject fireObject;
     public GameObject smolderingPrefab;
     public List<TileBehavior> SeenFires;
+    public List<TileBehavior> UnreachableFires;
     public float StateMachineTickRateSeconds = 1f;
     public int FireSenseDistanceSquares = 5;
     public float RoamSpeed = 25f;
@@ -200,15 +201,18 @@ public class VillagerBehavior : MonoBehaviour
         // Check if we're still heading to the highest danger fire we can see
         LookForFires();
         TileBehavior dangerFire = GetHighestDangerFire();
-        if (dangerFire) {
+        while (dangerFire) {
             if (CurrentTarget != dangerFire || CurrentTarget == null) {
                 CurrentTarget = dangerFire;
                 if (!movement.GoToNeighborOf(CurrentTarget)) {
-                    enterState(VillagerState.PANICKING);
+                    SeenFires.Remove(dangerFire);
+                    UnreachableFires.Add(dangerFire);
+                } else {
+                    return;
                 }
+            } else {
+                return;
             }
-        } else {
-            enterState(VillagerState.IDLE);
         }
     }
 
@@ -246,7 +250,7 @@ public class VillagerBehavior : MonoBehaviour
                 if (current_tile) {
                     TileBehavior check_tile = WorldMap.instance.GetTopTile(current_tile.IsoCoordinates + offset);
                     if (check_tile != null && check_tile.Fire.state == FireBehaviour.burnState.burning) {
-                        if (!SeenFires.Contains(check_tile)) {
+                        if (!SeenFires.Contains(check_tile) && !UnreachableFires.Contains(check_tile)) {
                             SeenFires.Add(check_tile);
                         }
                     }
@@ -357,11 +361,7 @@ public class VillagerBehavior : MonoBehaviour
 
     private void on_enterPuttingOutFire()
     {
-        TileBehavior fire = GetHighestDangerFire();
-        if (fire) {
-            CurrentTarget = fire;
-            movement.GoToNeighborOf(fire);
-        }
+        // Nothing to do here
     }
 
     private void on_enterGettingWater()
