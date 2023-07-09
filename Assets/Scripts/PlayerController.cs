@@ -47,8 +47,6 @@ public class PlayerController : MonoBehaviour
             
             (TileBehavior closestFireTile, float dist) = getClosestFireTile(mousePosCell);
 
-
-
             //Check for invalid shot
             bool validShot = checkValidShot(mouseTile, dist);
             if(validShot){
@@ -65,7 +63,7 @@ public class PlayerController : MonoBehaviour
                 }
                 return;
             }
-            drawArc(closestFireTile.IsoCoordinates, mousePosCell);
+            drawArc(closestFireTile, mouseTile);
 
             if(Input.GetMouseButtonDown(0) && validShot){
                 StartCoroutine(ShootProjectile(closestFireTile, mouseTile));
@@ -88,22 +86,32 @@ public class PlayerController : MonoBehaviour
     IEnumerator ShootProjectile(TileBehavior origin, TileBehavior target){
         state = PlayerState.cooldown;
         //Get path
-        
-        
+
         float dist = worldMap.grid.CellToWorld(target.IsoCoordinates - origin.IsoCoordinates).magnitude;
         Vector3Int isodir = (target.IsoCoordinates - origin.IsoCoordinates);
-        Vector3 dir = worldMap.grid.CellToWorld(isodir);
-        dir.Normalize();
+        Vector3 dir = worldMap.grid.CellToWorld(isodir).normalized;
+
         
         float launchAngle = Vector3.SignedAngle(dir, Vector3.right,Vector3.back) + 180;
 
-        float timeToArrive = dist/projectileSpeed;
+        
         
         GameObject newProjectile = Instantiate(projectile, origin.WorldCoordinates, Quaternion.Euler(new Vector3(0,0,launchAngle)));
+        GameObject newProjectileShadow = newProjectile.GetComponentInChildren<SpriteRenderer>().gameObject;
+
+        (Vector3[] path, float pathLength) = getParabolaPath(origin, target);
+        float timeToArrive = pathLength/projectileSpeed;
 
         float launchTime = Time.time;
         while(Time.time < launchTime + timeToArrive){
-            newProjectile.transform.position += -projectileSpeed*newProjectile.transform.right* Time.deltaTime;
+            float percentTravel = (Time.time-launchTime)/timeToArrive;
+            newProjectileShadow.transform.position = origin.WorldCoordinates;
+            int step = Mathf.FloorToInt(((float)path.Length * percentTravel));
+            Vector3 currentPoint = path[step];
+            Vector3 nextPoint = step+1<path.Length? path[step+1] : target.WorldCoordinates;
+            newProjectile.transform.position = currentPoint;
+            launchAngle = Vector3.SignedAngle(nextPoint - currentPoint, Vector3.right,Vector3.back) + 180;
+            newProjectile.transform.rotation = Quaternion.Euler(new Vector3(0,0,launchAngle));
             yield return null;
         }
 
@@ -116,6 +124,34 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(5);
         Destroy(newProjectile);
     }
+
+    (Vector3[], float) getParabolaPath(TileBehavior origin, TileBehavior target){
+        float resolution = 20;
+        float dist = worldMap.grid.CellToWorld(target.IsoCoordinates - origin.IsoCoordinates).magnitude;
+        Vector3Int isodir = (target.IsoCoordinates - origin.IsoCoordinates);
+        Vector3 dir = worldMap.grid.CellToWorld(isodir).normalized;
+        int steps = Mathf.FloorToInt(dist*resolution);
+        steps = Mathf.Max(steps, 50); //minimum tep count is 50. Helps short range shots look good
+        Vector3[] output = new Vector3[steps];
+        float pathLength = 0;
+        for(int step = 0; step < steps; step++){
+            Vector3 newPoint = origin.WorldCoordinates + (dir * dist/steps)*step;
+            newPoint.y += parabola(1.5f,dist,step*dist/steps);
+            output[step] = newPoint;
+
+            if(step>0){
+                pathLength += (newPoint - output[step-1]).magnitude;
+            }
+
+            float parabola(float h, float l, float x){
+                float a = h/(Mathf.Pow(l/2f,2));
+                float c = l/2;
+                return -(a*Mathf.Pow(x-c,2))+h;
+            }
+        }
+        return (output, pathLength);
+    }
+
     bool checkValidShot(TileBehavior tile, float dist){
         if(tile == null){return false;}
         bool burning = tile.Fire.state == FireBehaviour.burnState.burning;
@@ -134,11 +170,12 @@ public class PlayerController : MonoBehaviour
         gridIcon.GetComponent<SpriteRenderer>().color = validColor;
     }
 
-    void drawArc(Vector3Int startCell, Vector3Int endCell){
-        //TODO make parabola
+    void drawArc(TileBehavior origin, TileBehavior target){
+        (Vector3[] path, float shitballs) = getParabolaPath(origin, target);
         lr.enabled = true;
-        Vector3[] pos = {worldMap.grid.GetCellCenterWorld(startCell),worldMap.grid.GetCellCenterWorld(endCell)};
-        lr.SetPositions(pos);
+        lr.positionCount = path.Length;
+        lr.SetPositions(path);
+        
     }
     (TileBehavior,float) getClosestFireTile(Vector3Int mousePosCell){
         List<TileBehavior> burningTiles = worldMap.GetAllBurningTiles();
