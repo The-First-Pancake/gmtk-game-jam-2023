@@ -55,7 +55,7 @@ public class SceneHandler : MonoBehaviour
                 levelCameraPosition.z
             );
             
-            if (Vector3.Distance(cam.transform.position, levelCameraPosition) < 0.1f) {
+            if (Vector3.Distance(cam.transform.position, levelCameraPosition) < 0.001f) {
                 startTransitionIn = false;
             }
         }
