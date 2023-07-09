@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject lightningGFX;
 
+    SceneHandler SceneHandler;
+
     [HideInInspector]
     public bool usedLightning = false;
 
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         worldMap = WorldMap.instance;
         lr = gridIcon.GetComponent<LineRenderer>();
+        SceneHandler = GetComponent<SceneHandler>();
     }
 
     // Update is called once per frame
@@ -44,7 +47,6 @@ public class PlayerController : MonoBehaviour
         
         if(state == PlayerState.ready){
             gridIcon.GetComponent<SpriteRenderer>().enabled = true;
-            gridIcon.GetComponent<LineRenderer>().enabled = true;
             gridIcon.transform.position =  Vector3.ClampMagnitude(worldMap.grid.GetCellCenterWorld(mousePosCell), 150);
 
             TileBehavior mouseTile = WorldMap.instance.GetTopTile(mousePosCell);

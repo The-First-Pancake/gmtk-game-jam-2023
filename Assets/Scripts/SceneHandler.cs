@@ -8,29 +8,37 @@ public class SceneHandler : MonoBehaviour
 
     // public GameObject MainMenuContainer;
     // public GameObject CreditsContainer;
-    public Camera cam;
+    private Camera cam;
     public Vector3 inCameraPosition;
     public Vector3 outCameraPosition;
     private Vector3 levelCameraPosition = new Vector3(0, 0, -10);
     private bool startTransitionOut = false;
     private bool startTransitionIn = false;
+    private bool startTransitionRestart = false;
     public float duration = 5.0f;
     private float startTime;
 
     public void Start() {
         LevelTransitionIn();
+        cam = Camera.main;
     }
 
     public void NextLevel(){
         LevelTransitionOut();
     }
 
-    public void LevelTransitionOut() {
+    public void Restart(){
+        LevelTransitionRestart();
+    }
 
+    public bool IsTransitioning(){
+        return startTransitionOut || startTransitionIn || startTransitionRestart || (SceneManager.GetActiveScene().name == "Main_Menu");
+    }
+
+    public void LevelTransitionOut() {
         startTransitionOut = true;
         // Make a note of the time the script started.
         startTime = Time.time;
-
     }
 
     public void LevelTransitionIn() {
@@ -39,13 +47,14 @@ public class SceneHandler : MonoBehaviour
         startTime = Time.time;
     }
 
+    public void LevelTransitionRestart() {
+        startTransitionRestart = true;
+        // Make a note of the time the script started.
+        startTime = Time.time;
+    }
+
     public void Update() {
 
-        Debug.Log("startTransitionIn: " + startTransitionIn);
-        Debug.Log("startTransitionOut: " + startTransitionOut);
-
-
-        Debug.Log("cam.transform.position: " + cam.transform.position);
         if (startTransitionIn) {
             // Calculate the fraction of the total duration that has passed.
             float t = (Time.time - startTime) / duration;
@@ -63,9 +72,6 @@ public class SceneHandler : MonoBehaviour
         if (startTransitionOut) {
             // Calculate the fraction of the total duration that has passed.
             float t = (Time.time - startTime) / duration;
-            Debug.Log("t: " + t);
-            Debug.Log("duration: " + duration);
-            Debug.Log("Easing function calculated Y Position: " + EaseInBack(levelCameraPosition.y, outCameraPosition.y, t));
             cam.transform.position = new Vector3(
                 EaseInBack(levelCameraPosition.x / 4, outCameraPosition.x, t), 
                 EaseInBack(levelCameraPosition.y / 4, outCameraPosition.y, t), 
@@ -77,6 +83,22 @@ public class SceneHandler : MonoBehaviour
                 SceneManager.LoadSceneAsync(currentScene.buildIndex + 1);
             }
         }
+
+        if (startTransitionRestart) {
+            // Calculate the fraction of the total duration that has passed.
+            float t = (Time.time - startTime) / duration;
+            cam.transform.position = new Vector3(
+                EaseInBack(levelCameraPosition.x / 4, inCameraPosition.x, t), 
+                EaseInBack(levelCameraPosition.y / 4, inCameraPosition.y, t), 
+                levelCameraPosition.z
+            );
+            
+            if (Vector3.Distance(cam.transform.position, inCameraPosition) < 1f) {
+                Scene currentScene = SceneManager.GetActiveScene();
+                SceneManager.LoadSceneAsync(currentScene.buildIndex);
+            }
+        }
+
     }
 
     public static float EaseInBack(float start, float end, float value)
