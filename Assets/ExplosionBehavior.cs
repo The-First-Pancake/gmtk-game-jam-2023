@@ -28,7 +28,12 @@ public class ExplosionBehavior : MonoBehaviour
                 if (Vector3Int.Distance(checkTile.IsoCoordinates, thisTile.IsoCoordinates) < boomRadius){
                     checkTile.Fire.ignite();
                     checkTile.Fire.sustain *= 1/2;
+                    if(checkTile.IsUpper && checkTile.Fire.flambilityScore == 0){
+                        checkTile.DeleteTile();
+                    }
+                    
                 }
+                
             }
         }
         yield return null;

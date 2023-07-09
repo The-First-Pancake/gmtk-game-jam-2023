@@ -10,23 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e6f3fbb560bd6041a202ea918fa4f23, type: 3}
-  m_Name: Rock
+  m_Name: Big TNT
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 21300000, guid: 8cd0fa288c78b28bca96a2387f275a59, type: 3}
-  m_DefaultGameObject: {fileID: 6058571008962211761, guid: 0d4e018d3a26847f8a304aedd8f4f7ac, type: 3}
+  m_DefaultSprite: {fileID: 21300000, guid: 80bc2294d5b32db46b11e39a28f4313b, type: 3}
+  m_DefaultGameObject: {fileID: 6058571008962211761, guid: 1b41d5a484d90984ab8a69a6e6b520b4, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: 21300000, guid: 8cd0fa288c78b28bca96a2387f275a59, type: 3}
-    - {fileID: 21300000, guid: 6ccee9f6a333f6b82ba4edb5479b255e, type: 3}
-    - {fileID: 21300000, guid: f6e30a368eb2dd54aba69927edbace06, type: 3}
-    - {fileID: 21300000, guid: edfc0147b62abcd4b85f29f56df96c8b, type: 3}
-    m_GameObject: {fileID: 6058571008962211761, guid: 0d4e018d3a26847f8a304aedd8f4f7ac, type: 3}
-    m_MinAnimationSpeed: 4
-    m_MaxAnimationSpeed: 4
+    - {fileID: 21300000, guid: 80bc2294d5b32db46b11e39a28f4313b, type: 3}
+    m_GameObject: {fileID: 6058571008962211761, guid: 1b41d5a484d90984ab8a69a6e6b520b4, type: 3}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
-    m_Output: 1
+    m_Output: 0
     m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 
