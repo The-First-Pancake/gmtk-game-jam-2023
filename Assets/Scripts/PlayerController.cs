@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         
         if(state == PlayerState.ready){
             gridIcon.SetActive(true);
-            gridIcon.transform.position = worldMap.grid.GetCellCenterWorld(mousePosCell);
+            gridIcon.transform.position =  Vector3.ClampMagnitude(worldMap.grid.GetCellCenterWorld(mousePosCell), 150);
 
             TileBehavior mouseTile = WorldMap.instance.GetTopTile(mousePosCell);
             
@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
             }
 
             if(closestFireTile == null){
+                lr.enabled = false;
 
                 if(usedLightning == true){
                     Debug.Log("YOU LOSE IDIOT");
@@ -68,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
                 //othewise
                 //Fire hasn't started yet. Tiem to do lightnig
-                lr.enabled = false;
+                
                 if(Input.GetMouseButtonDown(0) && validShot){
                     StartCoroutine(LightningSequence(mouseTile));
                     usedLightning = true;
