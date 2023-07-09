@@ -11247,10 +11247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2568188cf75f314c886fb87b960306b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 2138894861}
   inCameraPosition: {x: 0, y: -30, z: -10}
   outCameraPosition: {x: 0, y: -30, z: -10}
-  duration: 2
 --- !u!1 &300800964
 GameObject:
   m_ObjectHideFlags: 0
@@ -15635,7 +15633,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 72}
+  m_AnchoredPosition: {x: 0, y: 105.93}
   m_SizeDelta: {x: 190, y: 40.899994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1157385868
@@ -15658,9 +15656,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'UNTITLED FIRE GAME
-
-'
+  m_text: "Fire \nAway!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f42d47529e0dde745acf996fb0560464, type: 2}
   m_sharedMaterial: {fileID: 8311884987042334824, guid: f42d47529e0dde745acf996fb0560464, type: 2}
@@ -15697,7 +15693,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 3.79
+  m_characterSpacing: 22.47
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
