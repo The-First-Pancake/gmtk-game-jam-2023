@@ -147,6 +147,7 @@ public class PlayerController : MonoBehaviour
     }
 
     (Vector3[], float) getParabolaPath(TileBehavior origin, TileBehavior target){
+        if (origin == null || target == null) {return (new Vector3 [0], 0);};
         float resolution = 20;
         float dist = worldMap.grid.CellToWorld(target.IsoCoordinates - origin.IsoCoordinates).magnitude;
         Vector3Int isodir = (target.IsoCoordinates - origin.IsoCoordinates);
