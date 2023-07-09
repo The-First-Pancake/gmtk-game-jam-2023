@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 72e628775af4cbb48b211d75dff2090a
+guid: 477080e35e15d38428a9aa75bcc71a57
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fireball_0
+      name: explosion_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 31
+        width: 117
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e19c12714947da94b8db098188ddc25d
-      internalID: 1541671141
+      spriteID: 9f0071a41586869469a188b67d2a5035
+      internalID: 1330434333
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball_1
+      name: explosion_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 117
         y: 0
-        width: 48
-        height: 31
+        width: 117
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fc90353cbaa9c945b8451047431eaea
-      internalID: 1618652202
+      spriteID: 306e08c96b1c5fa4c80ae5a55be03080
+      internalID: -656314456
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball_2
+      name: explosion_2
       rect:
         serializedVersion: 2
-        x: 96
+        x: 234
         y: 0
-        width: 48
-        height: 31
+        width: 117
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 757bab7007f2c9a4b98d5fb0b9ee873f
-      internalID: -645624977
+      spriteID: 9088a53142564d34f9bbeb5b7fee222d
+      internalID: -318946707
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball_3
+      name: explosion_3
       rect:
         serializedVersion: 2
-        x: 144
+        x: 351
         y: 0
-        width: 48
-        height: 31
+        width: 117
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +187,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ca5fc158367b1d46b9f56e58e38b345
-      internalID: -129636151
+      spriteID: bbd0a54d750298c4f9fe923433c74ca0
+      internalID: -2051349352
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball_4
+      name: explosion_4
       rect:
         serializedVersion: 2
-        x: 192
+        x: 468
         y: 0
-        width: 48
-        height: 31
+        width: 117
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,8 +208,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5382bd5bc91cabf4b8742742ca389901
-      internalID: 923986806
+      spriteID: 8d035468e80ca09459c5b588be523c43
+      internalID: 731627524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explosion_5
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 0
+        width: 117
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3b9cba28217d1c4dab981655b77b688
+      internalID: 491033915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explosion_6
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 0
+        width: 117
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90f32774a08497f43b72b8fa3121d1d6
+      internalID: -940998701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explosion_7
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 0
+        width: 117
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cb5296664302514693971e14f8212cf
+      internalID: -1453270062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explosion_8
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 117
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3024f9401f2459468b770136e82c0f0
+      internalID: 1479305220
       vertices: []
       indices: 
       edges: []
@@ -225,11 +309,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      fireball_0: 1541671141
-      fireball_1: 1618652202
-      fireball_2: -645624977
-      fireball_3: -129636151
-      fireball_4: 923986806
+      explosion_0: 1330434333
+      explosion_1: -656314456
+      explosion_2: -318946707
+      explosion_3: -2051349352
+      explosion_4: 731627524
+      explosion_5: 491033915
+      explosion_6: -940998701
+      explosion_7: -1453270062
+      explosion_8: 1479305220
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

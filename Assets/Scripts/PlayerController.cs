@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
         
         if(state == PlayerState.ready){
             gridIcon.GetComponent<SpriteRenderer>().enabled = true;
+            gridIcon.GetComponent<LineRenderer>().enabled = true;
             gridIcon.transform.position =  Vector3.ClampMagnitude(worldMap.grid.GetCellCenterWorld(mousePosCell), 150);
 
             TileBehavior mouseTile = WorldMap.instance.GetTopTile(mousePosCell);
@@ -84,6 +85,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (state == PlayerState.cooldown){
             gridIcon.GetComponent<SpriteRenderer>().enabled = false;
+            gridIcon.GetComponent<LineRenderer>().enabled = false;
         }
     }
 
@@ -98,7 +100,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ShootProjectile(TileBehavior origin, TileBehavior target){
         state = PlayerState.cooldown;
-        //Get path
 
         float dist = worldMap.grid.CellToWorld(target.IsoCoordinates - origin.IsoCoordinates).magnitude;
         Vector3Int isodir = (target.IsoCoordinates - origin.IsoCoordinates);
