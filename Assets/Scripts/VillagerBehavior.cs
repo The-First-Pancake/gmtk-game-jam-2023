@@ -12,7 +12,10 @@ public class VillagerBehavior : MonoBehaviour
         ALERTED,
         GETTING_WATER,
         PUTTING_OUT_FIRE,
+        SPLATSHING_WATER,
         PANICKING,
+        BURNING,
+        DYING,
     }
     public VillagerState State = VillagerState.IDLE;
     private VillagerMovement movement;
@@ -20,11 +23,16 @@ public class VillagerBehavior : MonoBehaviour
     private Animator anim;
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
+    public Sprite deadSprite;
+    public GameObject onFirePrefab;
+    private GameObject fireObject;
+    public GameObject smolderingPrefab;
     public List<TileBehavior> SeenFires;
     public float StateMachineTickRateSeconds = 1f;
     public int FireSenseDistanceSquares = 5;
     public float RoamSpeed = 25f;
     public float FireSpeed = 50f;
+    private bool wait_finished = false;
 
     // Start is called before the first frame update
     void Start()
@@ -42,18 +50,20 @@ public class VillagerBehavior : MonoBehaviour
         UpdateAnimator();
         TileBehavior CurrentTile = movement.GetCurrentTile();
         if (CurrentTile != null && CurrentTile.Fire.state == FireBehaviour.burnState.burning) {
-            Destroy(gameObject);
+            if (State != VillagerState.BURNING && State != VillagerState.DYING) {
+                enterState(VillagerState.BURNING);
+            }
         }
     }
 
     private void UpdateAnimator() {
+        Vector3 velocity = rb2d.velocity;
         switch (State) {
             case VillagerState.IDLE:
             case VillagerState.ROAMING:
             case VillagerState.ALERTED:
             case VillagerState.GETTING_WATER:
             case VillagerState.PUTTING_OUT_FIRE:
-                Vector3 velocity = rb2d.velocity;
                 float up_angle = Vector3.Angle(velocity, Vector3.up);
                 float left_angle = Vector3.Angle(velocity, Vector3.left);
                 float right_angle = Vector3.Angle(velocity, Vector3.right);
@@ -74,6 +84,19 @@ public class VillagerBehavior : MonoBehaviour
                 break;
             case VillagerState.PANICKING:
                 anim.SetTrigger("EnterPanic");
+                break;
+            case VillagerState.SPLATSHING_WATER:
+                velocity = rb2d.velocity;
+                float left = Vector3.Angle(velocity, Vector3.left);
+                float right = Vector3.Angle(velocity, Vector3.right);
+                spriteRenderer.flipX = right <= left;
+                anim.SetTrigger("PourWater");
+                break;
+            case VillagerState.BURNING:
+                anim.SetTrigger("StartBurn");
+                break;
+            case VillagerState.DYING:
+                anim.SetTrigger("EnterDie");
                 break;
             default:
                 throw new NotImplementedException();
@@ -101,8 +124,52 @@ public class VillagerBehavior : MonoBehaviour
             case VillagerState.PANICKING:
                 panickingUpdate();
                 break;
+            case VillagerState.SPLATSHING_WATER:
+                splashingUpdate();
+                break;
+            case VillagerState.BURNING:
+                burningUpdate();
+                break;
+            case VillagerState.DYING:
+                dyingUpdate();
+                break;
             default:
                 throw new NotImplementedException();
+        }
+    }
+
+    private void burningUpdate()
+    {
+        if (movement.IsDoneMove()) {
+            enterState(VillagerState.DYING);
+        }
+    }
+
+    private void dyingUpdate()
+    {
+        if (wait_finished) {
+            wait_finished = false;
+            Destroy(fireObject);
+            Instantiate(smolderingPrefab, transform);
+            anim.enabled = false;
+            spriteRenderer.sprite = deadSprite;
+        }
+    }
+
+    private void splashingUpdate()
+    {
+        if (wait_finished) {
+            wait_finished = false;
+            if (CurrentTarget != null) {
+                CurrentTarget.Fire.extinguish();
+            }
+            if (LookForFires()) {
+                enterState(VillagerState.ALERTED);
+                return;
+            } else {
+                enterState(VillagerState.IDLE);
+                return;
+            }
         }
     }
 
@@ -122,14 +189,9 @@ public class VillagerBehavior : MonoBehaviour
         }
         foreach (TileBehavior neighbor in currentTile.GetNeighbors()) {
             if (neighbor.Fire.state == FireBehaviour.burnState.burning) {
-                neighbor.Fire.extinguish();
-                if (LookForFires()) {
-                    enterState(VillagerState.ALERTED);
-                    return;
-                } else {
-                    enterState(VillagerState.IDLE);
-                    return;
-                }
+                CurrentTarget = neighbor;
+                enterState(VillagerState.SPLATSHING_WATER);
+                return;
             }
         }
 
@@ -237,10 +299,47 @@ public class VillagerBehavior : MonoBehaviour
             case VillagerState.PANICKING:
                 on_enterPanicking();
                 break;
+            case VillagerState.SPLATSHING_WATER:
+                on_enterSplashing();
+                break;
+            case VillagerState.BURNING:
+                on_enterBurning();
+                break;
+            case VillagerState.DYING:
+                on_enterDying();
+                break;
             default:
                 throw new NotImplementedException();
         }
         State = new_state;
+    }
+
+    private void on_enterBurning()
+    {
+        fireObject = Instantiate(onFirePrefab, transform);
+        Vector3Int randomVector = new Vector3Int(UnityEngine.Random.Range(-2, 2), (UnityEngine.Random.Range(-2, 2)));
+        TileBehavior tile = WorldMap.instance.GetTopTile(movement.GetCurrentTile().IsoCoordinates + randomVector);
+        if (tile) {
+            movement.BaseSpeed = RoamSpeed;
+            CurrentTarget = tile;
+            movement.GoToNeighborOf(CurrentTarget);
+        }
+    }
+
+    private void on_enterDying()
+    {
+        StartCoroutine(Wait(3));
+    }
+
+    private void on_enterSplashing()
+    {
+        StartCoroutine(Wait(3));
+    }
+
+    IEnumerator Wait (float seconds) {
+        wait_finished = false;
+        yield return new WaitForSeconds (seconds);
+        wait_finished = true;
     }
 
     private void on_enterPanicking()
@@ -287,6 +386,7 @@ public class VillagerBehavior : MonoBehaviour
     private void on_enterRoaming()
     {
         List<TileBehavior> buildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING);
+        if (buildings.Count == 0) {return;}
         int random_idx = UnityEngine.Random.Range(0, buildings.Count);
         TileBehavior targetBuilding = buildings[random_idx];
         TileBehavior target = targetBuilding;

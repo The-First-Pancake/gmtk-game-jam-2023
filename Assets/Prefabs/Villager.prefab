@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 29853809338117317}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -91,11 +91,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 0
   CurrentTarget: {fileID: 0}
+  deadSprite: {fileID: -1666901595, guid: 4f97227685e49ea6ea942a80637f55cc, type: 3}
+  onFirePrefab: {fileID: 4666961168873278341, guid: f364dcdbac36c1264b16be4242a2b116, type: 3}
+  smolderingPrefab: {fileID: 2366841241410158110, guid: 025815b64ef315d4db0dc5794693dda3, type: 3}
   SeenFires: []
   StateMachineTickRateSeconds: 0.1
-  FireSenseDistanceSquares: 5
-  RoamSpeed: 25
-  FireSpeed: 50
+  FireSenseDistanceSquares: 10
+  RoamSpeed: 0.2
+  FireSpeed: 0.4
 --- !u!212 &3435938022530975578
 SpriteRenderer:
   m_ObjectHideFlags: 0
