@@ -65,6 +65,11 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R) && !sceneHandler.IsTransitioning()){
             restart();
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape) && !sceneHandler.IsTransitioning()){
+            Application.Quit();
+        }
+
         totalFire = WorldMap.instance.GetAllBurningTiles().Count;
         UpdateMusic();
     }
