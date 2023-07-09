@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1262090858630543930
 MonoBehaviour:
@@ -46,11 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanPath: 1
+  VillagerTarget: 0
   MovementModifier: 0
   ThisTile: {fileID: 0}
   IsoCoordinates: {x: 0, y: 0, z: 0}
   WorldCoordinates: {x: 0, y: 0, z: 0}
   IsUpper: 0
+  Fire: {fileID: 0}
+  tilemap: {fileID: 0}
 --- !u!114 &2537774669494516959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,5 +68,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flambilityScore: 0.5
   sustain: 5
+  dangerRating: 0
+  timeStartedBurning: 0
   state: 0
   firePrefab: {fileID: 4666961168873278341, guid: e809512634afd6a45b3eb1eae6eae355, type: 3}
+  ignitionIndicator: {fileID: 4458365773425746247, guid: 2fe79c1982a6d3d4a8ec4ee4270fb21a, type: 3}
+  cannotBeSpreadFrom: 0
+  destroyAfterBurnOut: 0
+  burnoutSprites: []
+  burnoutTiles: []
+  burnoutGameObjects: []
