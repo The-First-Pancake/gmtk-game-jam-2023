@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public WindBehavior wind;
     SceneHandler sceneHandler;
-
     PlayerController playerController;
+    WinLoseText winLoseText;
     int totalBuildings;
     int totalFire;
     public AudioSource peacfulMusic;
@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         wind = gameObject.GetComponent<WindBehavior>();
         sceneHandler = gameObject.GetComponent<SceneHandler>();
         playerController = gameObject.GetComponent<PlayerController>();
+        winLoseText = gameObject.GetComponent<WinLoseText>();
     }
     // Start is called before the first frame update
     void Start()
@@ -37,14 +38,6 @@ public class GameManager : MonoBehaviour
         totalBuildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING).Count;
     }
 
-    public bool DidWin() {
-        if (levelOutcome == "WIN") {
-            return true;
-        } else if (levelOutcome == "LOSE") {
-            return false;
-        }
-        return false;
-    }
 
     // Update is called once per frame
     void Update()
@@ -52,7 +45,7 @@ public class GameManager : MonoBehaviour
         int remaingBuildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING).Count;
         if (totalBuildings != 0 && remaingBuildings == 0 && !nextLevelCalled) {
             nextLevelCalled = true;
-            levelOutcome = "WIN";
+            winLoseText.SetWinLoseText("WIN");
             sceneHandler.Invoke("NextLevel", 3);
         } else if (WorldMap.instance.GetAllBurningTiles().Count == 0 && 
                     playerController.usedLightning && 
@@ -61,7 +54,7 @@ public class GameManager : MonoBehaviour
                     playerController.state != PlayerController.PlayerState.cooldown) {
             
             restartLevelCalled = true;
-            levelOutcome = "LOSE";
+            winLoseText.SetWinLoseText("LOSE");
             this.Invoke("lose", 3);
         }
 
