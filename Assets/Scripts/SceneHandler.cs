@@ -20,6 +20,9 @@ public class SceneHandler : MonoBehaviour
 
     public void Start() {
         LevelTransitionIn();
+        startTransitionOut = false;
+        startTransitionIn = false;
+        startTransitionRestart = false;
         cam = Camera.main;
     }
 
@@ -73,12 +76,13 @@ public class SceneHandler : MonoBehaviour
             // Calculate the fraction of the total duration that has passed.
             float t = (Time.time - startTime) / duration;
             cam.transform.position = new Vector3(
-                EaseInBack(levelCameraPosition.x / 4, outCameraPosition.x, t), 
-                EaseInBack(levelCameraPosition.y / 4, outCameraPosition.y, t), 
+                EaseInBack(levelCameraPosition.x, outCameraPosition.x / 4, t), 
+                EaseInBack(levelCameraPosition.y, outCameraPosition.y / 4, t), 
                 levelCameraPosition.z
             );
             
             if (Vector3.Distance(cam.transform.position, outCameraPosition) < 1f) {
+                startTransitionOut = false;
                 Scene currentScene = SceneManager.GetActiveScene();
                 SceneManager.LoadSceneAsync(currentScene.buildIndex + 1);
             }
@@ -88,12 +92,13 @@ public class SceneHandler : MonoBehaviour
             // Calculate the fraction of the total duration that has passed.
             float t = (Time.time - startTime) / duration;
             cam.transform.position = new Vector3(
-                EaseInBack(levelCameraPosition.x / 4, inCameraPosition.x, t), 
-                EaseInBack(levelCameraPosition.y / 4, inCameraPosition.y, t), 
+                EaseInBack(levelCameraPosition.x, inCameraPosition.x / 4, t), 
+                EaseInBack(levelCameraPosition.y, inCameraPosition.y / 4, t), 
                 levelCameraPosition.z
             );
             
             if (Vector3.Distance(cam.transform.position, inCameraPosition) < 1f) {
+                startTransitionRestart = false;
                 Scene currentScene = SceneManager.GetActiveScene();
                 SceneManager.LoadSceneAsync(currentScene.buildIndex);
             }

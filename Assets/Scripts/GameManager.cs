@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
             sceneHandler.Invoke("NextLevel", 5);
         }
 
-        if(Input.GetKeyDown(KeyCode.R)){
+        if(Input.GetKeyDown(KeyCode.R) && !sceneHandler.IsTransitioning()){
             restart();
         }
         totalFire = WorldMap.instance.GetAllBurningTiles().Count;
