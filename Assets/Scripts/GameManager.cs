@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public WindBehavior wind;
     SceneHandler sceneHandler;
+
+    PlayerController playerController;
     int totalBuildings;
     int totalFire;
     public AudioSource peacfulMusic;
@@ -14,12 +16,15 @@ public class GameManager : MonoBehaviour
     public List<int> musicLevelThresholds;
 
     bool nextLevelCalled = false;
+    bool restartLevelCalled = false;
     bool fireStarted = false;
+    string levelOutcome;
     private void Awake()
     {
         instance = this;
         wind = gameObject.GetComponent<WindBehavior>();
         sceneHandler = gameObject.GetComponent<SceneHandler>();
+        playerController = gameObject.GetComponent<PlayerController>();
     }
     // Start is called before the first frame update
     void Start()
@@ -32,14 +37,31 @@ public class GameManager : MonoBehaviour
         totalBuildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING).Count;
     }
 
+    public bool DidWin() {
+        if (levelOutcome == "WIN") {
+            return true;
+        } else if (levelOutcome == "LOSE") {
+            return false;
+        }
+        return false;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Total Buildings: " + totalBuildings);
+        
+
         int remaingBuildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING).Count;
+        Debug.Log("Remaining Buildings: " + remaingBuildings);
         if (totalBuildings != 0 && remaingBuildings == 0 && !nextLevelCalled) {
             nextLevelCalled = true;
-            
+            levelOutcome = "WIN";
             sceneHandler.Invoke("NextLevel", 3);
+        } else if (WorldMap.instance.GetAllBurningTiles().Count == 0 && playerController.usedLightning && !restartLevelCalled && !nextLevelCalled) {
+            restartLevelCalled = true;
+            levelOutcome = "LOSE";
+            this.Invoke("lose", 3);
         }
 
         if(Input.GetKeyDown(KeyCode.R) && !sceneHandler.IsTransitioning()){

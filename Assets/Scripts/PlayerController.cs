@@ -65,12 +65,6 @@ public class PlayerController : MonoBehaviour
             if(closestFireTile == null){
                 lr.enabled = false;
 
-                if(usedLightning == true){
-                    Debug.Log("YOU LOSE IDIOT");
-                    GameManager.instance.lose();
-                    return;
-                }
-
                 //othewise
                 //Fire hasn't started yet. Tiem to do lightnig
                 
