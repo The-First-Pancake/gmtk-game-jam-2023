@@ -475,7 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridIcon: {fileID: 2685740661984830801}
-  maxRange: 15
+  maxRange: 5
   validColor: {r: 1, g: 1, b: 1, a: 0.33333334}
   invalidColor: {r: 1, g: 0.32452828, b: 0.32452828, a: 0.49019608}
   projectileSpeed: 1.5
@@ -494,7 +494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2568188cf75f314c886fb87b960306b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
   inCameraPosition: {x: 0, y: 0, z: 0}
   outCameraPosition: {x: 0, y: 0, z: 0}
   duration: 5
