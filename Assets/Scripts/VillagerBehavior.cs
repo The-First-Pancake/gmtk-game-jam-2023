@@ -12,7 +12,9 @@ public class VillagerBehavior : MonoBehaviour
         ALERTED,
         GETTING_WATER,
         PUTTING_OUT_FIRE,
+        SPLATSHING_WATER,
         PANICKING,
+        DYING,
     }
     public VillagerState State = VillagerState.IDLE;
     private VillagerMovement movement;
@@ -25,6 +27,7 @@ public class VillagerBehavior : MonoBehaviour
     public int FireSenseDistanceSquares = 5;
     public float RoamSpeed = 25f;
     public float FireSpeed = 50f;
+    private bool wait_finished = false;
 
     // Start is called before the first frame update
     void Start()
@@ -47,13 +50,13 @@ public class VillagerBehavior : MonoBehaviour
     }
 
     private void UpdateAnimator() {
+        Vector3 velocity = rb2d.velocity;
         switch (State) {
             case VillagerState.IDLE:
             case VillagerState.ROAMING:
             case VillagerState.ALERTED:
             case VillagerState.GETTING_WATER:
             case VillagerState.PUTTING_OUT_FIRE:
-                Vector3 velocity = rb2d.velocity;
                 float up_angle = Vector3.Angle(velocity, Vector3.up);
                 float left_angle = Vector3.Angle(velocity, Vector3.left);
                 float right_angle = Vector3.Angle(velocity, Vector3.right);
@@ -74,6 +77,13 @@ public class VillagerBehavior : MonoBehaviour
                 break;
             case VillagerState.PANICKING:
                 anim.SetTrigger("EnterPanic");
+                break;
+            case VillagerState.SPLATSHING_WATER:
+                velocity = rb2d.velocity;
+                float left = Vector3.Angle(velocity, Vector3.left);
+                float right = Vector3.Angle(velocity, Vector3.right);
+                spriteRenderer.flipX = right <= left;
+                anim.SetTrigger("PourWater");
                 break;
             default:
                 throw new NotImplementedException();
@@ -101,8 +111,35 @@ public class VillagerBehavior : MonoBehaviour
             case VillagerState.PANICKING:
                 panickingUpdate();
                 break;
+            case VillagerState.SPLATSHING_WATER:
+                splashingUpdate();
+                break;
+            case VillagerState.DYING:
+                dyingUpdate();
+                break;
             default:
                 throw new NotImplementedException();
+        }
+    }
+
+    private void dyingUpdate()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void splashingUpdate()
+    {
+        if (wait_finished) {
+            if (CurrentTarget != null) {
+                CurrentTarget.Fire.extinguish();
+            }
+            if (LookForFires()) {
+                enterState(VillagerState.ALERTED);
+                return;
+            } else {
+                enterState(VillagerState.IDLE);
+                return;
+            }
         }
     }
 
@@ -122,14 +159,9 @@ public class VillagerBehavior : MonoBehaviour
         }
         foreach (TileBehavior neighbor in currentTile.GetNeighbors()) {
             if (neighbor.Fire.state == FireBehaviour.burnState.burning) {
-                neighbor.Fire.extinguish();
-                if (LookForFires()) {
-                    enterState(VillagerState.ALERTED);
-                    return;
-                } else {
-                    enterState(VillagerState.IDLE);
-                    return;
-                }
+                CurrentTarget = neighbor;
+                enterState(VillagerState.SPLATSHING_WATER);
+                return;
             }
         }
 
@@ -237,10 +269,32 @@ public class VillagerBehavior : MonoBehaviour
             case VillagerState.PANICKING:
                 on_enterPanicking();
                 break;
+            case VillagerState.SPLATSHING_WATER:
+                on_enterSplashing();
+                break;
+            case VillagerState.DYING:
+                on_enterDying();
+                break;
             default:
                 throw new NotImplementedException();
         }
         State = new_state;
+    }
+
+    private void on_enterDying()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void on_enterSplashing()
+    {
+        StartCoroutine(Wait(3));
+    }
+
+    IEnumerator Wait (float seconds) {
+        wait_finished = false;
+        yield return new WaitForSeconds (seconds);
+        wait_finished = true;
     }
 
     private void on_enterPanicking()
