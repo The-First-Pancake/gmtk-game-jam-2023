@@ -91,6 +91,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 0
   CurrentTarget: {fileID: 0}
+  deadSprite: {fileID: -1666901595, guid: 4f97227685e49ea6ea942a80637f55cc, type: 3}
+  onFirePrefab: {fileID: 4666961168873278341, guid: f364dcdbac36c1264b16be4242a2b116, type: 3}
+  smolderingPrefab: {fileID: 2366841241410158110, guid: 025815b64ef315d4db0dc5794693dda3, type: 3}
   SeenFires: []
   StateMachineTickRateSeconds: 0.1
   FireSenseDistanceSquares: 10
