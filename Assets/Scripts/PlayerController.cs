@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool usedLightning = false;
 
-    PlayerState state = PlayerState.ready;
+    public PlayerState state = PlayerState.ready;
     // Start is called before the first frame update
     void Start()
     {

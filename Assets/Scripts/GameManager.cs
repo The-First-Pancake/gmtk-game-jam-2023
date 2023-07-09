@@ -54,7 +54,12 @@ public class GameManager : MonoBehaviour
             nextLevelCalled = true;
             levelOutcome = "WIN";
             sceneHandler.Invoke("NextLevel", 3);
-        } else if (WorldMap.instance.GetAllBurningTiles().Count == 0 && playerController.usedLightning && !restartLevelCalled && !nextLevelCalled) {
+        } else if (WorldMap.instance.GetAllBurningTiles().Count == 0 && 
+                    playerController.usedLightning && 
+                    !restartLevelCalled && 
+                    !nextLevelCalled && 
+                    playerController.state != PlayerController.PlayerState.cooldown) {
+            
             restartLevelCalled = true;
             levelOutcome = "LOSE";
             this.Invoke("lose", 3);
