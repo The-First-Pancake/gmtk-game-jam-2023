@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
         Debug.Log(remaingBuildings);
         if (totalBuildings != 0 && remaingBuildings == 0 && !nextLevelCalled) {
             nextLevelCalled = true;
-            sceneHandler.NextLevel();
+            
+            sceneHandler.Invoke("NextLevel", 5);
         }
 
         if(Input.GetKeyDown(KeyCode.R)){
