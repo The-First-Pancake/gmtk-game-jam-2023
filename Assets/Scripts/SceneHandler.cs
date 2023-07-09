@@ -8,7 +8,7 @@ public class SceneHandler : MonoBehaviour
 
     // public GameObject MainMenuContainer;
     // public GameObject CreditsContainer;
-    public Camera cam;
+    private Camera cam;
     public Vector3 inCameraPosition;
     public Vector3 outCameraPosition;
     private Vector3 levelCameraPosition = new Vector3(0, 0, -10);
@@ -20,6 +20,7 @@ public class SceneHandler : MonoBehaviour
 
     public void Start() {
         LevelTransitionIn();
+        cam = Camera.main;
     }
 
     public void NextLevel(){
@@ -31,7 +32,7 @@ public class SceneHandler : MonoBehaviour
     }
 
     public bool IsTransitioning(){
-        return startTransitionOut || startTransitionIn || startTransitionRestart;
+        return startTransitionOut || startTransitionIn || startTransitionRestart || (SceneManager.GetActiveScene().name == "Main_Menu");
     }
 
     public void LevelTransitionOut() {
