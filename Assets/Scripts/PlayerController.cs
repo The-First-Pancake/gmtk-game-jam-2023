@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         else if (state == PlayerState.cooldown){
-            gridIcon.SetActive(false);
+            gridIcon.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 

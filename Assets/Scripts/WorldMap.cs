@@ -35,6 +35,7 @@ public class WorldMap : MonoBehaviour
     }
 
     public void PublishTile(Vector3Int coords, GameObject obj) {
+        if (coords.x >= 50 || coords.x < -50 || coords.y >= 50 || coords.y < -50) {return;};
         TileBehavior tile_behavior = obj.GetComponent<TileBehavior>();
         if (tile_behavior.IsUpper) {
             map[coords.x + 50, coords.y + 50].present_upper = true;
@@ -46,6 +47,7 @@ public class WorldMap : MonoBehaviour
     }
 
     public void UnPublishTile(Vector3Int coords, GameObject obj) {
+        if (coords.x >= 50 || coords.x < -50 || coords.y >= 50 || coords.y < -50) {return;};
         if (map[coords.x + 50, coords.y + 50].upper_tile.gameObject == obj) {
             Debug.Log("Unpublishing Upper");
             map[coords.x + 50, coords.y + 50].present_upper = false;
@@ -63,6 +65,7 @@ public class WorldMap : MonoBehaviour
     }
 
     public TileBehavior GetTopTile(Vector3Int coords) {
+        if (coords.x >= 50 || coords.x < -50 || coords.y >= 50 || coords.y < -50) {return null;};
         WorldTile tile = map[coords.x + 50, coords.y + 50];
         if (tile.present_upper) {
             return tile.upper_tile;
