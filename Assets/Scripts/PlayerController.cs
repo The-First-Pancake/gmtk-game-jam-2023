@@ -43,7 +43,10 @@ public class PlayerController : MonoBehaviour
         Vector3Int mousePosCell = worldMap.grid.WorldToCell(mousePosWorld);
         mousePosCell.z = 0;
         
-        if(state == PlayerState.ready){
+        if (SceneHandler.IsTransitioning()) {
+            gridIcon.SetActive(false);
+        }
+        else if(state == PlayerState.ready){
             gridIcon.SetActive(true);
             gridIcon.transform.position =  Vector3.ClampMagnitude(worldMap.grid.GetCellCenterWorld(mousePosCell), 150);
 

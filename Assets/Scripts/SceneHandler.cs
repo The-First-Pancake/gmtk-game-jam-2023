@@ -15,14 +15,16 @@ public class SceneHandler : MonoBehaviour
     private bool startTransitionOut = false;
     private bool startTransitionIn = false;
     private bool startTransitionRestart = false;
-    public float duration = 5.0f;
+    private bool isRestarting = false;
+    private float duration = 0.75f;
     private float startTime;
 
     public void Start() {
-        LevelTransitionIn();
+        isRestarting = false;
         startTransitionOut = false;
         startTransitionIn = false;
         startTransitionRestart = false;
+        LevelTransitionIn();
         cam = Camera.main;
     }
 
@@ -35,7 +37,7 @@ public class SceneHandler : MonoBehaviour
     }
 
     public bool IsTransitioning(){
-        return startTransitionOut || startTransitionIn || startTransitionRestart || (SceneManager.GetActiveScene().name == "Main_Menu");
+        return startTransitionOut || startTransitionIn || startTransitionRestart || isRestarting || (SceneManager.GetActiveScene().name == "Main_Menu");
     }
 
     public void LevelTransitionOut() {
@@ -89,6 +91,7 @@ public class SceneHandler : MonoBehaviour
         }
 
         if (startTransitionRestart) {
+            isRestarting = true;
             // Calculate the fraction of the total duration that has passed.
             float t = (Time.time - startTime) / duration;
             cam.transform.position = new Vector3(
@@ -98,9 +101,9 @@ public class SceneHandler : MonoBehaviour
             );
             
             if (Vector3.Distance(cam.transform.position, inCameraPosition) < 1f) {
-                startTransitionRestart = false;
                 Scene currentScene = SceneManager.GetActiveScene();
                 SceneManager.LoadSceneAsync(currentScene.buildIndex);
+                startTransitionRestart = false;
             }
         }
 

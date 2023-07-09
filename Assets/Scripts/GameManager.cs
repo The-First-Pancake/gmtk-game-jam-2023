@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         if (totalBuildings != 0 && remaingBuildings == 0 && !nextLevelCalled) {
             nextLevelCalled = true;
             
-            sceneHandler.Invoke("NextLevel", 5);
+            sceneHandler.Invoke("NextLevel", 3);
         }
 
         if(Input.GetKeyDown(KeyCode.R) && !sceneHandler.IsTransitioning()){
