@@ -9,14 +9,13 @@ public class SceneHandler : MonoBehaviour
     // public GameObject MainMenuContainer;
     // public GameObject CreditsContainer;
     public Camera cam;
-    public Vector3 startMarker;
-    public Vector3 endMarker;
+    public Vector3 inCameraPosition;
+    public Vector3 outCameraPosition;
+    private Vector3 levelCameraPosition = new Vector3(0, 0, -10);
     private bool startTransitionOut = false;
     private bool startTransitionIn = false;
     public float duration = 5.0f;
     private float startTime;
-    private float camX;
-    private float camY;
 
     public void Start() {
         LevelTransitionIn();
@@ -31,8 +30,6 @@ public class SceneHandler : MonoBehaviour
         startTransitionOut = true;
         // Make a note of the time the script started.
         startTime = Time.time;
-        camX = cam.transform.position.x;
-        camY = cam.transform.position.y;
 
     }
 
@@ -40,22 +37,25 @@ public class SceneHandler : MonoBehaviour
         startTransitionIn = true;
         // Make a note of the time the script started.
         startTime = Time.time;
-        camX = cam.transform.position.x;
-        camY = cam.transform.position.y;
     }
 
     public void Update() {
 
+        Debug.Log("startTransitionIn: " + startTransitionIn);
+        Debug.Log("startTransitionOut: " + startTransitionOut);
+
+
+        Debug.Log("cam.transform.position: " + cam.transform.position);
         if (startTransitionIn) {
             // Calculate the fraction of the total duration that has passed.
             float t = (Time.time - startTime) / duration;
             cam.transform.position = new Vector3(
-                Mathf.SmoothStep(camX, startMarker.x,  t), 
-                Mathf.SmoothStep(camY, startMarker.y, t), 
-                cam.transform.position.z
+                EaseOutQuartD(inCameraPosition.x / 4, levelCameraPosition.x, t), 
+                EaseOutQuartD(-inCameraPosition.y / 4, levelCameraPosition.y, t), 
+                levelCameraPosition.z
             );
             
-            if (Vector3.Distance(cam.transform.position, startMarker) < 0.1f) {
+            if (Vector3.Distance(cam.transform.position, levelCameraPosition) < 0.1f) {
                 startTransitionIn = false;
             }
         }
@@ -63,15 +63,18 @@ public class SceneHandler : MonoBehaviour
         if (startTransitionOut) {
             // Calculate the fraction of the total duration that has passed.
             float t = (Time.time - startTime) / duration;
+            Debug.Log("t: " + t);
+            Debug.Log("duration: " + duration);
+            Debug.Log("Easing function calculated Y Position: " + EaseInBack(levelCameraPosition.y, outCameraPosition.y, t));
             cam.transform.position = new Vector3(
-                Mathf.SmoothStep(camX, endMarker.x, t), 
-                Mathf.SmoothStep(camY, endMarker.y, t), 
-                cam.transform.position.z
+                EaseInBack(levelCameraPosition.x / 4, outCameraPosition.x, t), 
+                EaseInBack(levelCameraPosition.y / 4, outCameraPosition.y, t), 
+                levelCameraPosition.z
             );
             
-            if (Vector3.Distance(cam.transform.position, endMarker) < 1f) {
+            if (Vector3.Distance(cam.transform.position, outCameraPosition) < 1f) {
                 Scene currentScene = SceneManager.GetActiveScene();
-                SceneManager.LoadScene(currentScene.buildIndex + 1);
+                SceneManager.LoadSceneAsync(currentScene.buildIndex + 1);
             }
         }
     }

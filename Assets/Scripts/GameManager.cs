@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     SceneHandler sceneHandler;
     int totalBuildings;
     int totalFire;
+
+    bool nextLevelCalled = false;
     private void Awake()
     {
         instance = this;
@@ -26,8 +28,23 @@ public class GameManager : MonoBehaviour
     {
         int remaingBuildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING).Count;
         Debug.Log(remaingBuildings);
-        if (totalBuildings != 0 && remaingBuildings == 0) {
+        if (totalBuildings != 0 && remaingBuildings == 0 && !nextLevelCalled) {
+            nextLevelCalled = true;
             sceneHandler.NextLevel();
         }
+
+        if(Input.GetKeyDown(KeyCode.R)){
+            restart();
+        }
+    }
+
+    public void lose(){
+        //TODO sad sound.
+        restart();
+    } 
+
+    public void restart(){
+        //Reload the level
+
     }
 }
