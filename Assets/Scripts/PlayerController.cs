@@ -44,7 +44,10 @@ public class PlayerController : MonoBehaviour
         mousePosCell.z = 0;
         Debug.Log($"mouse pos world: {mousePosWorld} mouse pos cell: {mousePosCell}");
         
-        if(state == PlayerState.ready){
+        if (SceneHandler.IsTransitioning()) {
+            gridIcon.SetActive(false);
+        }
+        else if(state == PlayerState.ready){
             gridIcon.SetActive(true);
             gridIcon.transform.position =  Vector3.ClampMagnitude(worldMap.grid.GetCellCenterWorld(mousePosCell), 150);
             
