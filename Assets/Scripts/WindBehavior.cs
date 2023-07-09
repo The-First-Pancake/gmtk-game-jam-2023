@@ -11,7 +11,7 @@ public class WindBehavior : MonoBehaviour
     void Start()
     {
         windDir = TileBehavior.NEIGHBOR_COORDS[UnityEngine.Random.Range(0, TileBehavior.NEIGHBOR_COORDS.Length - 1)];
-        InvokeRepeating("WindChange", .5f, 2f);
+        InvokeRepeating("WindChange", .5f, 4f);
     }
 
     // Update is called once per frame
