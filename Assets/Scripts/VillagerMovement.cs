@@ -102,6 +102,7 @@ public class VillagerMovement : MonoBehaviour
     }
 
     public List<Vector3> PathFind(TileBehavior start, TileBehavior end) {
+        int iterations = 0;
         List<PathFindingNode> open_list = new List<PathFindingNode>();
         List<PathFindingNode> closed_list = new List<PathFindingNode>();
 
@@ -111,6 +112,9 @@ public class VillagerMovement : MonoBehaviour
         open_list.Add(startNode);
 
         while (open_list.Count > 0) {
+            if (iterations++ > 500) {
+                return null;
+            }
             PathFindingNode currentNode = open_list[0];
             foreach (PathFindingNode node in open_list) {
                 if (node.fCost < currentNode.fCost || node.fCost == currentNode.fCost && node.hCost < currentNode.hCost) {
