@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
             (TileBehavior closestFireTile, float dist) = getClosestFireTile(mousePosCell);
 
             //Check for invalid shot
-            bool validShot = checkValidShot(mouseTile, dist);
+            bool validShot = checkValidShot(mouseTile, dist, closestFireTile);
             if(validShot){
                 validShotGFX();
             } else {
@@ -68,18 +68,18 @@ public class PlayerController : MonoBehaviour
                 //othewise
                 //Fire hasn't started yet. Tiem to do lightnig
                 
-                if(Input.GetMouseButtonDown(0) && validShot){
+                if(Input.GetMouseButtonDown(0) && validShot && !usedLightning){
                     StartCoroutine(LightningSequence(mouseTile));
                     usedLightning = true;
                 }
                 return;
             }
+            
             if(mouseTile != closestFireTile){
                 drawArc(closestFireTile, mouseTile);
             } else {
                 lr.enabled = false; 
             }
-            
 
             if(Input.GetMouseButtonDown(0) && validShot){
                 StartCoroutine(ShootProjectile(closestFireTile, mouseTile));
@@ -164,12 +164,13 @@ public class PlayerController : MonoBehaviour
         return (output, pathLength);
     }
 
-    bool checkValidShot(TileBehavior tile, float dist){
+    bool checkValidShot(TileBehavior tile, float dist, TileBehavior closestFireTile){
         if(tile == null){return false;}
         bool burning = tile.Fire.state == FireBehaviour.burnState.burning;
         bool invalidTerrain = tile.Fire.flambilityScore == 0;
         bool tooFar = dist > maxRange;
-        return !(burning || invalidTerrain || tooFar);
+        bool alreadyUsedLightning = !closestFireTile && usedLightning;
+        return !(burning || invalidTerrain || tooFar || alreadyUsedLightning);
     }
     void invalidShotGFX(){
         lr.startColor = invalidColor;
