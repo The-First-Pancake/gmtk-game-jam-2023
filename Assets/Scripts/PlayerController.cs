@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
         
         if(state == PlayerState.ready){
-            gridIcon.SetActive(true);
+            gridIcon.GetComponent<SpriteRenderer>().enabled = true;
             gridIcon.transform.position =  Vector3.ClampMagnitude(worldMap.grid.GetCellCenterWorld(mousePosCell), 150);
 
             TileBehavior mouseTile = WorldMap.instance.GetTopTile(mousePosCell);
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         else if (state == PlayerState.cooldown){
-            gridIcon.SetActive(false);
+            gridIcon.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 
