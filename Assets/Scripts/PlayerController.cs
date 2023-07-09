@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject lightningGFX;
 
+    [HideInInspector]
+    public bool usedLightning = false;
+
     PlayerState state = PlayerState.ready;
     // Start is called before the first frame update
     void Start()
@@ -56,10 +59,19 @@ public class PlayerController : MonoBehaviour
             }
 
             if(closestFireTile == null){
+
+                if(usedLightning == true){
+                    Debug.Log("YOU LOSE IDIOT");
+                    GameManager.instance.lose();
+                    return;
+                }
+
+                //othewise
                 //Fire hasn't started yet. Tiem to do lightnig
                 lr.enabled = false;
                 if(Input.GetMouseButtonDown(0) && validShot){
                     StartCoroutine(LightningSequence(mouseTile));
+                    usedLightning = true;
                 }
                 return;
             }
@@ -91,10 +103,7 @@ public class PlayerController : MonoBehaviour
         Vector3Int isodir = (target.IsoCoordinates - origin.IsoCoordinates);
         Vector3 dir = worldMap.grid.CellToWorld(isodir).normalized;
 
-        
         float launchAngle = Vector3.SignedAngle(dir, Vector3.right,Vector3.back) + 180;
-
-        
         
         GameObject newProjectile = Instantiate(projectile, origin.WorldCoordinates, Quaternion.Euler(new Vector3(0,0,launchAngle)));
         GameObject newProjectileShadow = newProjectile.GetComponentInChildren<SpriteRenderer>().gameObject;
