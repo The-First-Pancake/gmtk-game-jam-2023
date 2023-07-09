@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
         Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int mousePosCell = worldMap.grid.WorldToCell(mousePosWorld);
         mousePosCell.z = 0;
-        Debug.Log($"mouse pos world: {mousePosWorld} mouse pos cell: {mousePosCell}");
         
         if (SceneHandler.IsTransitioning()) {
             gridIcon.SetActive(false);
@@ -50,8 +49,6 @@ public class PlayerController : MonoBehaviour
         else if(state == PlayerState.ready){
             gridIcon.SetActive(true);
             gridIcon.transform.position =  Vector3.ClampMagnitude(worldMap.grid.GetCellCenterWorld(mousePosCell), 150);
-            
-            Debug.Log($"Cell center: {worldMap.grid.GetCellCenterWorld(mousePosCell)} ");
 
             TileBehavior mouseTile = WorldMap.instance.GetTopTile(mousePosCell);
             
