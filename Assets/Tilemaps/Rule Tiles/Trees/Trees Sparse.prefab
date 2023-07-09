@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6188174319425920012, guid: 51e451f18efc31b49a4943630a180172, type: 3}
       propertyPath: sustain
-      value: 40
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6188174319425920012, guid: 51e451f18efc31b49a4943630a180172, type: 3}
       propertyPath: flambilityScore

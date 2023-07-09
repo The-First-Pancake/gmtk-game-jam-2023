@@ -99,6 +99,7 @@ public class FireBehaviour : MonoBehaviour
     public void ignite()
     {
         if(state == burnState.burning){return;}
+        if(flambilityScore == 0){return;}
         state = burnState.burning;
         timeStartedBurning = Time.time;
         spawnedFire = Instantiate(firePrefab);
