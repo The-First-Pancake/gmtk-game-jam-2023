@@ -94,8 +94,8 @@ MonoBehaviour:
   SeenFires: []
   StateMachineTickRateSeconds: 0.1
   FireSenseDistanceSquares: 5
-  RoamSpeed: 25
-  FireSpeed: 50
+  RoamSpeed: 0.1
+  FireSpeed: 0.2
 --- !u!212 &3435938022530975578
 SpriteRenderer:
   m_ObjectHideFlags: 0
