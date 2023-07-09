@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         int remaingBuildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING).Count;
-        Debug.Log(remaingBuildings);
         if (totalBuildings != 0 && remaingBuildings == 0 && !nextLevelCalled) {
             nextLevelCalled = true;
             

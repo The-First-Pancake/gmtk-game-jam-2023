@@ -25,6 +25,10 @@ public class FireBehaviour : MonoBehaviour
     private Sprite[] burnoutSprites;
     [SerializeField]
     private IsometricRuleTile[] burnoutTiles;
+    [SerializeField]
+    private GameObject[] burnoutGameObjects;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -99,27 +103,29 @@ public class FireBehaviour : MonoBehaviour
         state = burnState.unburnt;
         sustain = (timeStartedBurning + sustain) - Time.time;
         deleteParticles();
-
     }
 
     public void burnComplete()
     {
         if(state != burnState.burning) { Debug.Log("What the hell oh my god"); return; }
 
-        if (destroyAfterBurnOut)
+        if (burnoutSprites.Length > 0)
         {
-            if (burnoutSprites.Length > 0)
-            {
-                Vector3 noisyPos = transform.position + new Vector3(Random.Range(-.10f, .10f), Random.Range(-.10f, -.10f), 0);
-                GameObject newSpawned = Instantiate((Resources.Load("Burnout Sprite Prefab") as GameObject), noisyPos, transform.rotation);
-                newSpawned.GetComponent<SpriteRenderer>().sprite = burnoutSprites[Random.Range(0, burnoutSprites.Length - 1)];
-            }
-            tileBehavior.DeleteTile();
+            Vector3 noisyPos = transform.position + new Vector3(Random.Range(-.10f, .10f), Random.Range(-.10f, -.10f), 0);
+            GameObject newSpawned = Instantiate((Resources.Load("Burnout Sprite Prefab") as GameObject), noisyPos, transform.rotation);
+            newSpawned.GetComponent<SpriteRenderer>().sprite = burnoutSprites[Random.Range(0, burnoutSprites.Length - 1)];
         }
-        if (burnoutTiles.Length > -0) {
+        if (burnoutTiles.Length > 0) {
             tileBehavior.tilemap.SetTile(tileBehavior.IsoCoordinates, burnoutTiles[Random.Range(0, burnoutSprites.Length - 1)]);
         }
-
+        if (burnoutGameObjects.Length > 0) {
+            var newGO = Instantiate(burnoutGameObjects[Random.Range(0, burnoutSprites.Length - 1)]);
+            newGO.transform.position = tileBehavior.WorldCoordinates;
+        }
+        if (destroyAfterBurnOut)
+        {
+            tileBehavior.DeleteTile();
+        }
         deleteParticles();
 
         state = burnState.unburnt;
@@ -150,6 +156,7 @@ public class FireBehaviour : MonoBehaviour
 
     void deleteParticles()
     {
+        if(spawnedFire == null){return;}
         var ps = spawnedFire.GetComponent<ParticleSystem>();
         ps.Stop();
         Destroy(spawnedFire, ps.main.startLifetime.constant); //Destroy particle effect after its finished

@@ -13,6 +13,6 @@ public class WindIndicator : MonoBehaviour
     void Update()
     {
         float angle = -Vector3.SignedAngle(WorldMap.instance.grid.WorldToCell(Vector3.down), GameManager.instance.wind.GetIsoWindDir(), WorldMap.instance.grid.WorldToCell(Vector3.back));
-        transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+        transform.localRotation = Quaternion.Euler(new Vector3(0, angle, 0));
     }
 }
