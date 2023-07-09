@@ -48,12 +48,8 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        Debug.Log("Total Buildings: " + totalBuildings);
-        
-
+    {      
         int remaingBuildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING).Count;
-        Debug.Log("Remaining Buildings: " + remaingBuildings);
         if (totalBuildings != 0 && remaingBuildings == 0 && !nextLevelCalled) {
             nextLevelCalled = true;
             levelOutcome = "WIN";
