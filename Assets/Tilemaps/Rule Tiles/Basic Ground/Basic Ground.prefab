@@ -61,6 +61,10 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2537774669494516959, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
+      propertyPath: cannotBeSpreadFrom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2537774669494516959, guid: 6d221801b31797b4689fb65e6aa2235b, type: 3}
       propertyPath: destroyAfterBurnOut
       value: 0
       objectReference: {fileID: 0}

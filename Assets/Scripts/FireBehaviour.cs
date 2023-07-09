@@ -8,8 +8,9 @@ public class FireBehaviour : MonoBehaviour
 
     public float flambilityScore = .5f; //Base chance of being spread to each second (assuming completly surrounded by fire)
     public float sustain = 5;
+    private float burnProgress = 0;
     public float dangerRating= 0;
-    private float timeStartedBurning = 0;
+    public float timeStartedBurning = 0;
     public burnState state = burnState.unburnt;
     public GameObject firePrefab;
     private GameObject spawnedFire;
@@ -17,6 +18,8 @@ public class FireBehaviour : MonoBehaviour
     private TileBehavior tileBehavior;
 
     static private float spreadInterval = .25f;
+
+    public bool cannotBeSpreadFrom = false;
 
     [Header("Burnout Behavior")]
     [SerializeField]
@@ -33,6 +36,7 @@ public class FireBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         tileBehavior = GetComponent<TileBehavior>();
         sustain *= Random.Range(0.9f, 1.1f); //Noise applied to sustain
         InvokeRepeating("onSpread", Random.Range(0,spreadInterval), spreadInterval);
@@ -47,7 +51,9 @@ public class FireBehaviour : MonoBehaviour
         {
             updateDanger();
             //Tickup running burn time, check if we've passed sustain
-            if (Time.time > timeStartedBurning + sustain)
+            
+            burnProgress = ((timeStartedBurning + sustain) - Time.time)/sustain;
+            if (burnProgress >= 1)
             {
                 burnComplete();
             }
@@ -101,7 +107,6 @@ public class FireBehaviour : MonoBehaviour
     public void extinguish()
     {
         state = burnState.unburnt;
-        sustain = (timeStartedBurning + sustain) - Time.time;
         deleteParticles();
     }
 

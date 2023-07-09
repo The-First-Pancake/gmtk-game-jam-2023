@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Color validColor;
     public Color invalidColor;
     public float projectileSpeed = 2;
+    public float postLandingCooldown = 0f;
     public GameObject projectile;
 
     [SerializeField]
@@ -129,12 +130,15 @@ public class PlayerController : MonoBehaviour
 
         
         target.Fire.ignite();
-        state = PlayerState.ready;
 
+        //Turn off projectile visuals
         newProjectile.GetComponent<SpriteRenderer>().enabled = false;
         newProjectile.GetComponentInChildren<ParticleSystem>().Stop();
+
+        yield return new WaitForSeconds(postLandingCooldown);
+        state = PlayerState.ready;
         yield return new WaitForSeconds(5);
-        Destroy(newProjectile);
+        Destroy(newProjectile); //delete projectile after the visuals were able to cool down
     }
 
     (Vector3[], float) getParabolaPath(TileBehavior origin, TileBehavior target){
@@ -198,6 +202,9 @@ public class PlayerController : MonoBehaviour
         float closestFireDistance = Mathf.Infinity;
         foreach(TileBehavior burningTile in burningTiles){
             float dist = (burningTile.IsoCoordinates - mousePosCell).magnitude;
+            if(burningTile.Fire.cannotBeSpreadFrom == true){
+                continue;
+            }
             if(dist < closestFireDistance){
                 closestTile = burningTile;
                 closestFireDistance = dist;
