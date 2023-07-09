@@ -184,6 +184,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fee2a4c5874a492dac3f5d556923016, type: 3}
+--- !u!20 &706828350 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 486107962671989740, guid: 12c94034f9ba5ee4ab6a2429eb2eff0c, type: 3}
+  m_PrefabInstance: {fileID: 663813735571550068}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &823642246
 GameObject:
   m_ObjectHideFlags: 0
@@ -10646,6 +10651,10 @@ PrefabInstance:
       propertyPath: m_AnimatedTiles.Array.data[11].second.m_AnimatedSprites.Array.data[5]
       value: 
       objectReference: {fileID: 1838118917, guid: d9f5e548190c9ba429c5a9a3bfae1424, type: 3}
+    - target: {fileID: 1229347882070091422, guid: c475924cc23f5654aaa57fbd25e651c4, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 706828350}
     - target: {fileID: 4866029162818953115, guid: c475924cc23f5654aaa57fbd25e651c4, type: 3}
       propertyPath: m_Size.y
       value: 67
@@ -30783,7 +30792,8 @@ PrefabInstance:
       value: 0.43333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1997958309983618568, guid: c475924cc23f5654aaa57fbd25e651c4, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c475924cc23f5654aaa57fbd25e651c4, type: 3}

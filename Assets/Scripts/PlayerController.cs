@@ -40,14 +40,15 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosWorld.z = 0;
         Vector3Int mousePosCell = worldMap.grid.WorldToCell(mousePosWorld);
         mousePosCell.z = 0;
-
+        Debug.Log($"mouse pos world: {mousePosWorld} mouse pos cell: {mousePosCell}");
         
         if(state == PlayerState.ready){
-            gridIcon.GetComponent<SpriteRenderer>().enabled = true;
+            gridIcon.SetActive(true);
             gridIcon.transform.position =  Vector3.ClampMagnitude(worldMap.grid.GetCellCenterWorld(mousePosCell), 150);
+            
+            Debug.Log($"Cell center: {worldMap.grid.GetCellCenterWorld(mousePosCell)} ");
 
             TileBehavior mouseTile = WorldMap.instance.GetTopTile(mousePosCell);
             
@@ -79,15 +80,19 @@ public class PlayerController : MonoBehaviour
                 }
                 return;
             }
-            drawArc(closestFireTile, mouseTile);
+            if(mouseTile != closestFireTile){
+                drawArc(closestFireTile, mouseTile);
+            } else {
+                lr.enabled = false; 
+            }
+            
 
             if(Input.GetMouseButtonDown(0) && validShot){
                 StartCoroutine(ShootProjectile(closestFireTile, mouseTile));
             }
         }
         else if (state == PlayerState.cooldown){
-            gridIcon.GetComponent<SpriteRenderer>().enabled = false;
-            gridIcon.GetComponent<LineRenderer>().enabled = false;
+            gridIcon.SetActive(false);
         }
     }
 
