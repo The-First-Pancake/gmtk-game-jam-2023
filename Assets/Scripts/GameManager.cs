@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    [HideInInspector]
     public WindBehavior wind;
     SceneHandler sceneHandler;
     PlayerController playerController;
@@ -64,6 +65,10 @@ public class GameManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.R) && !sceneHandler.IsTransitioning()){
             restart();
+        }
+
+        if(Input.GetKeyDown(KeyCode.N) && !sceneHandler.IsTransitioning()){
+            sceneHandler.NextLevel();
         }
 
         if(Input.GetKeyDown(KeyCode.Escape) && !sceneHandler.IsTransitioning()){
