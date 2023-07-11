@@ -188,6 +188,8 @@ public class PlayerController : MonoBehaviour
     }
 
     void drawArc(TileBehavior origin, TileBehavior target){
+        //if(Time.timeSinceLevelLoad < .1f) { return; } //TODO make this less bad (this is here b/c sometimes on the first frame of a level it'll try to draw the parab and fail). This is supposed to be gated by the isTransitioning function, but that don't always work.
+        //On second thought maybe its on the last frame of the level, since this fix didn't stop the error lol
         (Vector3[] path, float shitballs) = getParabolaPath(origin, target);
         lr.enabled = true;
         lr.positionCount = path.Length;

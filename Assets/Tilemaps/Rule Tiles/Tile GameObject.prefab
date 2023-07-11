@@ -72,9 +72,9 @@ MonoBehaviour:
   timeStartedBurning: 0
   state: 0
   firePrefab: {fileID: 4666961168873278341, guid: e809512634afd6a45b3eb1eae6eae355, type: 3}
-  ignitionIndicator: {fileID: 4458365773425746247, guid: 2fe79c1982a6d3d4a8ec4ee4270fb21a, type: 3}
   cannotBeSpreadFrom: 0
   destroyAfterBurnOut: 0
   burnoutSprites: []
   burnoutTiles: []
   burnoutGameObjects: []
+  burnoutSpriteObjectPrefab: {fileID: 2366841241410158110, guid: 025815b64ef315d4db0dc5794693dda3, type: 3}

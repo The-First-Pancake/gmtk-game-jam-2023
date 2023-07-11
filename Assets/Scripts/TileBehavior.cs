@@ -43,21 +43,53 @@ public class TileBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(tilemap == null){tilemap = GetComponentInParent<Tilemap>();}
+
         Fire = GetComponent<FireBehaviour>();
         Transform transform = GetComponent<Transform>();
         WorldCoordinates = transform.position;
-        tilemap = GetComponentInParent<Tilemap>();
         IsoCoordinates = tilemap.WorldToCell(WorldCoordinates);
-        ThisTile = tilemap.GetTile<IsometricRuleTile>(IsoCoordinates);
-        TilemapRenderer renderer = GetComponentInParent<TilemapRenderer>();
-        if (renderer.sortingLayerName == "Default") {
-            IsUpper = false;
-        } else if (renderer.sortingLayerName == "Buildings") {
-            IsUpper = true;
-        } else {
-            Debug.LogWarning("TilemapRenderer in parent does not have a valid sorting layer");
+        ThisTile = tilemap.GetTile<IsometricRuleTile>(IsoCoordinates); //Unused
+
+
+        if (transform.parent == WorldMap.instance.transform)
+        {
+            //We are the one true gameobject. We get to live on
+            WorldMap.instance.PublishTile(IsoCoordinates, gameObject);
         }
-        WorldMap.instance.PublishTile(IsoCoordinates, gameObject);
+        else
+        {
+            tilemap = GetComponentInParent<Tilemap>();
+
+            if (WorldMap.instance.tileAlreadyExists(IsoCoordinates, gameObject))
+            {
+                //Delete self. Give up. Die. You're ugly. you're Disgusting. I'm going to Kill you. Give me $200
+                Destroy(gameObject);
+            }
+            else
+            {
+                //Move over to the correct parent (worldmap), then delete self
+                GameObject theChosenOne = Instantiate(gameObject);
+                theChosenOne.transform.parent = WorldMap.instance.transform;
+                theChosenOne.transform.position = transform.position;
+                theChosenOne.transform.rotation = transform.rotation;
+                TilemapRenderer renderer = GetComponentInParent<TilemapRenderer>();
+
+                //Note which tilemap we used to be a part of
+                TileBehavior chosenOneTileBehav = theChosenOne.GetComponent<TileBehavior>();
+
+                chosenOneTileBehav.tilemap = tilemap;
+
+                if (renderer.sortingLayerName == "Default"){IsUpper = false;}
+                else if (renderer.sortingLayerName == "Buildings"){IsUpper = true;}
+                else{ Debug.LogWarning("TilemapRenderer in parent does not have a valid sorting layer");}
+                chosenOneTileBehav.IsUpper = this.IsUpper;
+                Destroy(gameObject);
+            }
+        }
+
+ 
+            
     }
 
     // Update is called once per frame

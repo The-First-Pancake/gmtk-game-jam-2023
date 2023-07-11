@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FireBehaviour : MonoBehaviour
 {
@@ -8,7 +9,6 @@ public class FireBehaviour : MonoBehaviour
 
     public float flambilityScore = .5f; //Base chance of being spread to each second (assuming completly surrounded by fire)
     public float sustain = 5;
-    private float burnProgress = 0;
     public float dangerRating= 0;
     public float timeStartedBurning = 0;
     public burnState state = burnState.unburnt;
@@ -16,8 +16,6 @@ public class FireBehaviour : MonoBehaviour
     private GameObject spawnedFire;
 
     private TileBehavior tileBehavior;
-
-    static private float spreadInterval = .25f;
 
     public bool cannotBeSpreadFrom = false;
 
@@ -30,30 +28,27 @@ public class FireBehaviour : MonoBehaviour
     private IsometricRuleTile[] burnoutTiles;
     [SerializeField]
     private GameObject[] burnoutGameObjects;
+    [SerializeField]
+    private GameObject burnoutSpriteObjectPrefab;
 
     
 
     // Start is called before the first frame update
     void Start()
     {
-        
         tileBehavior = GetComponent<TileBehavior>();
         sustain *= Random.Range(0.9f, 1.1f); //Noise applied to sustain
-        InvokeRepeating("onSpread", Random.Range(0,spreadInterval), spreadInterval);
-
-
+        GameManager.instance.spreadTick.AddListener(new UnityAction(onSpread));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (state == burnState.burning)
-        {
+        if (state == burnState.burning) { 
             updateDanger();
             //Tickup running burn time, check if we've passed sustain
             
-            burnProgress = (Time.time - (timeStartedBurning))/sustain;
-            if (burnProgress >= 1)
+            if (timeStartedBurning + sustain <= Time.time)
             {
                 burnComplete();
             }
@@ -67,7 +62,7 @@ public class FireBehaviour : MonoBehaviour
         if (state == burnState.unburnt){
             //Advanced coding and algorithms
 
-            float igniteProbability = tickRateProbabilityCompensation(bruningNeighborsFactor() * flambilityScore) ;
+            float igniteProbability = tickRateProbabilityCompensation(burningNeighborsFactor() * flambilityScore) ;
             
             if (igniteProbability > Random.Range(0f, 1f))
             {
@@ -79,7 +74,7 @@ public class FireBehaviour : MonoBehaviour
     float tickRateProbabilityCompensation(float prob){
 
         if(prob == 0){return 0;}
-        float spreadsPerSec = (1/spreadInterval);
+        float spreadsPerSec = (1/GameManager.spreadTickInterval);
         float output = 1f-Mathf.Pow((1f-prob),(1f/spreadsPerSec));
         return output;
     }
@@ -104,6 +99,7 @@ public class FireBehaviour : MonoBehaviour
         timeStartedBurning = Time.time;
         spawnedFire = Instantiate(firePrefab);
         spawnedFire.transform.position = tileBehavior.WorldCoordinates;
+        spawnedFire.transform.parent = this.transform;
     }
     public void extinguish()
     {
@@ -113,19 +109,19 @@ public class FireBehaviour : MonoBehaviour
 
     public void burnComplete()
     {
-        if(state != burnState.burning) { Debug.Log("What the hell oh my god"); return; }
-
+        if (state != burnState.burning) { Debug.Log("What the hell oh my god"); return; }
+        state = burnState.unburnt;
         if (burnoutSprites.Length > 0)
         {
             Vector3 noisyPos = transform.position + new Vector3(Random.Range(-.10f, .10f), Random.Range(-.10f, -.10f), 0);
-            GameObject newSpawned = Instantiate((Resources.Load("Burnout Sprite Prefab") as GameObject), noisyPos, transform.rotation);
-            newSpawned.GetComponent<SpriteRenderer>().sprite = burnoutSprites[Random.Range(0, burnoutSprites.Length - 1)];
+            GameObject newSpawned = Instantiate(burnoutSpriteObjectPrefab, noisyPos, transform.rotation);
+            newSpawned.GetComponent<SpriteRenderer>().sprite = burnoutSprites[Random.Range(0, burnoutSprites.Length)];
         }
         if (burnoutTiles.Length > 0) {
-            tileBehavior.tilemap.SetTile(tileBehavior.IsoCoordinates, burnoutTiles[Random.Range(0, burnoutSprites.Length - 1)]);
+            tileBehavior.tilemap.SetTile(tileBehavior.IsoCoordinates, burnoutTiles[Random.Range(0, burnoutSprites.Length)]);
         }
         if (burnoutGameObjects.Length > 0) {
-            var newGO = Instantiate(burnoutGameObjects[Random.Range(0, burnoutSprites.Length - 1)]);
+            var newGO = Instantiate(burnoutGameObjects[Random.Range(0, burnoutSprites.Length)]);
             newGO.transform.position = tileBehavior.WorldCoordinates;
         }
         if (destroyAfterBurnOut)
@@ -134,10 +130,10 @@ public class FireBehaviour : MonoBehaviour
         }
         deleteParticles();
 
-        state = burnState.unburnt;
+
     }
 
-    float bruningNeighborsFactor() // value between 0 and 2 that will modify the likelyhood of neighboring tiles catching on fire
+    float burningNeighborsFactor() // value between 0 and 2 that will modify the likelyhood of neighboring tiles catching on fire
     {
         List<TileBehavior> neighbors = tileBehavior.GetNeighbors();
 
