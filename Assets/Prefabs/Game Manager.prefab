@@ -563,7 +563,7 @@ Transform:
   - {fileID: 3858132290874658898}
   - {fileID: 5181349458820769413}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3618554682896805547
 MonoBehaviour:
@@ -578,6 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wind: {fileID: 0}
+  mute: 0
   peacfulMusic: {fileID: 7856771961841077075}
   musicLevels:
   - {fileID: 49290414624857698}
@@ -587,6 +588,11 @@ MonoBehaviour:
   - {fileID: 8026352333364219244}
   - {fileID: 2535940099041796966}
   musicLevelThresholds: 010000000a000000190000003200000064000000c8000000
+  debugMessage: {fileID: 3687829441632637369, guid: d7f78498b3fe8ff418252b49d23474f2, type: 3}
+  debugTile: {fileID: 4458365773425746247, guid: 2fe79c1982a6d3d4a8ec4ee4270fb21a, type: 3}
+  spreadTick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8386628355637925731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,7 +621,7 @@ MonoBehaviour:
   maxRange: 5
   validColor: {r: 1, g: 1, b: 1, a: 0.33333334}
   invalidColor: {r: 1, g: 0.32452828, b: 0.32452828, a: 0.49019608}
-  projectileSpeed: 1.5
+  projectileSpeed: 2.5
   postLandingCooldown: 0.25
   projectile: {fileID: 427563794674964962, guid: c068c5e3bb0c00742accc09584510eb0, type: 3}
   lightningGFX: {fileID: 7520491419621928241, guid: 318fb3edbae51b849bfd493afe489463, type: 3}
@@ -633,8 +639,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2568188cf75f314c886fb87b960306b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inCameraPosition: {x: 0, y: 15, z: -10}
-  outCameraPosition: {x: 0, y: -15, z: -10}
+  inCameraPosition: {x: 0, y: 15}
+  outCameraPosition: {x: 0, y: -15}
 --- !u!82 &5770356065622560922
 AudioSource:
   m_ObjectHideFlags: 0

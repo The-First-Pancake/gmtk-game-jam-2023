@@ -9,13 +9,14 @@ public class SceneHandler : MonoBehaviour
     // public GameObject MainMenuContainer;
     // public GameObject CreditsContainer;
     private Camera cam;
-    public Vector3 inCameraPosition;
-    public Vector3 outCameraPosition;
+    public Vector2 inCameraPosition = new Vector2(0,15);
+    public Vector2 outCameraPosition = new Vector2(0, -15);
     private Vector3 levelCameraPosition = new Vector3(0, 0, -10);
     private bool startTransitionOut = false;
     private bool startTransitionIn = false;
     private bool startTransitionRestart = false;
     private bool startTransitionBackToMenu = false;
+    private bool levelLoading = false;
     private bool isRestarting = false;
     private float duration = 0.75f;
     private float startTime;
@@ -39,7 +40,7 @@ public class SceneHandler : MonoBehaviour
     }
 
     public bool IsTransitioning(){
-        return startTransitionOut || startTransitionIn || startTransitionRestart || startTransitionBackToMenu || isRestarting || (SceneManager.GetActiveScene().name == "Main_Menu");
+        return startTransitionOut || startTransitionIn || startTransitionRestart || startTransitionBackToMenu || isRestarting || levelLoading || (SceneManager.GetActiveScene().name == "Main_Menu");
     }
 
     public void LevelTransitionOut() {
@@ -94,7 +95,8 @@ public class SceneHandler : MonoBehaviour
                 levelCameraPosition.z
             );
             
-            if (Vector3.Distance(cam.transform.position, outCameraPosition) < 1f) {
+            if (Vector2.Distance(cam.transform.position, levelCameraPosition) > Vector2.Distance(outCameraPosition, levelCameraPosition)) {
+                levelLoading = true;
                 startTransitionOut = false;
                 Scene currentScene = SceneManager.GetActiveScene();
                 SceneManager.LoadSceneAsync(currentScene.buildIndex + 1);
@@ -111,7 +113,7 @@ public class SceneHandler : MonoBehaviour
                 levelCameraPosition.z
             );
             
-            if (Vector3.Distance(cam.transform.position, inCameraPosition) < 1f) {
+            if (Vector2.Distance(cam.transform.position, levelCameraPosition) > Vector2.Distance(inCameraPosition, levelCameraPosition)){
                 Scene currentScene = SceneManager.GetActiveScene();
                 SceneManager.LoadSceneAsync(currentScene.buildIndex);
                 startTransitionRestart = false;
@@ -128,7 +130,7 @@ public class SceneHandler : MonoBehaviour
                 levelCameraPosition.z
             );
             
-            if (Vector3.Distance(cam.transform.position, inCameraPosition) < 1f) {
+            if (Vector2.Distance(cam.transform.position, inCameraPosition) < 1f) {
                 SceneManager.LoadSceneAsync(0);
                 startTransitionBackToMenu = false;
             }

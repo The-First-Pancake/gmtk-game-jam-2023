@@ -5,7 +5,7 @@ using UnityEngine;
 public class ParticleRespondToWind : MonoBehaviour
 {
     private ParticleSystem _particleSystem;
-    private float WindForceMultiplier = .1f;
+    private float WindForceMultiplier = .15f;
     private Vector2 startingSmokeDirection;
     // Start is called before the first frame update
     void Start()
