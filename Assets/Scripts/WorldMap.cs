@@ -77,6 +77,10 @@ public class WorldMap : MonoBehaviour
     }
 
     public bool tileOutOfBound(Vector3Int coords){
+        bool output = (coords.x >= 50 || coords.x < -50 || coords.y >= 50 || coords.y < -50);
+        if (output) {
+            Debug.Log($"Attempted to apply worldmap change to out of bounds tile at {coords.x}, {coords.y}");
+        }
         return (coords.x >= 50 || coords.x < -50 || coords.y >= 50 || coords.y < -50);
     }
 

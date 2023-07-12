@@ -46,7 +46,6 @@ public class TileBehavior : MonoBehaviour
         if(tilemap == null){tilemap = GetComponentInParent<Tilemap>();}
 
         Fire = GetComponent<FireBehaviour>();
-        Transform transform = GetComponent<Transform>();
         WorldCoordinates = transform.position;
         IsoCoordinates = tilemap.WorldToCell(WorldCoordinates);
         ThisTile = tilemap.GetTile<IsometricRuleTile>(IsoCoordinates); //Unused
@@ -59,11 +58,9 @@ public class TileBehavior : MonoBehaviour
         }
         else
         {
-            tilemap = GetComponentInParent<Tilemap>();
-
             if (WorldMap.instance.tileAlreadyExists(IsoCoordinates, gameObject))
             {
-                //Delete self. Give up. Die. You're ugly. you're Disgusting. I'm going to Kill you. Give me $200
+                //Delete self. You're ugly. you're Disgusting. I'm going to Kill you. Give me $200
                 Destroy(gameObject);
             }
             else
@@ -113,5 +110,6 @@ public class TileBehavior : MonoBehaviour
     {
         WorldMap.instance.UnPublishTile(IsoCoordinates, gameObject);
         tilemap.SetTile(IsoCoordinates, null);
+        Destroy(gameObject);
     }
 }

@@ -73,7 +73,7 @@ MonoBehaviour:
   state: 0
   firePrefab: {fileID: 4666961168873278341, guid: e809512634afd6a45b3eb1eae6eae355, type: 3}
   cannotBeSpreadFrom: 0
-  destroyAfterBurnOut: 0
+  destroyAfterBurnOut: 1
   burnoutSprites: []
   burnoutTiles: []
   burnoutGameObjects: []

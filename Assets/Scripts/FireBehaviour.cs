@@ -39,6 +39,12 @@ public class FireBehaviour : MonoBehaviour
         tileBehavior = GetComponent<TileBehavior>();
         sustain *= Random.Range(0.9f, 1.1f); //Noise applied to sustain
         GameManager.instance.spreadTick.AddListener(new UnityAction(onSpread));
+
+        if(burnoutTiles.Length > 0 && destroyAfterBurnOut == true)
+        {
+            Debug.Log($"Trying to spawn a Tile ({gameObject.name}) which is replaced by a burnout tile (which automatically destroys it after burnout for some unidentified reason) that also has 'destroy after burnout' checked. this double destroy break things, so I'll set destroyAfterBurnout to false for you");
+            destroyAfterBurnOut=false;
+        }
     }
 
     // Update is called once per frame
@@ -99,7 +105,7 @@ public class FireBehaviour : MonoBehaviour
         timeStartedBurning = Time.time;
         spawnedFire = Instantiate(firePrefab);
         spawnedFire.transform.position = tileBehavior.WorldCoordinates;
-        spawnedFire.transform.parent = this.transform;
+        //spawnedFire.transform.parent = this.transform; Removed so the particles can hang out for a bit after the gameobject is destroyed.
     }
     public void extinguish()
     {
