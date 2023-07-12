@@ -31,9 +31,7 @@ public class ExplosionBehavior : MonoBehaviour
                     if(checkTile.IsUpper && checkTile.Fire.flambilityScore == 0){
                         checkTile.DeleteTile();
                     }
-                    
                 }
-                
             }
         }
         yield return null;

@@ -109,6 +109,7 @@ public class FireBehaviour : MonoBehaviour
     }
     public void extinguish()
     {
+        if(state != burnState.burning) { return; }
         state = burnState.unburnt;
         deleteParticles();
     }

@@ -179,4 +179,10 @@ public class GameManager : MonoBehaviour
     public void restart(){
         sceneHandler.Restart();
     }
+
+    public (Vector2, Vector2) CameraBounds()
+    {
+        return (Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)), Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0)));
+
+    }
 }

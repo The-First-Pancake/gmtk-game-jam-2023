@@ -89,6 +89,22 @@ public class WorldMap : MonoBehaviour
         return GetTopTile(iso_point);
     }
 
+    public List<TileBehavior> GetAllTilesInCell(Vector3Int coords)
+    {
+        if (tileOutOfBound(coords)) { return null; };
+        WorldTile tile = map[coords.x + 50, coords.y + 50];
+        List<TileBehavior> tileBehaviors = new List<TileBehavior>();
+        if (tile.present_upper)
+        {
+            tileBehaviors.Add( tile.upper_tile);
+        }
+        else if (tile.present_lower)
+        {
+            tileBehaviors.Add(tile.lower_tile);
+        }
+        return tileBehaviors;
+    }
+
     public TileBehavior GetTopTile(Vector3Int coords) {
         if (tileOutOfBound(coords)) { return null;};
         WorldTile tile = map[coords.x + 50, coords.y + 50];
