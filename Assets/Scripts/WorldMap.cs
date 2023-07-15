@@ -37,13 +37,26 @@ public class WorldMap : MonoBehaviour
         }
     }
 
+    public void UnPublishTile(Vector3Int coords, GameObject obj) {
+        if (tileOutOfBound(coords)){return; };
+        if (map[coords.x + 50, coords.y + 50].upper_tile.gameObject == obj) {
+            Debug.Log("Unpublishing Upper");
+            map[coords.x + 50, coords.y + 50].present_upper = false;
+            map[coords.x + 50, coords.y + 50].upper_tile = null;
+        } else if (map[coords.x + 50, coords.y + 50].lower_tile.gameObject == obj) {
+            Debug.Log("Unpublishing Lower");
+            map[coords.x + 50, coords.y + 50].present_lower = false;
+            map[coords.x + 50, coords.y + 50].lower_tile = null;
+        }
+    }
+
     public bool tileAlreadyExists(Vector3Int coords, GameObject obj)
     {
         if (tileOutOfBound(coords)) { return false; };
         TileBehavior tile_behavior = obj.GetComponent<TileBehavior>();
         if (tile_behavior.IsUpper)
         {
-            if(map[coords.x + 50, coords.y + 50].present_upper == true)
+            if (map[coords.x + 50, coords.y + 50].present_upper == true)
             {
                 return true;
             }
@@ -56,19 +69,6 @@ public class WorldMap : MonoBehaviour
             }
         }
         return false;
-    }
-
-    public void UnPublishTile(Vector3Int coords, GameObject obj) {
-        if (tileOutOfBound(coords)){return; };
-        if (map[coords.x + 50, coords.y + 50].upper_tile.gameObject == obj) {
-            Debug.Log("Unpublishing Upper");
-            map[coords.x + 50, coords.y + 50].present_upper = false;
-            map[coords.x + 50, coords.y + 50].upper_tile = null;
-        } else if (map[coords.x + 50, coords.y + 50].lower_tile.gameObject == obj) {
-            Debug.Log("Unpublishing Lower");
-            map[coords.x + 50, coords.y + 50].present_lower = false;
-            map[coords.x + 50, coords.y + 50].lower_tile = null;
-        }
     }
 
     public bool tileOutOfBound(Vector3Int coords){

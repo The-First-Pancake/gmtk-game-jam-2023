@@ -63,27 +63,44 @@ public class FireBehaviour : MonoBehaviour
 
     void onSpread()
     {
-        if(WorldMap.instance.GetTopTile(tileBehavior.IsoCoordinates) != tileBehavior) { return; } //IDo not try to burn if there is a tile above
+        if(state != burnState.burning) { return; }
+        if(WorldMap.instance.GetTopTile(tileBehavior.IsoCoordinates) != tileBehavior) { return; } //Do not try to spread if there is a tile above
 
-        if (state == burnState.unburnt){
-            //Advanced coding and algorithms
+        Vector3 windDir = GameManager.instance.wind.GetIsoWindDir();
 
-            float igniteProbability = tickRateProbabilityCompensation(burningNeighborsFactor() * flambilityScore) ;
-            
-            if (igniteProbability > Random.Range(0f, 1f))
+        foreach (TileBehavior neighbor in tileBehavior.GetNeighbors())
+        {
+            if (neighbor.Fire.state == burnState.unburnt)
             {
-                ignite();
+                //Advanced coding and algorithms
+               
+                Vector3 dirOfNeighbor = neighbor.IsoCoordinates - tileBehavior.IsoCoordinates;
+
+                float igniteProbability = tickRateProbabilityCompensation(windModifier(dirOfNeighbor, windDir) * flambilityScore);
+
+                if (igniteProbability > Random.Range(0f, 1f))
+                {
+                    neighbor.Fire.ignite();
+                }
             }
+        }
+
+        float windModifier(Vector3 neighborDir, Vector3 windDir)
+        {
+            return ((Vector3.Angle(windDir, neighborDir) / 180)) * 2; //should be 2 if aligned, 0 if not
+        }
+
+        float tickRateProbabilityCompensation(float prob)
+        {
+
+            if (prob == 0) { return 0; }
+            float spreadsPerSec = (1 / GameManager.spreadTickInterval);
+            float output = 1f - Mathf.Pow((1f - prob), (1f / spreadsPerSec));
+            return output;
         }
     }
 
-    float tickRateProbabilityCompensation(float prob){
 
-        if(prob == 0){return 0;}
-        float spreadsPerSec = (1/GameManager.spreadTickInterval);
-        float output = 1f-Mathf.Pow((1f-prob),(1f/spreadsPerSec));
-        return output;
-    }
 
     private void updateDanger()
     {
@@ -136,32 +153,8 @@ public class FireBehaviour : MonoBehaviour
             tileBehavior.DeleteTile();
         }
         deleteParticles();
-
-
     }
-
-    float burningNeighborsFactor() // value between 0 and 2 that will modify the likelyhood of neighboring tiles catching on fire
-    {
-        List<TileBehavior> neighbors = tileBehavior.GetNeighbors();
-
-        float burningNeighbors = 0;
-        foreach (TileBehavior neighbor in neighbors)
-        {
-            if (neighbor.gameObject.GetComponent<FireBehaviour>())
-            {
-                if (neighbor.gameObject.GetComponent<FireBehaviour>().state == burnState.burning)
-                {
-                    Vector3 windDir = GameManager.instance.wind.GetIsoWindDir();
-                    Vector3 dirOfBurningNeighbor = neighbor.IsoCoordinates - tileBehavior.IsoCoordinates;
-                    burningNeighbors += neighborWindModifier(dirOfBurningNeighbor, windDir);
-                }
-            }
-        }
-        return burningNeighbors/4 * 1.5f;
-    }
-    float neighborWindModifier(Vector3 neighborDir, Vector3 windDir){
-        return (Vector3.Angle(windDir , neighborDir)/180); //should be 1 if aligned, 0 if not
-    }
+    
 
     void deleteParticles()
     {
