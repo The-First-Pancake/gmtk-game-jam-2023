@@ -63,18 +63,21 @@ public class FireBehaviour : MonoBehaviour
 
     void onSpread()
     {
-        if(WorldMap.instance.GetTopTile(tileBehavior.IsoCoordinates) != tileBehavior) { return; } //IDo not try to burn if there is a tile above
+        if (state != burnState.unburnt) { return; }
+        if(flambilityScore <= 0) { return; }
+        if (WorldMap.instance.GetTopTile(tileBehavior.IsoCoordinates) != tileBehavior) { return; } //IDo not try to burn if there is a tile above
 
-        if (state == burnState.unburnt){
-            //Advanced coding and algorithms
+        //Advanced coding and algorithms
+        float burningNeughtborsFactor = BurningNeighborsFactor();
+        if(burningNeughtborsFactor <= 0) { return; }
 
-            float igniteProbability = tickRateProbabilityCompensation(burningNeighborsFactor() * flambilityScore) ;
+        float igniteProbability = tickRateProbabilityCompensation(burningNeughtborsFactor * flambilityScore) ;
             
-            if (igniteProbability > Random.Range(0f, 1f))
-            {
-                ignite();
-            }
+        if (igniteProbability > Random.Range(0f, 1f))
+        {
+            ignite();
         }
+        
     }
 
     float tickRateProbabilityCompensation(float prob){
@@ -140,18 +143,18 @@ public class FireBehaviour : MonoBehaviour
 
     }
 
-    float burningNeighborsFactor() // value between 0 and 2 that will modify the likelyhood of neighboring tiles catching on fire
+    float BurningNeighborsFactor() // value between 0 and 2 that will modify the likelyhood of neighboring tiles catching on fire
     {
         List<TileBehavior> neighbors = tileBehavior.GetNeighbors();
 
         float burningNeighbors = 0;
+        Vector3 windDir = GameManager.instance.wind.GetIsoWindDir();
         foreach (TileBehavior neighbor in neighbors)
         {
-            if (neighbor.gameObject.GetComponent<FireBehaviour>())
+            if (neighbor.Fire)
             {
-                if (neighbor.gameObject.GetComponent<FireBehaviour>().state == burnState.burning)
+                if (neighbor.Fire.state == burnState.burning)
                 {
-                    Vector3 windDir = GameManager.instance.wind.GetIsoWindDir();
                     Vector3 dirOfBurningNeighbor = neighbor.IsoCoordinates - tileBehavior.IsoCoordinates;
                     burningNeighbors += neighborWindModifier(dirOfBurningNeighbor, windDir);
                 }
