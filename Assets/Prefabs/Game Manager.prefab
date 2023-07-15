@@ -627,7 +627,7 @@ MonoBehaviour:
   maxRange: 5
   validColor: {r: 1, g: 1, b: 1, a: 0.33333334}
   invalidColor: {r: 1, g: 0.32452828, b: 0.32452828, a: 0.49019608}
-  projectileSpeed: 2.5
+  projectileSpeed: 3.5
   postLandingCooldown: 0.25
   projectile: {fileID: 427563794674964962, guid: c068c5e3bb0c00742accc09584510eb0, type: 3}
   lightningGFX: {fileID: 7520491419621928241, guid: 318fb3edbae51b849bfd493afe489463, type: 3}
@@ -763,10 +763,10 @@ MonoBehaviour:
   - Freakin' Sweet
   - Gabbagool!
   - Simply Epic!
-  - Burn Baby Burn!"
+  - Burn Baby Burn!
   - I LOVE FIRE!
   - Well Done! (get it?)
-  - Scortchtastic!
+  - Scortched!
   - To A Crisp!
   losePhrases:
   - So Close!
@@ -777,6 +777,7 @@ MonoBehaviour:
   - Skill Issue
   - 'Error: More Flame Required'
   - Too Many Survivors
+  - Your fire Went Out!
   winLoseText: {fileID: 1306675500662878602}
   credits: {fileID: 0}
 --- !u!1 &2685740661984830801

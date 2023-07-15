@@ -132,28 +132,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 243951722873259610, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
-      propertyPath: m_AnchorMax.x
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 243951722873259610, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 243951722873259610, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 243951722873259610, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 243951722873259610, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 243951722873259610, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -100
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1111082822144016154, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
       propertyPath: m_Name
@@ -32302,18 +32286,6 @@ PrefabInstance:
     - target: {fileID: 7043968218189068632, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
       propertyPath: loseColor.r
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7043968218189068632, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
-      propertyPath: losePhrases.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7043968218189068632, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
-      propertyPath: winPhrases.Array.data[5]
-      value: Burn Baby Burn!
-      objectReference: {fileID: 0}
-    - target: {fileID: 7043968218189068632, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
-      propertyPath: losePhrases.Array.data[8]
-      value: Your fire Went Out!
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
