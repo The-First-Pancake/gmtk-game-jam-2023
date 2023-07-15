@@ -14,8 +14,6 @@ public class ParticleRespondToWind : MonoBehaviour
         ParticleSystem.ForceOverLifetimeModule psfolt = _particleSystem.forceOverLifetime;
 
         startingSmokeDirection = new Vector2(psfolt.x.constant, psfolt.y.constant);
-
-
     }
 
     // Update is called once per frame

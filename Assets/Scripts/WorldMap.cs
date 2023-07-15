@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -23,12 +24,6 @@ public class WorldMap : MonoBehaviour
         map = new WorldTile[100, 100];
         grid = GetComponentInParent<Grid>();
     }
-
-    void Start()
-    {
-
-    }
-
 
     public void PublishTile(Vector3Int coords, GameObject obj) {
         if (tileOutOfBound(coords)) { return; };

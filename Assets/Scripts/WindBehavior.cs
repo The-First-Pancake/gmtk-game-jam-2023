@@ -5,30 +5,36 @@ using UnityEngine;
 
 public class WindBehavior : MonoBehaviour
 {
-    private Vector3Int windDir;
+    public float windAngle;
+    public float windSpeed;
+
+    public float playerWindPush = 60; //Maximum amount thhe player can push on the wind direction
+
+    //wind pull is the measure of how hard the wind will try to change direction on its own
+    public float windPullMagnitude = 30; //Maximum Degrees Per Second of random pull
+    private float windPullDirection;  //Randomly determined direction/multiplier of wind pull
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        windDir = TileBehavior.NEIGHBOR_COORDS[UnityEngine.Random.Range(0, TileBehavior.NEIGHBOR_COORDS.Length - 1)];
-        InvokeRepeating("WindChange", .5f, 1f);
+        windAngle = 90;//UnityEngine.Random.Range(0f, 360f);
+        InvokeRepeating("WindPullChange", .5f, .5f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        windAngle += windPullDirection * windPullMagnitude * Time.deltaTime;
+
+        windAngle += -Input.GetAxisRaw("Horizontal") * playerWindPush * Time.deltaTime;
+
     }
 
-    void WindChange()
+    void WindPullChange()
     {
-        if(UnityEngine.Random.Range(0,100) > 95){
-            int index = Array.IndexOf(TileBehavior.NEIGHBOR_COORDS, windDir);
-            int noise = UnityEngine.Random.Range(-1, 2);
-            int newIndex = mod(index + noise, TileBehavior.NEIGHBOR_COORDS.Length); //wraps index at length of array
-            windDir = TileBehavior.NEIGHBOR_COORDS[newIndex];
-        }
-        
+        windPullDirection = UnityEngine.Random.Range(-1f, 1f);
     }
     int mod(int x, int m)
     {
@@ -36,10 +42,20 @@ public class WindBehavior : MonoBehaviour
     }
     public Vector3 GetWorldWindDir()
     {
-        return WorldMap.instance.grid.CellToWorld(windDir);
+        Vector2 worldCoordinatesOfIsoDir = WorldMap.instance.grid.GetCellCenterWorld(getIsoWindRiInt());
+        Vector2 gridCenterCoordinates = WorldMap.instance.grid.GetCellCenterWorld(Vector3Int.zero);
+        Vector2 postionAdjustedWorldWindDir = worldCoordinatesOfIsoDir - gridCenterCoordinates;
+        return postionAdjustedWorldWindDir.normalized;
     }
-    public Vector3Int GetIsoWindDir()
+    public Vector3 GetIsoWindDir()
     {
-        return windDir;
+        float radians = windAngle * Mathf.Deg2Rad;
+        return new Vector3((float)Math.Cos(radians), (float)Math.Sin(radians), 0);
     }
+
+    public Vector3Int getIsoWindRiInt()
+    {
+        return new Vector3Int(Mathf.RoundToInt(GetIsoWindDir().x), Mathf.RoundToInt(GetIsoWindDir().y), 0);
+    }
+
 }

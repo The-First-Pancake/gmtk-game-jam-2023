@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [HideInInspector]
     public WindBehavior wind;
+    [HideInInspector]
     public SceneHandler sceneHandler;
     PlayerController playerController;
     WinLoseText winLoseText;

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class WinLoseText : MonoBehaviour
 {
-
-    List<string> winPhrases = new List<string>();
-    List<string> losePhrases = new List<string>();
+    public Color winColor = Color.white;
+    public Color loseColor = Color.red;
+    public List<string> winPhrases = new List<string>();
+    public List<string> losePhrases = new List<string>();
     GameManager gameManager;
     SceneHandler sceneHandler;
     float startTime;
@@ -29,17 +30,9 @@ public class WinLoseText : MonoBehaviour
         gameManager = gameObject.GetComponent<GameManager>();
         sceneHandler = gameObject.GetComponent<SceneHandler>();
 
-        winPhrases.Add("Level Complete!");
-        winPhrases.Add("Nice One!");
-        winPhrases.Add("Freakin' Sweet");
-        winPhrases.Add("Gabbagool!");
-
-        losePhrases.Add("So Close!");
-        losePhrases.Add("Try Again!");
-        losePhrases.Add("Needs More Fire!");
-        losePhrases.Add("Almost!!");
 
         if (sceneHandler.getCurrentLevel() == "Level_EndScreen") {
+            winLoseText.color = winColor;
             winLoseText.text = "Thanks for Playing!";
             Invoke("TransitionIn", 1);
             Invoke("CreditsScroll", 3);
@@ -101,9 +94,11 @@ public class WinLoseText : MonoBehaviour
     public void SetWinLoseText(string levelOutcome) {
 
         if (levelOutcome == "WIN") {
-            winLoseText.text = winPhrases[Random.Range(0, winPhrases.Count - 1)];
+            winLoseText.text = winPhrases[Random.Range(0, winPhrases.Count)];
+            winLoseText.color = winColor;
         } else if (levelOutcome == "LOSE") {
-            winLoseText.text = losePhrases[Random.Range(0, losePhrases.Count - 1)];
+            winLoseText.text = losePhrases[Random.Range(0, losePhrases.Count)];
+            winLoseText.color = loseColor;
         }
         TransitionIn();
     }
