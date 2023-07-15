@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     float lastTickTime = 0;
     public static float spreadTickInterval = .25f;
 
-    public List<TileBehavior> tilesToBeDeleted = new List<TileBehavior>();
+    public List<TileBehavior> tilesToBeDeleted;
 
     private void Awake()
     {
@@ -54,8 +54,21 @@ public class GameManager : MonoBehaviour
             audio.Play();
         }
         UIcanvas.worldCamera = Camera.main;
+
+        InvokeRepeating("displayNeighbors", .25f, .25f);
     }
 
+    void displayNeighbors()
+    {
+        foreach(TileBehavior neighbor in WorldMap.instance.adjacentToBurningTiles)
+        {
+            spawnDebugtile(new Color(1,0,0,.5f), neighbor.WorldCoordinates, 0, .25f);
+        }
+        foreach (TileBehavior tile in WorldMap.instance.burningTiles)
+        {
+            spawnDebugtile(new Color(0, 1, 0, .5f), tile.WorldCoordinates, 0, .25f);
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -66,9 +79,13 @@ public class GameManager : MonoBehaviour
         }
 
         //Trigger the Fire Ticks
-        if(lastTickTime + spreadTickInterval < Time.time) {
+        if (lastTickTime + spreadTickInterval < Time.time)
+        {
             lastTickTime = Time.time;
-            spreadTick.Invoke();
+            foreach (TileBehavior tileBehavior in WorldMap.instance.adjacentToBurningTiles)
+            {
+                tileBehavior.Fire.onSpread();
+            }
         }
 
         checkWinLoseConditions();
@@ -164,13 +181,16 @@ public class GameManager : MonoBehaviour
         }
         
     }
-    public void spawnDebugtile(Color color, Vector3 spawnPt, float noise)
+    public void spawnDebugtile(Color color, Vector3 spawnPt, float noise, float lifetime = 0)
     {
         GameObject newTile = Instantiate(debugTile);
         Vector3 noiseVec = new Vector3(Random.Range(-noise, noise), Random.Range(-noise, noise), 0);
         newTile.transform.position = spawnPt + noiseVec;
         newTile.GetComponent<SpriteRenderer>().color = color;
-        
+        if (lifetime != 0)
+        {
+            Destroy(newTile, lifetime);
+        }
     }
     public void lose(){
         //TODO sad sound.

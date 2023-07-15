@@ -38,8 +38,9 @@ public class FireBehaviour : MonoBehaviour
     {
         tileBehavior = GetComponent<TileBehavior>();
         sustain *= Random.Range(0.9f, 1.1f); //Noise applied to sustain
-        GameManager.instance.spreadTick.AddListener(new UnityAction(onSpread));
+        //GameManager.instance.spreadTick.AddListener(new UnityAction(onSpread));
 
+        //InvokeRepeating("onSpread", GameManager.spreadTickInterval, GameManager.spreadTickInterval);
         if(burnoutTiles.Length > 0 && destroyAfterBurnOut == true)
         {
             Debug.Log($"Trying to spawn a Tile ({gameObject.name}) which is replaced by a burnout tile (which automatically destroys it after burnout for some unidentified reason) that also has 'destroy after burnout' checked. this double destroy break things, so I'll set destroyAfterBurnout to false for you");
@@ -61,13 +62,12 @@ public class FireBehaviour : MonoBehaviour
         }
     }
 
-    void onSpread()
+    public void onSpread()
     {
-        if(WorldMap.instance.GetTopTile(tileBehavior.IsoCoordinates) != tileBehavior) { return; } //IDo not try to burn if there is a tile above
+        if (WorldMap.instance.GetTopTile(tileBehavior.IsoCoordinates) != tileBehavior) { return; } //Do not try to burn if there is a tile above
 
         if (state == burnState.unburnt){
             //Advanced coding and algorithms
-
             float igniteProbability = tickRateProbabilityCompensation(burningNeighborsFactor() * flambilityScore) ;
             
             if (igniteProbability > Random.Range(0f, 1f))
@@ -75,15 +75,17 @@ public class FireBehaviour : MonoBehaviour
                 ignite();
             }
         }
+
+        float tickRateProbabilityCompensation(float prob)
+        {
+            if (prob == 0) { return 0; } //This function is not defined at 0, but handing 0 as 0 makes the most sense
+            float spreadsPerSec = (1 / GameManager.spreadTickInterval);
+            float output = 1f - Mathf.Pow((1f - prob), (1f / spreadsPerSec));
+            return output;
+        }
     }
 
-    float tickRateProbabilityCompensation(float prob){
 
-        if(prob == 0){return 0;}
-        float spreadsPerSec = (1/GameManager.spreadTickInterval);
-        float output = 1f-Mathf.Pow((1f-prob),(1f/spreadsPerSec));
-        return output;
-    }
 
     private void updateDanger()
     {
@@ -105,13 +107,16 @@ public class FireBehaviour : MonoBehaviour
         timeStartedBurning = Time.time;
         spawnedFire = Instantiate(firePrefab);
         spawnedFire.transform.position = tileBehavior.WorldCoordinates;
-        //spawnedFire.transform.parent = this.transform; Removed so the particles can hang out for a bit after the gameobject is destroyed.
+        WorldMap.instance.refreshTile(tileBehavior);
     }
     public void extinguish()
     {
         if(state != burnState.burning) { return; }
         state = burnState.unburnt;
+
+
         deleteParticles();
+        WorldMap.instance.refreshTile(tileBehavior);
     }
 
     public void burnComplete()
@@ -131,13 +136,19 @@ public class FireBehaviour : MonoBehaviour
             var newGO = Instantiate(burnoutGameObjects[Random.Range(0, burnoutSprites.Length)]);
             newGO.transform.position = tileBehavior.WorldCoordinates;
         }
+        WorldMap.instance.refreshTile(tileBehavior);
         if (destroyAfterBurnOut)
         {
             tileBehavior.DeleteTile();
         }
         deleteParticles();
 
+    }
 
+    [ContextMenu("Refresh")]
+    public void Refresh()
+    {
+        WorldMap.instance.refreshTile(tileBehavior);
     }
 
     float burningNeighborsFactor() // value between 0 and 2 that will modify the likelyhood of neighboring tiles catching on fire
@@ -157,7 +168,7 @@ public class FireBehaviour : MonoBehaviour
                 }
             }
         }
-        return burningNeighbors/4 * 1.5f;
+        return burningNeighbors/4 * 2f;
     }
     float neighborWindModifier(Vector3 neighborDir, Vector3 windDir){
         return (Vector3.Angle(windDir , neighborDir)/180); //should be 1 if aligned, 0 if not

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.Burst;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,12 +19,56 @@ public class WorldMap : MonoBehaviour
     public Grid grid;
     public static WorldMap instance;
 
+    public List<TileBehavior> burningTiles = new List<TileBehavior>();
+    public List<TileBehavior> adjacentToBurningTiles = new List<TileBehavior>();
+
 
     void Awake()
     {
         instance = this;
         map = new WorldTile[100, 100];
         grid = GetComponentInParent<Grid>();
+    }
+
+    public void refreshTile(TileBehavior tile)
+    {
+        foreach(TileBehavior neighbor in tile.GetNeighbors())
+        {
+            refreshTileBurnRegistries(neighbor);
+        }
+        foreach(TileBehavior stackedTile in GetAllTilesInCell(tile.IsoCoordinates))
+        {
+            refreshTileBurnRegistries(stackedTile);
+        }
+    }
+
+    private void refreshTileBurnRegistries(TileBehavior tile)
+    {
+        if (tile.Fire.state == FireBehaviour.burnState.burning)
+        {
+            bool removed = adjacentToBurningTiles.Remove(tile);
+            if (removed) { Debug.Log("RemoveSuccessful"); }
+            
+            if (!burningTiles.Contains(tile))
+            {
+                burningTiles.Add(tile); 
+            }
+        }
+        else
+        {
+            burningTiles.Remove(tile);
+            if (tile.hasBurningNeighbor())
+            {
+                if (!adjacentToBurningTiles.Contains(tile))
+                {
+                    adjacentToBurningTiles.Add(tile);
+                }
+            }
+            else
+            {
+                adjacentToBurningTiles.Remove(tile);
+            }
+        }
     }
 
     public void PublishTile(Vector3Int coords, GameObject obj) {
@@ -60,6 +106,7 @@ public class WorldMap : MonoBehaviour
 
     public void UnPublishTile(Vector3Int coords, GameObject obj) {
         if (tileOutOfBound(coords)){return; };
+
         if (map[coords.x + 50, coords.y + 50].upper_tile.gameObject == obj) {
             Debug.Log("Unpublishing Upper");
             map[coords.x + 50, coords.y + 50].present_upper = false;
@@ -69,6 +116,10 @@ public class WorldMap : MonoBehaviour
             map[coords.x + 50, coords.y + 50].present_lower = false;
             map[coords.x + 50, coords.y + 50].lower_tile = null;
         }
+        var tb = obj.GetComponent<TileBehavior>();
+        burningTiles.Remove(tb);
+        adjacentToBurningTiles.Remove(tb);
+        refreshTile(tb);
     }
 
     public bool tileOutOfBound(Vector3Int coords){

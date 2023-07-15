@@ -112,4 +112,13 @@ public class TileBehavior : MonoBehaviour
         tilemap.SetTile(IsoCoordinates, null);
         Destroy(gameObject);
     }
+
+    public bool hasBurningNeighbor()
+    {
+        foreach(TileBehavior neighbor in GetNeighbors())
+        {
+            if(neighbor.Fire.state == FireBehaviour.burnState.burning) return true;
+        }
+        return false;
+    }
 }
