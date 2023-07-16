@@ -68673,7 +68673,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5466239871252205984, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
       propertyPath: m_AnimatedTiles.Array.size
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5466239871252205984, guid: 1297d227cbc6c9b47bb6d4a554d48ae8, type: 3}
       propertyPath: m_TileSpriteArray.Array.size

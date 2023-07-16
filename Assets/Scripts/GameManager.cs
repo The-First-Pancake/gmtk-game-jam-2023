@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
 
     public List<TileBehavior> tilesToBeDeleted = new List<TileBehavior>();
 
+    private float timeSinceLoss = 0;
+
     private void Awake()
     {
         instance = this;
@@ -115,7 +117,6 @@ public class GameManager : MonoBehaviour
 
         if (totalBuildings != 0 && remaingBuildings == 0 && !nextLevelCalled)
         {
-
             nextLevelCalled = true;
             winLoseText.SetWinLoseText("WIN");
             sceneHandler.Invoke("NextLevel", 1.25f);
@@ -126,10 +127,17 @@ public class GameManager : MonoBehaviour
                     !nextLevelCalled &&
                     playerController.state != PlayerController.PlayerState.cooldown)
         {
-
-            restartLevelCalled = true;
-            winLoseText.SetWinLoseText("LOSE");
-            this.Invoke("lose", 1.25f);
+            timeSinceLoss += Time.deltaTime; //We must be losing for a half second before we actually call it a loss. Fixes explosion insta-loss
+            if (timeSinceLoss > .5f)
+            {
+                restartLevelCalled = true;
+                winLoseText.SetWinLoseText("LOSE");
+                this.Invoke("lose", 1.25f);
+            }
+        }
+        else
+        {
+            timeSinceLoss = 0;
         }
     }
 

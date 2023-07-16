@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6f3fbb560bd6041a202ea918fa4f23, type: 3}
   m_Name: Big TNT
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 21300000, guid: 80bc2294d5b32db46b11e39a28f4313b, type: 3}
+  m_DefaultSprite: {fileID: 21300000, guid: 707f220618bba494b81818dba1f705d6, type: 3}
   m_DefaultGameObject: {fileID: 6058571008962211761, guid: 1b41d5a484d90984ab8a69a6e6b520b4, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: 21300000, guid: 80bc2294d5b32db46b11e39a28f4313b, type: 3}
+    - {fileID: 21300000, guid: 707f220618bba494b81818dba1f705d6, type: 3}
     m_GameObject: {fileID: 6058571008962211761, guid: 1b41d5a484d90984ab8a69a6e6b520b4, type: 3}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1

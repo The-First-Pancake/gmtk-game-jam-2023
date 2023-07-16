@@ -119,4 +119,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c68967e44338544affd34ff5288a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boomRadius: 3
+  boomRadius: 3.5

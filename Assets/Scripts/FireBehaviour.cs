@@ -9,8 +9,8 @@ public class FireBehaviour : MonoBehaviour
 
     public float flambilityScore = .5f; //Base chance of being spread to each second (assuming completly surrounded by fire)
     public float sustain = 5;
+    public float health;
     public float dangerRating= 0;
-    public float timeStartedBurning = 0;
     public burnState state = burnState.unburnt;
     public GameObject firePrefab;
     private GameObject spawnedFire;
@@ -37,7 +37,8 @@ public class FireBehaviour : MonoBehaviour
     void Start()
     {
         tileBehavior = GetComponent<TileBehavior>();
-        sustain *= Random.Range(0.9f, 1.1f); //Noise applied to sustain
+        health = sustain;
+        health *= Random.Range(0.9f, 1.1f); //Noise applied to starting health
         GameManager.instance.spreadTick.AddListener(new UnityAction(onSpread));
 
         if(burnoutTiles.Length > 0 && destroyAfterBurnOut == true)
@@ -52,9 +53,10 @@ public class FireBehaviour : MonoBehaviour
     {
         if (state == burnState.burning) { 
             updateDanger();
-            //Tickup running burn time, check if we've passed sustain
-            
-            if (timeStartedBurning + sustain <= Time.time)
+
+            //tick down health
+            health -= Time.deltaTime;
+            if (health <= 0)
             {
                 burnComplete();
             }
@@ -105,7 +107,8 @@ public class FireBehaviour : MonoBehaviour
         if(state == burnState.burning){return;}
         if(flambilityScore == 0){return;}
         state = burnState.burning;
-        timeStartedBurning = Time.time;
+
+        //Particle Effect
         spawnedFire = Instantiate(firePrefab);
         spawnedFire.transform.position = tileBehavior.WorldCoordinates;
         //spawnedFire.transform.parent = this.transform; Removed so the particles can hang out for a bit after the gameobject is destroyed.

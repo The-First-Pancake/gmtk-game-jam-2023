@@ -42,8 +42,15 @@ public class WindBehavior : MonoBehaviour
     }
     public Vector3 GetWorldWindDir()
     {
-        Vector2 worldCoordinatesOfIsoDir = WorldMap.instance.grid.GetCellCenterWorld(getIsoWindRiInt());
-        Vector2 gridCenterCoordinates = WorldMap.instance.grid.GetCellCenterWorld(Vector3Int.zero);
+        var grid = WorldMap.instance.grid;
+
+        Vector3 GetCellCenterWorld(Vector3 position)
+        {
+            return grid.LocalToWorld(grid.CellToLocalInterpolated(position + grid.GetLayoutCellCenter()));
+        }
+
+        Vector2 worldCoordinatesOfIsoDir = GetCellCenterWorld(GetIsoWindDir());
+        Vector2 gridCenterCoordinates = grid.GetCellCenterWorld(Vector3Int.zero);
         Vector2 postionAdjustedWorldWindDir = worldCoordinatesOfIsoDir - gridCenterCoordinates;
         return postionAdjustedWorldWindDir.normalized;
     }
