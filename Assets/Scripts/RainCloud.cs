@@ -5,20 +5,34 @@ using UnityEngine;
 public class RainCloud : MonoBehaviour
 {
 
-    public float offscreenAmount = 1.0f;
     public float movespeed = .25f;
     public Vector2 extinguishRange = new Vector2 (2, 1); // shape is in worldspace, so should generally have a ratio of 2:1
-
+    [HideInInspector]
+    public bool isCopy = false;
 
     void Start()
     {
-        
+
+        //We make 3 copies so that it wraps perfectly around the edges of the screen
+        if(isCopy == false)
+        {
+            (Vector2 lowerLeft, Vector2 upperRight) = GameManager.instance.CameraBounds();
+
+            float screenWidth = upperRight.x - lowerLeft.x;
+            float screenHeight = upperRight.y - lowerLeft.y;
+
+            var copy1 = Instantiate(gameObject, transform.position + new Vector3(screenWidth, 0,0), Quaternion.identity);
+            copy1.GetComponent<RainCloud>().isCopy = true;
+            var copy2 = Instantiate(gameObject, transform.position + new Vector3(screenWidth, screenHeight, 0), Quaternion.identity);
+            copy2.GetComponent<RainCloud>().isCopy = true;
+            var copy3 = Instantiate(gameObject, transform.position + new Vector3(0, screenHeight, 0), Quaternion.identity);
+            copy3.GetComponent<RainCloud>().isCopy = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if(GameManager.instance.sceneHandler.IsTransitioning()) { return; }
 
         //Get windspeed
@@ -28,22 +42,29 @@ public class RainCloud : MonoBehaviour
         //check for off screen
         (Vector2 lowerLeft, Vector2 upperRight) = GameManager.instance.CameraBounds();
 
+        float screenWidth = upperRight.x - lowerLeft.x; 
+        float screenHeight = upperRight.y - lowerLeft.y;
+
         //Wrapping
-        if(transform.position.x < lowerLeft.x - offscreenAmount)
+        if(transform.position.x < lowerLeft.x - screenWidth/2)
         {
-            transform.position = new Vector3(upperRight.x + offscreenAmount, transform.position.y, transform.position.z); 
+            float distancePastBoundry = transform.position.x - (lowerLeft.x - screenWidth / 2);
+            transform.position = new Vector3(upperRight.x + screenWidth / 2 + distancePastBoundry, transform.position.y, transform.position.z); 
         }
-        if (transform.position.x > upperRight.x + offscreenAmount)
+        if (transform.position.x > upperRight.x + screenWidth/2)
         {
-            transform.position = new Vector3(lowerLeft.x - offscreenAmount, transform.position.y, transform.position.z); 
+            float distancePastBoundry = transform.position.x - (upperRight.x + screenWidth / 2);
+            transform.position = new Vector3(lowerLeft.x - screenWidth / 2 + distancePastBoundry, transform.position.y, transform.position.z); 
         }
-        if (transform.position.y < lowerLeft.y - offscreenAmount)
+        if (transform.position.y < lowerLeft.y - screenHeight/2)
         {
-            transform.position = new Vector3(transform.position.x, upperRight.y + offscreenAmount, transform.position.z); 
+            float distancePastBoundry = transform.position.y - (lowerLeft.y - screenHeight / 2);
+            transform.position = new Vector3(transform.position.x, upperRight.y + screenHeight / 2 - distancePastBoundry, transform.position.z); 
         }
-        if (transform.position.y > upperRight.y + offscreenAmount)
+        if (transform.position.y > upperRight.y + screenHeight/2)
         {
-            transform.position = new Vector3(transform.position.x, lowerLeft.y - offscreenAmount, transform.position.z);
+            float distancePastBoundry = transform.position.y - (upperRight.y + screenHeight / 2);
+            transform.position = new Vector3(transform.position.x, lowerLeft.y - screenHeight / 2 + distancePastBoundry, transform.position.z);
         }
 
         //Extinguish below
@@ -58,9 +79,7 @@ public class RainCloud : MonoBehaviour
                     tile.Fire.extinguish();
                 }
             }
-        }
-        
-
+        }    
     }
 
     private bool IsObjectOffscreen(float threshold)

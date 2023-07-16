@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public PlayerState state = PlayerState.ready;
 
     public AudioClip fireBallIgniteSound;
+    public AudioClip fireBallLaunchSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -104,6 +105,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ShootProjectile(TileBehavior origin, TileBehavior target){
         state = PlayerState.cooldown;
+
+        GameManager.instance.audioManager.PlaySound(fireBallLaunchSound,.5f, 1, .2f);
 
         float dist = worldMap.grid.CellToWorld(target.IsoCoordinates - origin.IsoCoordinates).magnitude;
         Vector3Int isodir = (target.IsoCoordinates - origin.IsoCoordinates);

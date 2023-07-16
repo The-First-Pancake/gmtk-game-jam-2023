@@ -625,6 +625,7 @@ MonoBehaviour:
   usedLightning: 0
   state: 0
   fireBallIgniteSound: {fileID: 8300000, guid: 8152cf5eac0849740b40f0c7101ccb97, type: 3}
+  fireBallLaunchSound: {fileID: 8300000, guid: df8004f916527fd43926b7092d4ce284, type: 3}
 --- !u!114 &6383908619028314576
 MonoBehaviour:
   m_ObjectHideFlags: 0

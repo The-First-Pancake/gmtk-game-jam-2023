@@ -54,12 +54,24 @@ public class AudioManger : MonoBehaviour
         catchallAudioSource.PlayOneShot(clip, volume);
     }
 
+    public void PlaySound(AudioClip clip, float volume, float pitch, float pitchNoise = 0)
+    {
+        var tempAudioSource = gameObject.AddComponent<AudioSource>();
+        tempAudioSource.clip = clip;
+        tempAudioSource.volume = volume;
+        tempAudioSource.pitch = Random.Range(pitch -pitchNoise, pitch + pitchNoise);
+        tempAudioSource.Play();
+        Destroy(tempAudioSource, tempAudioSource.clip.length);
+    }
+
     public void PlaySound(string clipname, float volume = 1)
     {
         AudioClip clip = miscSounds.Find(x => x.name == clipname);
         if (clip == null){Debug.LogWarning($"Attempted to find clip {clipname} and was unable to. Make sure clip exists in the audioManager miscClips list"); return; }
 
-        catchallAudioSource.PlayOneShot(clip, volume);
+        PlaySound(clip, volume);
+
+
     }
 
     void OnFireStart()
