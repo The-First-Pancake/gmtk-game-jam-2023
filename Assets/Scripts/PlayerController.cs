@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     public bool usedLightning = false;
 
     public PlayerState state = PlayerState.ready;
+
+    public AudioClip fireBallIgniteSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -128,7 +130,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
 
-        
+        GameManager.instance.audioManager.PlaySound(fireBallIgniteSound,.4f);
         target.Fire.ignite();
 
         //Turn off projectile visuals

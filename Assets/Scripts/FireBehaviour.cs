@@ -31,6 +31,9 @@ public class FireBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject burnoutSpriteObjectPrefab;
 
+
+    [Header("Effects")]
+    public GameObject extinguishEffect;
     
 
     // Start is called before the first frame update
@@ -117,7 +120,9 @@ public class FireBehaviour : MonoBehaviour
     {
         if(state != burnState.burning) { return; }
         state = burnState.unburnt;
-        deleteParticles();
+        Destroy(spawnedFire);
+        var ee = Instantiate(extinguishEffect);
+        ee.transform.position = tileBehavior.WorldCoordinates;
     }
 
     public void burnComplete()

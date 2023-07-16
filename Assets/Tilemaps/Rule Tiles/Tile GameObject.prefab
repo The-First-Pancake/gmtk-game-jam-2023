@@ -68,8 +68,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flambilityScore: 0.5
   sustain: 5
+  health: 0
   dangerRating: 0
-  timeStartedBurning: 0
   state: 0
   firePrefab: {fileID: 4666961168873278341, guid: e809512634afd6a45b3eb1eae6eae355, type: 3}
   cannotBeSpreadFrom: 0
@@ -78,3 +78,4 @@ MonoBehaviour:
   burnoutTiles: []
   burnoutGameObjects: []
   burnoutSpriteObjectPrefab: {fileID: 2366841241410158110, guid: 025815b64ef315d4db0dc5794693dda3, type: 3}
+  extinguishEffect: {fileID: 9017378188611043671, guid: 153087f8afd7e6a4e86dae59c030572a, type: 3}

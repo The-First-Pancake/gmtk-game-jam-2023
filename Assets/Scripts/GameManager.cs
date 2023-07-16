@@ -37,6 +37,12 @@ public class GameManager : MonoBehaviour
 
     private float timeSinceLoss = 0;
 
+    [Header("GeneralGameSounds")]
+    [SerializeField]
+    private AudioClip winSound;
+    [SerializeField]
+    private AudioClip loseSound;
+
 
     private void Awake()
     {
@@ -109,6 +115,7 @@ public class GameManager : MonoBehaviour
         {
             nextLevelCalled = true;
             winLoseText.SetWinLoseText("WIN");
+            audioManager.PlaySound(winSound);
             sceneHandler.Invoke("NextLevel", 1.25f);
         }
         else if (WorldMap.instance.GetAllBurningTiles().Count == 0 &&
@@ -122,6 +129,7 @@ public class GameManager : MonoBehaviour
             {
                 restartLevelCalled = true;
                 winLoseText.SetWinLoseText("LOSE");
+                audioManager.PlaySound(loseSound);
                 this.Invoke("lose", 1.25f);
             }
         }

@@ -88,10 +88,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5672343491899223914, guid: 12c94034f9ba5ee4ab6a2429eb2eff0c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8025689004477206436, guid: 12c94034f9ba5ee4ab6a2429eb2eff0c, type: 3}
       propertyPath: m_Name
       value: Main Camera

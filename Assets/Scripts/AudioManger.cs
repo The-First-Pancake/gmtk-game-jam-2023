@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class AudioManger : MonoBehaviour
 {
+    [HideInInspector]
     public bool mute = false;
+
+    [Header("Music")]
     public AudioSource peacfulMusic;
     public List<AudioSource> musicLevels;
     public List<int> musicLevelThresholds;
+
+    [Header("SoundFX")]
+    public List<AudioClip> miscSounds;
+    private AudioSource catchallAudioSource;
+    public AudioSource fireCracklingSounds;
 
     GameManager gameManager;
 
@@ -16,6 +24,8 @@ public class AudioManger : MonoBehaviour
     {
         gameManager = GameManager.instance;
         gameManager.OnFireStart.AddListener(OnFireStart);
+
+        catchallAudioSource = GetComponent<AudioSource>();  
 
         peacfulMusic.volume = 1;
         peacfulMusic.Play();
@@ -34,7 +44,22 @@ public class AudioManger : MonoBehaviour
             setMute(!mute);
         }
 
+        fireCracklingSounds.volume = Mathf.Clamp(gameManager.totalFire / 100f, 0, .75f);
+
         UpdateMusic();
+    }
+
+    public void PlaySound(AudioClip clip, float volume = 1)
+    {
+        catchallAudioSource.PlayOneShot(clip, volume);
+    }
+
+    public void PlaySound(string clipname, float volume = 1)
+    {
+        AudioClip clip = miscSounds.Find(x => x.name == clipname);
+        if (clip == null){Debug.LogWarning($"Attempted to find clip {clipname} and was unable to. Make sure clip exists in the audioManager miscClips list"); return; }
+
+        catchallAudioSource.PlayOneShot(clip, volume);
     }
 
     void OnFireStart()
@@ -71,6 +96,7 @@ public class AudioManger : MonoBehaviour
 
     void updateMute()
     {
+        catchallAudioSource.mute = mute;
         peacfulMusic.mute = mute;
         foreach (AudioSource track in musicLevels)
         {
