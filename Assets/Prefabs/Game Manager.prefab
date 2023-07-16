@@ -24,12 +24,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315397215725751030}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3008797540765408354}
+  m_Father: {fileID: 5682418941545623509}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &3971084552307650803
@@ -152,12 +152,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402115915944018344}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3008797540765408354}
+  m_Father: {fileID: 5682418941545623509}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &49290414624857698
@@ -280,12 +280,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693170972776295487}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3008797540765408354}
+  m_Father: {fileID: 5682418941545623509}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1036904174139791293
@@ -555,13 +555,8 @@ Transform:
   m_Children:
   - {fileID: 306223052474343223}
   - {fileID: 2063197955233213199}
-  - {fileID: 7237134060999970286}
-  - {fileID: 2846475742598766498}
-  - {fileID: 3920372981810606843}
-  - {fileID: 5774730200232977377}
-  - {fileID: 2015514848450226989}
-  - {fileID: 3858132290874658898}
   - {fileID: 5181349458820769413}
+  - {fileID: 5682418941545623509}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -579,22 +574,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wind: {fileID: 0}
   sceneHandler: {fileID: 0}
-  mute: 0
-  peacfulMusic: {fileID: 7856771961841077075}
-  musicLevels:
-  - {fileID: 49290414624857698}
-  - {fileID: 4074405509524253349}
-  - {fileID: 3971084552307650803}
-  - {fileID: 1036904174139791293}
-  - {fileID: 8026352333364219244}
-  - {fileID: 2535940099041796966}
-  musicLevelThresholds: 010000000a000000190000003200000064000000c8000000
+  audioManager: {fileID: 0}
+  totalFire: 0
+  OnFireStart:
+    m_PersistentCalls:
+      m_Calls: []
   debugMessage: {fileID: 3687829441632637369, guid: d7f78498b3fe8ff418252b49d23474f2, type: 3}
   debugTile: {fileID: 4458365773425746247, guid: 2fe79c1982a6d3d4a8ec4ee4270fb21a, type: 3}
   spreadTick:
     m_PersistentCalls:
       m_Calls: []
-  tilesToBeDeleted: []
 --- !u!114 &8386628355637925731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1096,12 +1085,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2876262980212643901}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3008797540765408354}
+  m_Father: {fileID: 5682418941545623509}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &4074405509524253349
@@ -1224,12 +1213,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6457478746520247361}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3008797540765408354}
+  m_Father: {fileID: 5682418941545623509}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &2535940099041796966
@@ -1352,12 +1341,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6984887328499273046}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3008797540765408354}
+  m_Father: {fileID: 5682418941545623509}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &8026352333364219244
@@ -1584,3 +1573,63 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &7749371622259407689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5682418941545623509}
+  - component: {fileID: 2798524839064649123}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5682418941545623509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749371622259407689}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7237134060999970286}
+  - {fileID: 2846475742598766498}
+  - {fileID: 3920372981810606843}
+  - {fileID: 5774730200232977377}
+  - {fileID: 2015514848450226989}
+  - {fileID: 3858132290874658898}
+  m_Father: {fileID: 3008797540765408354}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2798524839064649123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749371622259407689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ead5e2eeaf7e4448cca8943d274db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mute: 0
+  peacfulMusic: {fileID: 0}
+  musicLevels:
+  - {fileID: 49290414624857698}
+  - {fileID: 4074405509524253349}
+  - {fileID: 3971084552307650803}
+  - {fileID: 1036904174139791293}
+  - {fileID: 8026352333364219244}
+  - {fileID: 2535940099041796966}
+  musicLevelThresholds: 000000000000000000000000000000000000000000000000

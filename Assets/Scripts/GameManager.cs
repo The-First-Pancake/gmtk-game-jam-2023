@@ -11,17 +11,17 @@ public class GameManager : MonoBehaviour
     public WindBehavior wind;
     [HideInInspector]
     public SceneHandler sceneHandler;
+    [HideInInspector]
+    public AudioManger audioManager;
     PlayerController playerController;
     WinLoseText winLoseText;
 
     Canvas UIcanvas;
     int totalBuildings = -1;
-    int totalFire;
-
-    public bool mute = false;
-    public AudioSource peacfulMusic;
-    public List<AudioSource> musicLevels;
-    public List<int> musicLevelThresholds;
+    [HideInInspector]
+    public int totalFire;
+    [HideInInspector]
+    public UnityEvent OnFireStart;
 
     public GameObject debugMessage;
     public GameObject debugTile;
@@ -29,14 +29,14 @@ public class GameManager : MonoBehaviour
     bool nextLevelCalled = false;
     bool restartLevelCalled = false;
     bool fireStarted = false;
-    
+
+    [HideInInspector]
     public UnityEvent spreadTick;
     float lastTickTime = 0;
     public static float spreadTickInterval = .25f;
 
-    public List<TileBehavior> tilesToBeDeleted = new List<TileBehavior>();
-
     private float timeSinceLoss = 0;
+
 
     private void Awake()
     {
@@ -46,15 +46,11 @@ public class GameManager : MonoBehaviour
         playerController = gameObject.GetComponent<PlayerController>();
         winLoseText = gameObject.GetComponent<WinLoseText>();
         UIcanvas = gameObject.GetComponentInChildren<Canvas>();
+        audioManager = gameObject.GetComponentInChildren<AudioManger>();
     }
     // Start is called before the first frame update
     void Start()
     {
-        peacfulMusic.volume = 1;
-        peacfulMusic.Play();
-        foreach (AudioSource audio in musicLevels) {
-            audio.Play();
-        }
         UIcanvas.worldCamera = Camera.main;
     }
 
@@ -79,7 +75,11 @@ public class GameManager : MonoBehaviour
 
         totalFire = WorldMap.instance.GetAllBurningTiles().Count;
 
-        UpdateMusic();
+        if (totalFire > 0 && !fireStarted)
+        {
+            fireStarted = true;
+            OnFireStart.Invoke();
+        }
     }
 
     void checkKeybinds()
@@ -92,16 +92,6 @@ public class GameManager : MonoBehaviour
             sceneHandler.NextLevel();
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            mute = !mute;
-
-            peacfulMusic.mute = mute;
-            foreach(AudioSource track in musicLevels)
-            {
-                track.mute = mute;
-            }
-        }
 
         if (Input.GetKeyDown(KeyCode.Escape) && !sceneHandler.IsTransitioning()){
             Application.Quit();
@@ -141,25 +131,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void UpdateMusic() {
-        if (totalFire > 0 && !fireStarted) {
-            fireStarted = true;
-            peacfulMusic.volume = 0;
-        }
-        
-        for (int i = 0; i < musicLevelThresholds.Count; i++) {
-            if (totalFire > musicLevelThresholds[i]) {
-                musicLevels[i].volume = 1;
-            } else {
-                float last_threshold = 0;
-                if (i != 0) {
-                    last_threshold = musicLevelThresholds[i-1];
-                }
-                float mapped_value = (totalFire - last_threshold) / (musicLevelThresholds[i] - last_threshold);
-                musicLevels[i].volume = mapped_value;
-            }
-        }
-    }
 
     public void spawnDebugMSG(string message, Vector3 spawnPt, float noise, float lifetime = 0)
     {
