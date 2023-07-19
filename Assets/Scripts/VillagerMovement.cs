@@ -54,7 +54,7 @@ public class VillagerMovement : MonoBehaviour
     }
 
     public bool GoToNeighborOf(TileBehavior target) {
-        List<TileBehavior> neighbors = target.GetNeighbors();
+        List<TileBehavior> neighbors = target.GetOrthagNeigbors();
         // Sort by closest to current location
         neighbors = neighbors.OrderBy(x => Vector3Int.Distance(GetCurrentTile().IsoCoordinates, x.IsoCoordinates)).ToList();
         foreach (TileBehavior neighbor in neighbors) {
@@ -63,8 +63,8 @@ public class VillagerMovement : MonoBehaviour
                 if(GoToTile(neighbor)) {
                     // Append a final leg to the journey to travel to the edge of the target tile.
                     // Animations like bucket don't look right from the center of the tile
-                    Vector3 inbetween = (neighbor.WorldCoordinates + target.WorldCoordinates) / 2;
-                    CurrentPath.Add(inbetween);
+                    Vector3 toTarget = target.WorldCoordinates - neighbor.WorldCoordinates;
+                    CurrentPath.Add(neighbor.WorldCoordinates + (toTarget / 2.5f));
                     return true;
                 }
                 return false;

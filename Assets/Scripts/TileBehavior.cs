@@ -17,6 +17,13 @@ public class TileBehavior : MonoBehaviour
         Vector3Int.down + Vector3Int.left,
     };
 
+    public static Vector3Int [] ORTHAG_NEIGHBOR_COORDS = {
+        Vector3Int.left,
+        Vector3Int.up,
+        Vector3Int.right,
+        Vector3Int.down,
+    };
+
     public enum VillagerTargetType {
         DONT_CARE = 0,
         BUILDING,
@@ -98,6 +105,17 @@ public class TileBehavior : MonoBehaviour
     public List<TileBehavior> GetNeighbors() {
         List<TileBehavior> neighbors = new List<TileBehavior>();
         foreach (Vector3Int coord in NEIGHBOR_COORDS) {
+            TileBehavior tile = WorldMap.instance.GetTopTile(coord + IsoCoordinates);
+            if (tile) {
+                neighbors.Add(tile);
+            }
+        }
+        return neighbors;
+    }
+
+    public List<TileBehavior> GetOrthagNeigbors() {
+        List<TileBehavior> neighbors = new List<TileBehavior>();
+        foreach (Vector3Int coord in ORTHAG_NEIGHBOR_COORDS) {
             TileBehavior tile = WorldMap.instance.GetTopTile(coord + IsoCoordinates);
             if (tile) {
                 neighbors.Add(tile);
