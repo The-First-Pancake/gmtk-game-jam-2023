@@ -73,11 +73,9 @@ public class VillagerBehavior : MonoBehaviour
                 float down_angle = Vector3.Angle(velocity, Vector3.down);
                 if (up_angle <= left_angle && up_angle <= right_angle && up_angle <= down_angle) {
                     anim.SetTrigger("TurnAway");
-                    return;
                 } else if (left_angle <= up_angle && left_angle <= right_angle && left_angle <= down_angle) {
                     spriteRenderer.flipX = false;
                     anim.SetTrigger("TurnSide");
-                    return;
                 } else if (right_angle <= up_angle && right_angle <= left_angle && right_angle <= down_angle) {
                     spriteRenderer.flipX = true;
                     anim.SetTrigger("TurnSide");
@@ -89,7 +87,7 @@ public class VillagerBehavior : MonoBehaviour
                 anim.SetTrigger("EnterPanic");
                 break;
             case VillagerState.SPLATSHING_WATER:
-                velocity = rb2d.velocity;
+                velocity = CurrentTarget.WorldCoordinates - transform.position;
                 float left = Vector3.Angle(velocity, Vector3.left);
                 float right = Vector3.Angle(velocity, Vector3.right);
                 spriteRenderer.flipX = right <= left;
@@ -189,18 +187,17 @@ public class VillagerBehavior : MonoBehaviour
     private void puttingOutFireUpdate()
     {
         // Stay alert for fires
-        LookForFires();
-        TileBehavior dangerFire = GetHighestDangerFire();
-        // If there are no dangerous fires calm the fuck down
-        if (dangerFire == null) {
+        if (!LookForFires()) {
             enterState(VillagerState.IDLE);
             return;
+        }
         // You reached the fire put it out man
-        } else if (CurrentTarget != null && CurrentTarget.Fire.state == FireBehaviour.burnState.burning && movement.IsDoneMove()) {
+        if (CurrentTarget != null && CurrentTarget.Fire.state == FireBehaviour.burnState.burning && movement.IsDoneMove()) {
             enterState(VillagerState.SPLATSHING_WATER);
             return;
         }
         // make sure we're still headed to the highest danger fire
+        TileBehavior dangerFire = GetHighestDangerFire();
         while (dangerFire != null) {
             if (CurrentTarget == null || (dangerFire.Fire.dangerRating > CurrentTarget.Fire.dangerRating) || CurrentTarget.Fire.state != FireBehaviour.burnState.burning) {
                 CurrentTarget = dangerFire;
@@ -275,7 +272,9 @@ public class VillagerBehavior : MonoBehaviour
         // clean list
         SeenFires.RemoveAll(item => item == null);
         SeenFires.RemoveAll(item => item.Fire.state != FireBehaviour.burnState.burning);
-        return (SeenFires.Count > 0);
+        UnreachableFires.RemoveAll(item => item == null);
+        UnreachableFires.RemoveAll(item => item.Fire.state != FireBehaviour.burnState.burning);
+        return (SeenFires.Count > 0) || (UnreachableFires.Count > 0);
     }
     private TileBehavior GetHighestDangerFire()
     {
