@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class VillagerMovement : MonoBehaviour
@@ -53,10 +54,20 @@ public class VillagerMovement : MonoBehaviour
     }
 
     public bool GoToNeighborOf(TileBehavior target) {
-        foreach (TileBehavior neighbor in target.GetNeighbors()) {
+        List<TileBehavior> neighbors = target.GetNeighbors();
+        // Sort by closest to current location
+        neighbors = neighbors.OrderBy(x => Vector3Int.Distance(GetCurrentTile().IsoCoordinates, x.IsoCoordinates)).ToList();
+        foreach (TileBehavior neighbor in neighbors) {
             if (neighbor.CanPath != TileBehavior.PathAble.BLOCKS_MOVEMENT &&
                     neighbor.Fire.state != FireBehaviour.burnState.burning) {
-                return GoToTile(neighbor);
+                if(GoToTile(neighbor)) {
+                    // Append a final leg to the journey to travel to the edge of the target tile.
+                    // Animations like bucket don't look right from the center of the tile
+                    Vector3 inbetween = (neighbor.WorldCoordinates + target.WorldCoordinates) / 2;
+                    CurrentPath.Add(inbetween);
+                    return true;
+                }
+                return false;
             }
         }
         return false;
