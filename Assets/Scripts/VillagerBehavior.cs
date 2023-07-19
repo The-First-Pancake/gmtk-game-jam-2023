@@ -188,36 +188,39 @@ public class VillagerBehavior : MonoBehaviour
 
     private void puttingOutFireUpdate()
     {
-        // Check if we can put out any fires
-        TileBehavior currentTile = movement.GetCurrentTile();
-        if (currentTile == null) {
-            return;
-        }
-        // Always try to put out adjacent fires
-        foreach (TileBehavior neighbor in currentTile.GetNeighbors()) {
-            if (neighbor.Fire.state == FireBehaviour.burnState.burning) {
-                CurrentTarget = neighbor;
-                enterState(VillagerState.SPLATSHING_WATER);
-                return;
-            }
-        }
-
-        // Check if we're still heading to the highest danger fire we can see
+        // Stay alert for fires
         LookForFires();
         TileBehavior dangerFire = GetHighestDangerFire();
-        while (dangerFire) {
-            if (CurrentTarget != dangerFire || CurrentTarget == null) {
+        // If there are no dangerous fires calm the fuck down
+        if (dangerFire == null) {
+            enterState(VillagerState.IDLE);
+            return;
+        // You reached the fire put it out man
+        } else if (CurrentTarget != null && CurrentTarget.Fire.state == FireBehaviour.burnState.burning && movement.IsDoneMove()) {
+            enterState(VillagerState.SPLATSHING_WATER);
+            return;
+        }
+        // make sure we're still headed to the highest danger fire
+        while (dangerFire != null) {
+            if (CurrentTarget == null || (dangerFire.Fire.dangerRating > CurrentTarget.Fire.dangerRating) || CurrentTarget.Fire.state != FireBehaviour.burnState.burning) {
                 CurrentTarget = dangerFire;
                 if (!movement.GoToNeighborOf(CurrentTarget)) {
                     SeenFires.Remove(dangerFire);
                     UnreachableFires.Add(dangerFire);
                 } else {
+                    // we are able to go to the highest danger fire lets do it
                     return;
                 }
             } else {
+                // we're already on our way there... patience
                 return;
             }
+            dangerFire = GetHighestDangerFire();
         }
+
+        // If we reached here, all fires are unreachable, panick
+        enterState(VillagerState.PANICKING);
+        return;
     }
 
     private void gettingWaterUpdate()

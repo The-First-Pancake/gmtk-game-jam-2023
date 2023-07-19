@@ -95,6 +95,10 @@ public class FireBehaviour : MonoBehaviour
 
     private void updateDanger()
     {
+        if (tileBehavior.VillagerTarget == TileBehavior.VillagerTargetType.BUILDING) {
+            dangerRating = float.PositiveInfinity;
+            return;
+        }
         List<TileBehavior> buildings = WorldMap.instance.GetAllTilesOfTargetType(TileBehavior.VillagerTargetType.BUILDING);
         float closestBuildingDistance = float.PositiveInfinity;
         foreach (TileBehavior building in buildings) {
