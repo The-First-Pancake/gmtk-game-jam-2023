@@ -219,6 +219,9 @@ public class VillagerBehavior : MonoBehaviour
 
     private void gettingWaterUpdate()
     {
+        if (CurrentTarget == null) {
+            enterState(VillagerState.PANICKING);
+        }
         if (movement.IsDoneMove()) {
             enterState(VillagerState.PUTTING_OUT_FIRE);
         } 
@@ -328,7 +331,7 @@ public class VillagerBehavior : MonoBehaviour
         Vector3Int randomVector = new Vector3Int(UnityEngine.Random.Range(-2, 2), (UnityEngine.Random.Range(-2, 2)));
         TileBehavior tile = WorldMap.instance.GetTopTile(movement.GetCurrentTile().IsoCoordinates + randomVector);
         if (tile) {
-            movement.BaseSpeed = RoamSpeed;
+            movement.BaseSpeed = FireSpeed;
             CurrentTarget = tile;
             movement.GoToNeighborOf(CurrentTarget);
         }
@@ -357,7 +360,7 @@ public class VillagerBehavior : MonoBehaviour
         Vector3Int randomVector = new Vector3Int(UnityEngine.Random.Range(-2, 2), (UnityEngine.Random.Range(-2, 2)));
         TileBehavior tile = WorldMap.instance.GetTopTile(movement.GetCurrentTile().IsoCoordinates + randomVector);
         if (tile) {
-            movement.BaseSpeed = RoamSpeed;
+            movement.BaseSpeed = FireSpeed;
             CurrentTarget = tile;
             movement.GoToNeighborOf(CurrentTarget);
         }
@@ -380,8 +383,11 @@ public class VillagerBehavior : MonoBehaviour
                 closestWaterDistance = waterDistance;
             }
         }
-        CurrentTarget = closestWater;
-        movement.GoToNeighborOf(closestWater);
+        if (movement.GoToNeighborOf(closestWater)) {
+            CurrentTarget = closestWater;
+        } else {
+            CurrentTarget = null;
+        }
     }
 
     private void on_enterAlerted()
