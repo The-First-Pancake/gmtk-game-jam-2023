@@ -162,6 +162,9 @@ public class VillagerBehavior : MonoBehaviour
     private void splashingUpdate()
     {
         if (wait_finished) {
+            if (CurrentTarget != null) {
+                CurrentTarget.Fire.extinguish();
+            }
             wait_finished = false;
             if (LookForFires()) {
                 enterState(VillagerState.ALERTED);
@@ -187,12 +190,10 @@ public class VillagerBehavior : MonoBehaviour
         if (currentTile == null) {
             return;
         }
+        // Always try to put out adjacent fires
         foreach (TileBehavior neighbor in currentTile.GetNeighbors()) {
             if (neighbor.Fire.state == FireBehaviour.burnState.burning) {
                 CurrentTarget = neighbor;
-                if (CurrentTarget != null) {
-                    CurrentTarget.Fire.extinguish();
-                }
                 enterState(VillagerState.SPLATSHING_WATER);
                 return;
             }
