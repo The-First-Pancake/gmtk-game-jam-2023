@@ -54,6 +54,7 @@ public class VillagerBehavior : MonoBehaviour
         if (CurrentTile != null && CurrentTile.Fire.state == FireBehaviour.burnState.burning) {
             if (State != VillagerState.BURNING && State != VillagerState.DYING) {
                 enterState(VillagerState.BURNING);
+                return;
             }
         }
     }
@@ -144,6 +145,7 @@ public class VillagerBehavior : MonoBehaviour
     {
         if (movement.IsDoneMove()) {
             enterState(VillagerState.DYING);
+            return;
         }
     }
 
@@ -180,6 +182,7 @@ public class VillagerBehavior : MonoBehaviour
     {
         if (movement.IsDoneMove()) {
             enterState(VillagerState.PANICKING);
+            return;
         }
     }
 
@@ -221,9 +224,11 @@ public class VillagerBehavior : MonoBehaviour
     {
         if (CurrentTarget == null) {
             enterState(VillagerState.PANICKING);
+            return;
         }
         if (movement.IsDoneMove()) {
             enterState(VillagerState.PUTTING_OUT_FIRE);
+            return;
         } 
     }
 
@@ -235,14 +240,17 @@ public class VillagerBehavior : MonoBehaviour
             return;
         }
         enterState(VillagerState.GETTING_WATER);
+        return;
     }
 
     private void roamingUpdate()
     {
         if (movement.IsDoneMove()) {
             enterState(VillagerState.IDLE);
+            return;
         } else if (LookForFires()) {
             enterState(VillagerState.ALERTED);
+            return;
         }
     }
 
@@ -284,8 +292,10 @@ public class VillagerBehavior : MonoBehaviour
     {
         if (LookForFires()) {
             enterState(VillagerState.ALERTED);
+            return;
         }
         enterState(VillagerState.ROAMING);
+        return;
     }
 
     private void enterState(VillagerState new_state) {
