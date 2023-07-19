@@ -70,6 +70,10 @@ public class VillagerMovement : MonoBehaviour
         return (CurrentPath.Count == 0);
     }
 
+    public void CancelMove() {
+        CurrentPath.Clear();
+    }
+
     void FollowPath() {
         if (CurrentPath.Count > 0) {
             Vector3 target = CurrentPath[0];

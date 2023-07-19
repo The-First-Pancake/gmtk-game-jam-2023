@@ -322,6 +322,7 @@ public class VillagerBehavior : MonoBehaviour
 
     private void on_enterBurning()
     {
+        movement.CancelMove();
         fireObject = Instantiate(onFirePrefab, transform);
         Vector3Int randomVector = new Vector3Int(UnityEngine.Random.Range(-2, 2), (UnityEngine.Random.Range(-2, 2)));
         TileBehavior tile = WorldMap.instance.GetTopTile(movement.GetCurrentTile().IsoCoordinates + randomVector);
@@ -334,11 +335,13 @@ public class VillagerBehavior : MonoBehaviour
 
     private void on_enterDying()
     {
+        movement.CancelMove();
         StartCoroutine(Wait(3));
     }
 
     private void on_enterSplashing()
     {
+        movement.CancelMove();
         StartCoroutine(Wait(3));
     }
 
