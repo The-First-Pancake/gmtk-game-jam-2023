@@ -15,6 +15,9 @@ public class FireBehaviour : MonoBehaviour
     public GameObject firePrefab;
     private GameObject spawnedFire;
 
+    private bool managed = false;
+    private float lastTimeManaged = -100;
+
     private TileBehavior tileBehavior;
 
     public bool cannotBeSpreadFrom = false;
@@ -57,11 +60,19 @@ public class FireBehaviour : MonoBehaviour
         if (state == burnState.burning) { 
             updateDanger();
 
-            //tick down health
-            health -= Time.deltaTime;
-            if (health <= 0)
+            if(managed) {
+                if(Time.time > lastTimeManaged + 1) {//If the blaze hasn't been managed in 1 second, it becomes unmanaged again
+                    managed = false; 
+                }
+            }
+            else
             {
-                burnComplete();
+                //tick down health
+                health -= Time.deltaTime;
+                if (health <= 0)
+                {
+                    burnComplete();
+                }
             }
         }
     }
@@ -125,11 +136,18 @@ public class FireBehaviour : MonoBehaviour
         if(state != burnState.burning) { return; }
         state = burnState.unburnt;
         Destroy(spawnedFire);
-        var ee = Instantiate(extinguishEffect);
-        ee.transform.position = tileBehavior.WorldCoordinates;
+        GameObject newExtinguishEffect = Instantiate(this.extinguishEffect);
+        newExtinguishEffect.transform.position = tileBehavior.WorldCoordinates;
+        health = sustain;
     }
 
-    public void burnComplete()
+    public void manageBlaze() //Keeps fire from damaging tile
+    {
+        managed = true;
+        lastTimeManaged = Time.time;
+    }
+
+    private void burnComplete()
     {
         if (state != burnState.burning) { Debug.Log("What the hell oh my god"); return; }
         state = burnState.unburnt;
@@ -151,8 +169,6 @@ public class FireBehaviour : MonoBehaviour
             tileBehavior.DeleteTile();
         }
         deleteParticles();
-
-
     }
 
     float BurningNeighborsFactor() // value between 0 and 2 that will modify the likelyhood of neighboring tiles catching on fire

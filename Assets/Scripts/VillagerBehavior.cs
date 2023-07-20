@@ -161,6 +161,11 @@ public class VillagerBehavior : MonoBehaviour
 
     private void splashingUpdate()
     {
+        if (CurrentTarget != null && CurrentTarget.Fire.state == FireBehaviour.burnState.burning)
+        {
+            CurrentTarget.Fire.manageBlaze(); //Manage the fire for now. In other words, keep it from losing health
+        }
+
         if (wait_finished) {
             if (CurrentTarget != null) {
                 CurrentTarget.Fire.extinguish();
